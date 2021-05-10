@@ -14,6 +14,23 @@ export const DEFAULT_TOKEN = {
   decimals: 6
 };
 
+export const networkNames = {
+  1: 'ETH Mainnet',
+  42: 'Kovan Testnet',
+  56: 'Binance Smart Chain',
+  77: 'Sokol Testnet',
+  100: 'xDai Chain',
+};
+
+export const chainUrls = {
+  1: {
+    rpc: "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd",// mainnet
+    explorer: 'https://blockscout.com/eth/mainnet',
+    chainId: 1,
+    name: networkNames[1],
+  },
+};
+
 export const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000';
 export const ETHER_CURRENCY_LOGO =
   'https://assets.coingecko.com/coins/images/279/small/ethereum.png?1595348880';
@@ -70,14 +87,6 @@ export const nativeCurrencyMediators = {
   56: '0xefc33f8b2c4d51005585962be7ea20518ea9fd0d'.toLowerCase(),
 };
 
-export const networkNames = {
-  1: 'ETH Mainnet',
-  42: 'Kovan Testnet',
-  56: 'Binance Smart Chain',
-  77: 'Sokol Testnet',
-  100: 'xDai Chain',
-};
-
 export const networkLabels = {
   1: 'Mainnet',
   3: 'Ropsten',
@@ -109,15 +118,6 @@ export const networkCurrencies = {
   100: {
     name: 'xDai',
     symbol: 'xDai',
-  },
-};
-
-export const chainUrls = {
-  1: {
-    rpc: "https://mainnet.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd",
-    explorer: 'https://blockscout.com/eth/mainnet',
-    chainId: 1,
-    name: networkNames[1],
   },
 };
 

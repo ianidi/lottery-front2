@@ -1,5 +1,4 @@
-import { Box, Button, Flex, Grid, Image, Text } from '@chakra-ui/react';
-import NoHistoryImage from 'assets/no-history.svg';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

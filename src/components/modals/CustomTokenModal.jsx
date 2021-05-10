@@ -15,10 +15,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import CustomTokenImage from 'assets/custom-token.svg';
-import {
-  isRebasingToken,
-  RebasingTokenWarning,
-} from 'components/warnings/RebasingTokenWarning';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { utils } from 'ethers';
 import { LOCAL_STORAGE_KEYS } from 'lib/constants';
@@ -106,8 +102,6 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
     }
   };
 
-  const isRebaseToken = isRebasingToken(customToken);
-
   const initialRef = useRef();
 
   return (
@@ -187,7 +181,6 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
             </Flex>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">
-            {isRebaseToken && <RebasingTokenWarning token={customToken} />}
             <Flex
               w="100%"
               justify="space-between"
@@ -206,7 +199,6 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
               <Button
                 px={12}
                 onClick={onClick}
-                isDisabled={isRebaseToken}
                 colorScheme="blue"
                 mt={{ base: 2, md: 0 }}
               >

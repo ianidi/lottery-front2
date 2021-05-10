@@ -2,7 +2,6 @@ import { Flex, Image } from '@chakra-ui/react';
 import DownTriangle from 'assets/down-triangle.svg';
 import UpTriangle from 'assets/up-triangle.svg';
 import { ConnectWeb3 } from 'components/common/ConnectWeb3';
-import { Footer } from 'components/common/Footer';
 import { Header } from 'components/common/Header';
 import { useWeb3Context } from 'contexts/Web3Context';
 import React, { useMemo } from 'react';
@@ -53,7 +52,6 @@ export const Layout = ({ children }) => {
       >
         {valid ? children : <ConnectWeb3 />}
       </Flex>
-      {/* <Footer /> */}
     </Flex>
   );
 };

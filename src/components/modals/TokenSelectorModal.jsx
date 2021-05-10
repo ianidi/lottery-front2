@@ -21,8 +21,6 @@ import { useWeb3Context } from 'contexts/Web3Context';
 import { PlusIcon } from 'icons/PlusIcon';
 import { ADDRESS_ZERO, LOCAL_STORAGE_KEYS, GRAPH_ENDPOINT } from 'lib/constants';
 import {
-  formatValue,
-  getNativeCurrency,
   logError,
   removeElement,
   uniqueTokens,

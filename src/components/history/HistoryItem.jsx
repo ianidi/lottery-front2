@@ -9,7 +9,6 @@ import {
 } from '@chakra-ui/react';
 import BlueTickImage from 'assets/blue-tick.svg';
 import RightArrowImage from 'assets/right-arrow.svg';
-import { AddToMetamask } from 'components/common/AddToMetamask';
 import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { BigNumber, utils } from 'ethers';
@@ -307,7 +306,6 @@ export const HistoryItem = ({
               toToken.decimals,
             )} ${tokenSymbol}`}
           </Text>
-          <AddToMetamask token={toToken} ml="0.25rem" />
         </Flex>
         {receivingTx ? (
           <Flex align="center" justify={{ base: 'center', md: 'flex-end' }}>

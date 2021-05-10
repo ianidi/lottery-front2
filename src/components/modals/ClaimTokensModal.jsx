@@ -14,15 +14,9 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import ClaimTokensImage from 'assets/multiple-claim.svg';
-import { LoadingModal } from 'components/modals/LoadingModal';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { useClaimableTransfers } from 'hooks/useClaimableTransfers';
 import { LOCAL_STORAGE_KEYS } from 'lib/constants';
-import {
-  getGasPrice,
-  getLowestHistoricalEthGasPrice,
-  getMedianHistoricalEthGasPrice,
-} from 'lib/gasPrice';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -47,11 +41,6 @@ export const ClaimTokensModal = () => {
       window.localStorage.getItem(DONT_SHOW_CLAIMS) === 'true';
     setOpen(!!transfers && transfers.length > 0 && !dontShowClaims);
   }, [transfers]);
-
-  if (loading) return <LoadingModal />;
-  const currentGasPrice = getGasPrice();
-  const medianGasPrice = getMedianHistoricalEthGasPrice();
-  const lowestGasPrice = getLowestHistoricalEthGasPrice();
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>

@@ -1,19 +1,14 @@
 import { useWeb3Context } from 'contexts/Web3Context';
-import { useBridgeDirection } from 'hooks/useBridgeDirection';
+import { GRAPH_ENDPOINT } from 'lib/constants';
 import {
   combineRequestsWithExecutions,
-  getExecutions,
   getRequests,
 } from 'lib/history';
 import { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 
 export const useUserHistory = () => {
-  const {
-    homeChainId,
-    getGraphEndpoint,
-  } = useBridgeDirection();
-  const { account } = useWeb3Context();
+  const { account, providerChainId } = useWeb3Context();
   const [transfers, setTransfers] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -23,11 +18,11 @@ export const useUserHistory = () => {
       const [
         { requests: homeRequests },
       ] = await Promise.all([
-        getRequests(account, getGraphEndpoint(homeChainId)),
+        getRequests(account, GRAPH_ENDPOINT),
       ]);
       const homeTransfers = combineRequestsWithExecutions(
         homeRequests,
-        homeChainId,
+        providerChainId,
       );
       const allTransfers = [...homeTransfers].sort(
         (a, b) => b.timestamp - a.timestamp,
@@ -39,7 +34,7 @@ export const useUserHistory = () => {
     setLoading(true);
     const subscription = defer(() => update()).subscribe();
     return () => subscription.unsubscribe();
-  }, [homeChainId, account, getGraphEndpoint]);
+  }, [providerChainId, account, GRAPH_ENDPOINT]);
 
   return { transfers, loading };
 };

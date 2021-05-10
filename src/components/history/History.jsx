@@ -1,37 +1,15 @@
-import { Checkbox, Flex, Grid, Text } from '@chakra-ui/react';
-import { HistoryItem } from 'components/history/HistoryItem';
+import { Flex, Grid, Text } from '@chakra-ui/react';
+// import { HistoryItem } from 'components/history/HistoryItem';
 import { HistoryPagination } from 'components/history/HistoryPagination';
-import { ManualClaim } from 'components/history/ManualClaim';
 import { NoHistory } from 'components/history/NoHistory';
-import { LoadingModal } from 'components/modals/LoadingModal';
-import { AuspiciousGasWarning } from 'components/warnings/AuspiciousGasWarning';
-import { GraphHealthWarning } from 'components/warnings/GraphHealthWarning';
 import { useUserHistory } from 'hooks/useUserHistory';
-import {
-  getGasPrice,
-  getLowestHistoricalEthGasPrice,
-  getMedianHistoricalEthGasPrice,
-} from 'lib/gasPrice';
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 const TOTAL_PER_PAGE = 20;
 
-export const BridgeHistory = ({ page }) => {
-  // const [onlyUnReceived, setOnlyUnReceived] = useState(false);
-
+export const History = ({ page }) => {
   const { transfers, loading } = useUserHistory();
-
-  if (loading) {
-    return (
-      <Flex w="100%" maxW="75rem" direction="column" mt={8} px={8}>
-        <LoadingModal />
-      </Flex>
-    );
-  }
-  // const filteredTransfers = onlyUnReceived
-  //   ? transfers.filter(i => i.receivingTx === null)
-  //   : transfers;
 
   const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
   const displayHistory = transfers.slice(
@@ -43,10 +21,6 @@ export const BridgeHistory = ({ page }) => {
     return <Redirect to="/history" />;
   }
 
-  const currentGasPrice = getGasPrice();
-  const medianGasPrice = getMedianHistoricalEthGasPrice();
-  const lowestGasPrice = getLowestHistoricalEthGasPrice();
-
   return (
     <Flex
       maxW="75rem"
@@ -55,22 +29,10 @@ export const BridgeHistory = ({ page }) => {
       px={{ base: 4, sm: 8 }}
       w="100%"
     >
-      {/* <GraphHealthWarning />
-      <ManualClaim /> */}
       <Flex justify="space-between" align="center" mb={4}>
         <Text fontSize="xl" fontWeight="bold">
           History
         </Text>
-        {/* <Checkbox
-          isChecked={onlyUnReceived}
-          onChange={e => setOnlyUnReceived(e.target.checked)}
-          borderColor="grey"
-          borderRadius="4px"
-          size="lg"
-          variant="solid"
-        >
-          <Text fontSize="sm">Show only unreceived</Text>
-        </Checkbox> */}
       </Flex>
 
       {displayHistory.length > 0 ? (
@@ -94,9 +56,9 @@ export const BridgeHistory = ({ page }) => {
             <Text textAlign="center">Amount</Text>
             <Text textAlign="right">Status</Text>
           </Grid>
-          {displayHistory.map(item => (
+          {/* {displayHistory.map(item => (
             <HistoryItem key={item.sendingTx} data={item} />
-          ))}
+          ))} */}
           {numPages > 1 && (
             <HistoryPagination numPages={numPages} currentPage={page} />
           )}
