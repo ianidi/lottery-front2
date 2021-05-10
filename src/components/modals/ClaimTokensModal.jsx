@@ -14,33 +14,14 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import ClaimTokensImage from 'assets/multiple-claim.svg';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { useClaimableTransfers } from 'hooks/useClaimableTransfers';
-import { LOCAL_STORAGE_KEYS } from 'lib/constants';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-
-const { DONT_SHOW_CLAIMS } = LOCAL_STORAGE_KEYS;
+import React, { useState } from 'react';
 
 export const ClaimTokensModal = () => {
-  const { account, providerChainId } = useWeb3Context();
-  const { transfers, loading } = useClaimableTransfers();
   const [isOpen, setOpen] = useState(false);
 
   const onClose = () => {
     setOpen(false);
-    window.localStorage.setItem(DONT_SHOW_CLAIMS, 'true');
   };
-
-  useEffect(() => {
-    window.localStorage.setItem(DONT_SHOW_CLAIMS, 'false');
-  }, [account, providerChainId]);
-
-  useEffect(() => {
-    const dontShowClaims =
-      window.localStorage.getItem(DONT_SHOW_CLAIMS) === 'true';
-    setOpen(!!transfers && transfers.length > 0 && !dontShowClaims);
-  }, [transfers]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -65,9 +46,7 @@ export const ClaimTokensModal = () => {
           <ModalBody px={6} py={0}>
             <VStack align="center" direction="column" spacing="4">
               <Box w="100%">
-                <Text as="span">{`You have `}</Text>
-                <Text as="b">{transfers ? transfers.length : 0}</Text>
-                <Text as="span">{` not claimed transactions `}</Text>
+                <Text as="span">You have not claimed tokens</Text>
               </Box>
             </VStack>
           </ModalBody>
@@ -87,22 +66,14 @@ export const ClaimTokensModal = () => {
               >
                 Cancel
               </Button>
-              <Link
-                to="/history"
-                display="flex"
-                onClick={() => {
-                  window.localStorage.setItem('dont-show-claims', 'false');
-                }}
+              <Button
+                px={12}
+                colorScheme="blue"
+                mt={{ base: 2, md: 0 }}
+                w="100%"
               >
-                <Button
-                  px={12}
-                  colorScheme="blue"
-                  mt={{ base: 2, md: 0 }}
-                  w="100%"
-                >
-                  Claim
+                Claim
                 </Button>
-              </Link>
             </Flex>
           </ModalFooter>
         </ModalContent>

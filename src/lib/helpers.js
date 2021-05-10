@@ -3,25 +3,14 @@ import {
   chainUrls,
   defaultTokens,
   defaultTokensUrl,
-  nativeCurrencies,
-  nativeCurrencyMediators,
   networkCurrencies,
   networkLabels,
   networkNames,
 } from 'lib/constants';
-import {
-  networks,
-} from 'lib/networks';
 
 export const getDefaultToken = chainId => defaultTokens[chainId] || defaultTokens[1];
 
-export const getWalletProviderName = provider =>
-  provider?.connection?.url || null;
-
-export const getNativeCurrency = chainId => nativeCurrencies[chainId || 1];
-
-export const getNetworkName = chainId =>
-  networkNames[chainId] || 'Unknown Network';
+export const getNetworkName = chainId => networkNames[chainId] || 'Unknown Network';
 
 export const getNetworkLabel = chainId => networkLabels[chainId] || 'Unknown';
 
@@ -32,8 +21,7 @@ export const getRPCUrl = (chainId = null) => {
   return chainUrls[chainId || 1].rpc;
 }
 
-export const getExplorerUrl = chainId =>
-  (chainUrls[chainId] || chainUrls[1]).explorer;
+export const getExplorerUrl = chainId => (chainUrls[chainId] || chainUrls[1]).explorer;
 
 export const getTokenListUrl = chainId =>
   defaultTokensUrl[chainId] || defaultTokensUrl[1];
@@ -79,30 +67,6 @@ export const parseValue = (num, dec) => {
   return utils.parseUnits(num, dec);
 };
 
-export const uriToHttp = uri => {
-  const protocol = uri.split(':')[0].toLowerCase();
-  const hash = uri.match(/^ipfs:(\/\/)?(.*)$/i)?.[2];
-  const name = uri.match(/^ipns:(\/\/)?(.*)$/i)?.[2];
-  switch (protocol) {
-    case 'https':
-      return [uri];
-    case 'http':
-      return [`https${uri.substr(4)}`, uri];
-    case 'ipfs':
-      return [
-        `https://cloudflare-ipfs.com/ipfs/${hash}/`,
-        `https://ipfs.io/ipfs/${hash}/`,
-      ];
-    case 'ipns':
-      return [
-        `https://cloudflare-ipfs.com/ipns/${name}/`,
-        `https://ipfs.io/ipns/${name}/`,
-      ];
-    default:
-      return [];
-  }
-};
-
 export const fetchQueryParams = search => {
   if (!search || !search.trim().length) return null;
   return search
@@ -133,24 +97,6 @@ export const logDebug = error => {
     // eslint-disable-next-line no-console
     console.debug(error);
   }
-};
-
-export const getHelperContract = chainId =>
-  nativeCurrencyMediators[chainId || 1];
-
-export const getMediatorAddressWithoutOverride = (bridgeDirection, chainId) => {
-  if (!bridgeDirection || !chainId) return null;
-  const { homeChainId, homeMediatorAddress, foreignMediatorAddress } = networks[
-    bridgeDirection
-  ];
-  return homeChainId === chainId
-    ? homeMediatorAddress.toLowerCase()
-    : foreignMediatorAddress.toLowerCase();
-};
-
-export const getMediatorAddress = (bridgeDirection, token) => {
-  if (!token || !token.chainId || !token.address) return null;
-  return getMediatorAddressWithoutOverride(bridgeDirection, token.chainId);
 };
 
 export const truncateText = (text, maxLength) => {

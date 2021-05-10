@@ -11,9 +11,3 @@ export const getEthersProvider = async chainId => {
   const provider = memoized(rpcURL);
   return provider || null;
 };
-
-export const isEIP1193 = ethersProvider =>
-  ethersProvider &&
-  ethersProvider.connection &&
-  ethersProvider.connection.url &&
-  ethersProvider.connection.url.includes('eip-1193');

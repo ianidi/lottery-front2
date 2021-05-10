@@ -21,8 +21,6 @@ import {
 import { POLLING_INTERVAL } from 'lib/constants';
 import {
   getExplorerUrl,
-  getHelperContract,
-  getNativeCurrency,
   getNetworkName,
   logError,
 } from 'lib/helpers';
@@ -210,11 +208,7 @@ export const HistoryItem = ({
     getGraphEndpoint,
   ]);
 
-  const homeCurrencyHelperContract = getHelperContract(foreignChainId);
-  const { symbol: tokenSymbol } =
-    enableForeignCurrencyBridge && user === homeCurrencyHelperContract
-      ? getNativeCurrency(foreignChainId)
-      : toToken;
+  const { symbol: tokenSymbol } = toToken;
 
   return (
     <Flex
