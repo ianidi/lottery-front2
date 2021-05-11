@@ -10,6 +10,7 @@ export const appSlice = createSlice({
     balance: "0",
     allowance: "0",
     maxBetPercent: 10,
+    duration: "0",
   },
   reducers: {
     setToken: (state, action) => {
@@ -27,10 +28,13 @@ export const appSlice = createSlice({
     setMaxBetPercent: (state, action) => {
       state.maxBetPercent = action.payload;
     },
+    setDuration: (state, action) => {
+      state.duration = action.payload;
+    },
   },
 });
 
-export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent } = appSlice.actions;
+export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent, setDuration } = appSlice.actions;
 
 export const selectToken = (state) => state.app.token;
 export const selectAmount = (state) => BigNumber.from(state.app.amount);
@@ -40,5 +44,6 @@ export const selectBalanceIsZero = (state) => BigNumber.from(state.app.balance).
 export const selectAllowance = (state) => BigNumber.from(state.app.allowance);
 export const selectTransferAllowed = (state) => BigNumber.from(state.app.balance).gt(BigNumber.from(0)) && BigNumber.from(state.app.amount).gt(BigNumber.from(0)) && (BigNumber.from(state.app.amount).eq(BigNumber.from(state.app.allowance))); // balance > 0 && amount == allowance;
 export const selectMaxBetPercent = (state) => state.app.maxBetPercent;
+export const selectDuration = (state) => BigNumber.from(state.app.duration);
 
 export default appSlice.reducer;

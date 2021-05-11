@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 
-export const LOTTERY_CONTRACT_ADDRESS = '0xefc33f8b2c4d51005585962be7ea20518ea9fd0d';
+export const LOTTERY_CONTRACT_ADDRESS = '0xe3eD91Da3daAb35FD95ec192b14D19B73D84d6bf';
 
 export const GRAPH_ENDPOINT = "https://api.thegraph.com/subgraphs/name/raid-guild/xdai-omnibridge";
 

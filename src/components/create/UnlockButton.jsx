@@ -31,38 +31,39 @@ export const UnlockButton = () => {
     }
   };
   const onClick = () => {
-    if (!approvalLoading) {
-      approve().catch(error => {
-        if (error && error.message) {
-          if (
-            error.data &&
-            (error.data.includes('Bad instruction fe') ||
-              error.data.includes('Reverted'))
-          ) {
-            showError(
-              <Text>
-                There is problem with the token unlock. Try to revoke previous
+    if (approvalLoading) {
+      return;
+    }
+    approve().catch(error => {
+      if (error && error.message) {
+        if (
+          error.data &&
+          (error.data.includes('Bad instruction fe') ||
+            error.data.includes('Reverted'))
+        ) {
+          showError(
+            <Text>
+              There is problem with the token unlock. Try to revoke previous
                 approval if any on{' '}
-                <Link
-                  href="https://revoke.cash"
-                  textDecor="underline"
-                  isExternal
-                >
-                  https://revoke.cash/
+              <Link
+                href="https://revoke.cash"
+                textDecor="underline"
+                isExternal
+              >
+                https://revoke.cash/
                 </Link>{' '}
                 and try again.
               </Text>,
-            );
-          } else {
-            showError(error.message);
-          }
-        } else {
-          showError(
-            'Impossible to perform the operation. Reload the application and try again.',
           );
+        } else {
+          showError(error.message);
         }
-      });
-    }
+      } else {
+        showError(
+          'Impossible to perform the operation. Reload the application and try again.',
+        );
+      }
+    });
   };
 
   if (balanceIsZero || amountIsZero || transferAllowed) { return null; }

@@ -3,6 +3,7 @@ import {
   Button,
   Divider,
   Flex,
+  Spinner,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,49 +14,26 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
+import { TxLink } from 'components/common/TxLink';
+import { useWeb3Context } from 'contexts/Web3Context';
 import { formatValue } from 'lib/helpers';
+import { useCreate } from 'hooks/useCreate';
 import React from 'react';
 import { useSelector } from "react-redux";
-import { selectToken, selectAmount } from "store/appSlice";
+import { selectToken, selectAmount, selectMaxBetPercent, selectDuration } from "store/appSlice";
 
 export const ConfirmTransferModal = ({ isOpen, onClose }) => {
+  const toast = useToast();
+  const { providerChainId } = useWeb3Context();
 
   const token = useSelector(selectToken);
   const amount = useSelector(selectAmount);
+  const maxBetPercent = useSelector(selectMaxBetPercent);
+  const duration = useSelector(selectDuration);
 
-  const transfer = async () => {
-    // setLoading(true);
-    // try {
-    //   const tx = await relayTokens(
-    //     ethersProvider,
-    //     token,
-    //     receiver || account,
-    //     amount,
-    //     {
-    //       shouldReceiveNativeCur,
-    //       foreignChainId,
-    //     },
-    //   );
-    //   setTxHash(tx.hash);
-    // } catch (transferError) {
-    //   setLoading(false);
-    //   logError({
-    //     transferError,
-    //     token,
-    //     receiver: receiver || account,
-    //     amount: amount.toString(),
-    //     account,
-    //   });
-    //   throw transferError;
-    // }
-  };
+  const { createTxHash, createLoading, create } = useCreate(token, amount, maxBetPercent, duration, onClose);
 
-  const toast = useToast();
-
-  if (!token) return null;
-
-  const fromAmt = formatValue(amount, token.decimals);
-  const fromUnit = token.symbol;
+  const formattedAmount = formatValue(amount, token.decimals);
 
   const showError = msg => {
     if (msg) {
@@ -69,7 +47,10 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
   };
 
   const onClick = () => {
-    transfer().catch(error => {
+    if (createLoading) {
+      return;
+    }
+    create().catch(error => {
       if (error && error.message) {
         showError(error.message);
       } else {
@@ -78,8 +59,9 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
         );
       }
     });
-    onClose();
   };
+
+  if (!token) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -113,18 +95,23 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
                 px={4}
               >
                 <Text textAlign="center" fontWeight="bold">
-                  {fromAmt}
+                  {formattedAmount}
                 </Text>
                 <Text textAlign="center" fontSize="sm">
-                  {fromUnit}
+                  {token.symbol}
                 </Text>
               </Flex>
             </Flex>
             <Divider color="#DAE3F0" my={4} />
+            <Box w="100%" fontSize="sm" color={'black'} mb={2}>
+              <Text as="span">Please confirm that you would like to create a new lottery and send </Text>
+              <Text as="b">{`${formattedAmount} ${token.symbol}`}</Text>
+              <Text as="span"> to lottery liquidity fund.</Text>
+            </Box>
             <Box w="100%" fontSize="sm" color={'black'}>
-              <Text as="span">{`Please confirm that you would like to create a new lottery and send `}</Text>
-              <Text as="b">{`${fromAmt} ${fromUnit}`}</Text>
-              <Text as="span"> to lottery liquidity fund</Text>
+              <Text as="span">Maximum bet percent is set to </Text>
+              <Text as="b">{`${maxBetPercent}`}</Text>
+              <Text as="span">.</Text>
             </Box>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">
@@ -149,7 +136,15 @@ export const ConfirmTransferModal = ({ isOpen, onClose }) => {
                 colorScheme="blue"
                 mt={{ base: 2, md: 0 }}
               >
-                Continue
+                {createLoading ? (
+                  <TxLink chainId={providerChainId} hash={createTxHash}>
+                    <Spinner color="white" size="sm" />
+                  </TxLink>
+                ) : (
+                  <>
+                    <Text color="white" fontWeight="bold">Continue</Text>
+                  </>
+                )}
               </Button>
             </Flex>
           </ModalFooter>
