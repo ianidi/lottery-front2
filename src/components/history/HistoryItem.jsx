@@ -13,7 +13,7 @@ import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
-export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, timestamp } }) => {
+export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, txHash, timestamp } }) => {
   const { providerChainId, ethersProvider } = useWeb3Context();
 
   const timestampString = new Date(
@@ -74,14 +74,16 @@ export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, tim
           <Button w="80%" size="sm" colorScheme="blue">View game</Button>
         </Flex>
         <Flex justify="center">
-          <Button w="80%" size="sm" colorScheme="blue">View Tx</Button>
+          <TxLink chainId={providerChainId} hash={txHash}>
+            <Button w="80%" size="sm" colorScheme="blue">View Tx</Button>
+          </TxLink>
         </Flex>
       </Grid>
     </Flex>
   );
 };
 
-{/* <TxLink chainId={providerChainId}></TxLink> */ }
-// hash={txHash}
+{/*  */ }
+//
 // onClick={claimTokens}
 // isLoading={loading}

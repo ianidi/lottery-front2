@@ -14,7 +14,7 @@ export const NoHistory = () => {
       align="center"
     >
       <Text fontWeight="bold" mb={4}>
-        No History Found
+        No history found
       </Text>
       <Link to="/list">
         <Button colorScheme="blue">
