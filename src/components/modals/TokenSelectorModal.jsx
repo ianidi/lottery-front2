@@ -19,7 +19,7 @@ import {
 import SearchIcon from 'assets/search.svg';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { PlusIcon } from 'icons/PlusIcon';
-import { ADDRESS_ZERO, LOCAL_STORAGE_KEYS, GRAPH_ENDPOINT } from 'lib/constants';
+import { ADDRESS_ZERO, LOCAL_STORAGE_KEYS } from 'lib/constants';
 import {
   logError,
   removeElement,
@@ -91,7 +91,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
     async (chainId, customTokens) => {
       setLoading(true);
       try {
-        const baseTokenList = await fetchTokenList(chainId, GRAPH_ENDPOINT);
+        const baseTokenList = await fetchTokenList(chainId);
 
         const customTokenList = [
           ...uniqueTokens(

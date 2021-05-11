@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers';
 
 export const LOTTERY_CONTRACT_ADDRESS = '0xe3eD91Da3daAb35FD95ec192b14D19B73D84d6bf';
 
-export const GRAPH_ENDPOINT = "https://api.thegraph.com/subgraphs/name/raid-guild/xdai-omnibridge";
+export const GRAPH_ENDPOINT = "https://api.thegraph.com/subgraphs/name/ianidi/lottery-ropsten";
 
 export const RPC_URL = "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd";
 

@@ -6,7 +6,7 @@ import { getTokenListUrl, uniqueTokens } from './helpers';
 
 export const fetchTokenList = async (
   chainId,
-  homeEndpoint,
+  // homeEndpoint,
 ) => {
   // const [defaultTokens, subgraphTokens] = await Promise.all([
   //   fetchDefaultTokens(chainId),
@@ -49,10 +49,10 @@ const homeTokensQuery = gql`
   }
 `;
 
-const fetchTokensFromSubgraph = async (homeEndpoint) => {
-  const [homeData] = await Promise.all([
-    request(homeEndpoint, homeTokensQuery),
-  ]);
-  const homeTokens = homeData && homeData.tokens ? homeData.tokens : [];
-  return homeTokens;
-};
+// const fetchTokensFromSubgraph = async (homeEndpoint) => {
+//   const [homeData] = await Promise.all([
+//     request(homeEndpoint, homeTokensQuery),
+//   ]);
+//   const homeTokens = homeData && homeData.tokens ? homeData.tokens : [];
+//   return homeTokens;
+// };
