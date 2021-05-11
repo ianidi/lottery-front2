@@ -7,14 +7,11 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import BlueTickImage from 'assets/blue-tick.svg';
-import RightArrowImage from 'assets/right-arrow.svg';
 import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL } from 'lib/constants';
-import { getExplorerUrl, logError } from 'lib/helpers';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, timestamp } }) => {
   const { providerChainId, ethersProvider } = useWeb3Context();
@@ -29,20 +26,20 @@ export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, tim
     minute: '2-digit',
   });
 
-  // const toast = useToast();
-  // const showError = useCallback(
-  //   msg => {
-  //     if (msg) {
-  //       toast({
-  //         title: 'Error',
-  //         description: msg,
-  //         status: 'error',
-  //         isClosable: 'true',
-  //       });
-  //     }
-  //   },
-  //   [toast],
-  // );
+  const toast = useToast();
+  const showError = useCallback(
+    msg => {
+      if (msg) {
+        toast({
+          title: 'Error',
+          description: msg,
+          status: 'error',
+          isClosable: 'true',
+        });
+      }
+    },
+    [toast],
+  );
   // const claimable = useMemo(
   //   () => message && message.msgData && message.signatures,
   //   [message],

@@ -1,5 +1,4 @@
 import { Flex, Grid, Text } from '@chakra-ui/react';
-import { BigNumber } from '@ethersproject/bignumber';
 import { HistoryItem } from 'components/history/HistoryItem';
 import { HistoryPagination } from 'components/history/HistoryPagination';
 import { NoHistory } from 'components/history/NoHistory';
