@@ -14,12 +14,7 @@ export const getNetworkName = chainId => networkNames[chainId] || 'Unknown Netwo
 
 export const getNetworkLabel = chainId => networkLabels[chainId] || 'Unknown';
 
-export const getNetworkCurrency = chainId =>
-  networkCurrencies[chainId] || { name: 'Unknown', symbol: 'Unknown' };
-
-export const getRPCUrl = (chainId = null) => {
-  return chainUrls[chainId || 1].rpc;
-}
+export const getNetworkCurrency = chainId => networkCurrencies[chainId] || { name: 'Unknown', symbol: 'Unknown' };
 
 export const getExplorerUrl = chainId => (chainUrls[chainId] || chainUrls[1]).explorer;
 

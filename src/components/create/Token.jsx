@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 import { useDispatch, useSelector } from "react-redux";
 import { selectToken, selectBalance, setAmount, setBalance } from "store/appSlice";
+import { BigNumber } from '@ethersproject/bignumber';
 
 export const Token = () => {
   const dispatch = useDispatch();
@@ -31,15 +32,15 @@ export const Token = () => {
       subscription = defer(() =>
         fetchTokenBalance(token, account).catch(balanceError => {
           logError({ balanceError });
-          setBalance(0);
+          dispatch(setBalance(BigNumber.from(0)));
           setBalanceLoading(false);
         }),
       ).subscribe(b => {
-        setBalance(b);
+        dispatch(setBalance(b));
         setBalanceLoading(false);
       });
     } else {
-      setBalance(0);
+      dispatch(setBalance(BigNumber.from(0)));
     }
     return () => {
       if (subscription) {

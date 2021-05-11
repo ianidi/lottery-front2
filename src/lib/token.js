@@ -118,6 +118,7 @@ export const fetchTokenBalanceWithProvider = async (
   { address, mode },
   account,
 ) => {
+  console.log(address, mode)
   if (address === ADDRESS_ZERO && mode === 'NATIVE') {
     return ethersProvider.getBalance(account);
   }

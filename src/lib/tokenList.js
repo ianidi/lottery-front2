@@ -8,11 +8,13 @@ export const fetchTokenList = async (
   chainId,
   homeEndpoint,
 ) => {
-  const [defaultTokens, subgraphTokens] = await Promise.all([
-    fetchDefaultTokens(chainId),
-    fetchTokensFromSubgraph(homeEndpoint),
-  ]);
-  const tokens = uniqueTokens(defaultTokens.concat(subgraphTokens));
+  // const [defaultTokens, subgraphTokens] = await Promise.all([
+  //   fetchDefaultTokens(chainId),
+  //   fetchTokensFromSubgraph(homeEndpoint),
+  // ]);
+  // const tokens = uniqueTokens(defaultTokens.concat(subgraphTokens));
+  const defaultTokens = await fetchDefaultTokens(chainId);
+  const tokens = uniqueTokens(defaultTokens);
   return tokens;
 };
 

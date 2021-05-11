@@ -1,6 +1,7 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { ethers } from 'ethers';
-import { getRPCUrl, logError } from 'lib/helpers';
+import { logError } from 'lib/helpers';
+import { RPC_URL } from 'lib/constants';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
@@ -13,7 +14,8 @@ const providerOptions = {
     package: WalletConnectProvider,
     options: {
       rpc: {
-        1: getRPCUrl(1),
+        1: RPC_URL,
+        3: RPC_URL,
       },
     },
   },

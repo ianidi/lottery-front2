@@ -84,10 +84,7 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
       setAddressInput(e.target.value);
       if (utils.isAddress(e.target.value)) {
         setAddressInvalid(false);
-        setCustomToken({
-          ...customToken
-        });
-
+        setCustomToken({ ...customToken, [e.target.id]: e.target.value });
       } else {
         setAddressInvalid(true);
       }
