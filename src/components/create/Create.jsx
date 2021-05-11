@@ -2,10 +2,13 @@ import { Slider, SliderTrack, Box, SliderFilledTrack, SliderThumb, VStack, Flex,
 import { UnlockButton } from 'components/create/UnlockButton';
 import { TransferButton } from 'components/create/TransferButton';
 import { Token } from 'components/create/Token';
-import React, { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from "react-redux";
+import { selectMaxBetPercent, setMaxBetPercent } from "store/appSlice";
 
 export const Create = () => {
-  const [maxBetPercent, setMaxBetPercent] = useState(10);
+  const dispatch = useDispatch();
+  const maxBetPercent = useSelector(selectMaxBetPercent);
 
   return (
     <Flex
@@ -48,7 +51,7 @@ export const Create = () => {
               Max bet percent ({maxBetPercent}%)
             </Text>
           </Flex>
-          <Slider defaultValue={10} min={1} max={50} step={1} onChange={(val) => setMaxBetPercent(val)}>
+          <Slider defaultValue={maxBetPercent} min={1} max={50} step={1} onChange={(val) => dispatch(setMaxBetPercent(val))}>
             <SliderTrack bg="red.100">
               <Box position="relative" right={10} />
               <SliderFilledTrack bg="tomato" />

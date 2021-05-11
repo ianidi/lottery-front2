@@ -100,12 +100,13 @@ export const fetchTokenDetails = async (token) => {
 
 export const approveToken = async (
   ethersProvider,
-  { address, mediator },
+  { address },
+  recipient,
   amount,
 ) => {
   const abi = ['function approve(address, uint256)'];
   const tokenContract = new Contract(address, abi, ethersProvider.getSigner());
-  return tokenContract.approve(mediator, amount);
+  return tokenContract.approve(recipient, amount);
 };
 
 export const fetchTokenBalance = async (token, account) => {
@@ -115,11 +116,10 @@ export const fetchTokenBalance = async (token, account) => {
 
 export const fetchTokenBalanceWithProvider = async (
   ethersProvider,
-  { address, mode },
+  { address },
   account,
 ) => {
-  console.log(address, mode)
-  if (address === ADDRESS_ZERO && mode === 'NATIVE') {
+  if (address === ADDRESS_ZERO) {
     return ethersProvider.getBalance(account);
   }
   if (!account || !address || address === ADDRESS_ZERO || !ethersProvider) {

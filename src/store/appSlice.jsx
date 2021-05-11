@@ -24,17 +24,21 @@ export const appSlice = createSlice({
     setAllowance: (state, action) => {
       state.allowance = BigNumber.from(action.payload).toString();
     },
+    setMaxBetPercent: (state, action) => {
+      state.maxBetPercent = action.payload;
+    },
   },
 });
 
-export const { setToken, setAmount, setBalance, setAllowance } = appSlice.actions;
+export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent } = appSlice.actions;
 
 export const selectToken = (state) => state.app.token;
 export const selectAmount = (state) => BigNumber.from(state.app.amount);
+export const selectAmountIsZero = (state) => BigNumber.from(state.app.amount).eq(BigNumber.from(0));
 export const selectBalance = (state) => BigNumber.from(state.app.balance);
 export const selectBalanceIsZero = (state) => BigNumber.from(state.app.balance).eq(BigNumber.from(0));
 export const selectAllowance = (state) => BigNumber.from(state.app.allowance);
-export const selectTransferAllowed = (state) => BigNumber.from(state.app.balance).gt(BigNumber.from(0)) && (BigNumber.from(state.app.amount).eq(BigNumber.from(state.app.allowance))); // balance > 0 && amount == allowance;
+export const selectTransferAllowed = (state) => BigNumber.from(state.app.balance).gt(BigNumber.from(0)) && BigNumber.from(state.app.amount).gt(BigNumber.from(0)) && (BigNumber.from(state.app.amount).eq(BigNumber.from(state.app.allowance))); // balance > 0 && amount == allowance;
 export const selectMaxBetPercent = (state) => state.app.maxBetPercent;
 
 export default appSlice.reducer;

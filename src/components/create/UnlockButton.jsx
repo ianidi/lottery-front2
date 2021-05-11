@@ -3,9 +3,10 @@ import { Button, Image, Link, Spinner, Text, useToast } from '@chakra-ui/react';
 import UnlockIcon from 'assets/unlock.svg';
 import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
+import { LOTTERY_CONTRACT_ADDRESS } from 'lib/constants';
 import { useApproval } from 'hooks/useApproval';
 import { useSelector } from "react-redux";
-import { selectToken, selectAmount, selectBalanceIsZero, selectTransferAllowed } from "store/appSlice";
+import { selectToken, selectAmount, selectBalanceIsZero, selectAmountIsZero, selectTransferAllowed } from "store/appSlice";
 
 export const UnlockButton = () => {
   const toast = useToast();
@@ -14,9 +15,10 @@ export const UnlockButton = () => {
   const token = useSelector(selectToken);
   const amount = useSelector(selectAmount);
   const balanceIsZero = useSelector(selectBalanceIsZero);
+  const amountIsZero = useSelector(selectAmountIsZero);
   const transferAllowed = useSelector(selectTransferAllowed);
 
-  const { approvalTxHash, approvalLoading, approve } = useApproval(token, amount);
+  const { approvalTxHash, approvalLoading, approve } = useApproval(token, LOTTERY_CONTRACT_ADDRESS, amount);
 
   const showError = msg => {
     if (msg) {
@@ -63,7 +65,7 @@ export const UnlockButton = () => {
     }
   };
 
-  if (balanceIsZero || transferAllowed) { return null; }
+  if (balanceIsZero || amountIsZero || transferAllowed) { return null; }
 
   return (
     <Button

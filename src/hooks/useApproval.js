@@ -8,7 +8,7 @@ import { setAllowance } from "store/appSlice";
 
 const { INFINITE_UNLOCK } = LOCAL_STORAGE_KEYS;
 
-export const useApproval = (token, amount) => {
+export const useApproval = (token, recipient, amount) => {
   const dispatch = useDispatch();
 
   const { account, ethersProvider, providerChainId } = useWeb3Context();
@@ -28,17 +28,18 @@ export const useApproval = (token, amount) => {
   //   );
   // }, [amount, allowance, token]);
 
-  const [approvalLoading, setapprovalLoading] = useState(false);
+  const [approvalLoading, setApprovalLoading] = useState(false);
   const [approvalTxHash, setApprovalTxHash] = useState();
 
   const approve = useCallback(async () => {
-    setapprovalLoading(true);
-    const approvalAmount =
-      window.localStorage.getItem(INFINITE_UNLOCK) === 'true'
-        ? LARGEST_UINT256
-        : amount;
+    setApprovalLoading(true);
+    // const approvalAmount =
+    //   window.localStorage.getItem(INFINITE_UNLOCK) === 'true'
+    //     ? LARGEST_UINT256
+    //     : amount;
+    const approvalAmount = amount;
     try {
-      const tx = await approveToken(ethersProvider, token, approvalAmount);
+      const tx = await approveToken(ethersProvider, token, recipient, approvalAmount);
       setApprovalTxHash(tx.hash);
       await tx.wait();
       dispatch(setAllowance(approvalAmount));
@@ -52,9 +53,9 @@ export const useApproval = (token, amount) => {
       throw approveError;
     } finally {
       setApprovalTxHash();
-      setapprovalLoading(false);
+      setApprovalLoading(false);
     }
-  }, [amount, token, ethersProvider, account]);
+  }, [amount, token, recipient, ethersProvider, account]);
 
   return { updateAllowance, approvalLoading, approvalTxHash, approve };
 };
