@@ -1,7 +1,7 @@
 import query from 'query-string';
 import React from 'react';
 
-import { LotteryList } from '../components/lottery/LotteryList';
+import { LotteryList } from '../components/list/LotteryList';
 
 export const List = ({ location }) => {
   const parsed = query.parse(location.search);
