@@ -122,10 +122,7 @@ export const Token = () => {
             </Flex>
           </Flex>
           <Flex>
-            <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => {
-              const { formattedValue, value } = values;
-              setAmountInput(value)
-            }} />
+            <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => setAmountInput(values.value)} />
             <Button
               ml={2}
               color="blue.500"
@@ -136,7 +133,6 @@ export const Token = () => {
               _hover={{ bg: 'blue.100' }}
               onClick={() => {
                 setAmountInput(balance.toString());
-                // dispatch(setAmount(utils.formatUnits(balance, token.decimals)));
               }}
             >
               Max
