@@ -1,15 +1,19 @@
-import { Flex, Grid, Text } from '@chakra-ui/react';
+import { Flex, Grid, Text, Checkbox } from '@chakra-ui/react';
 import { ListItem } from 'components/list/ListItem';
 import { ListPagination } from 'components/list/ListPagination';
 import { NoList } from 'components/list/NoList';
 import { useLotteryList } from 'hooks/useLotteryList';
-import React from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 
 const TOTAL_PER_PAGE = 20;
 
 export const LotteryList = ({ page }) => {
   const { transfers, loading } = useLotteryList();
+
+  const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
+
+  // const filteredTransfers = onlyLiquidityProvided ? transfers.filter(i => i.receivingTx === null) : transfers;
 
   const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
   // const displayList = transfers.slice(
@@ -34,13 +38,23 @@ export const LotteryList = ({ page }) => {
         <Text fontSize="xl" fontWeight="bold">
           Lottery list
         </Text>
+        <Checkbox
+          isChecked={onlyLiquidityProvided}
+          onChange={e => setOnlyLiquidityProvided(e.target.checked)}
+          borderColor="grey"
+          borderRadius="4px"
+          size="lg"
+          variant="solid"
+        >
+          <Text fontSize="sm">Show only where I provide liquidity</Text>
+        </Checkbox>
       </Flex>
 
       {displayList.length > 0 ? (
         <>
           <Grid
             templateColumns={{
-              base: '1fr 1fr 1fr 1fr 1fr',
+              base: '1fr 1fr 1fr 1fr 1fr 1fr',
             }}
             color="grey"
             fontSize="sm"
@@ -48,11 +62,12 @@ export const LotteryList = ({ page }) => {
             mb={4}
             display={{ base: 'none', md: 'grid' }}
           >
-            <Text textAlign="center">Date</Text>
-            <Text textAlign="center">Amount</Text>
-            <Text textAlign="center">Result</Text>
-            <Text textAlign="center">Game</Text>
-            <Text textAlign="center">Tx</Text>
+            <Text textAlign="center">Liquidity pool</Text>
+            <Text textAlign="center">Max bet percent</Text>
+            <Text textAlign="center">Formula</Text>
+            <Text textAlign="center">Active until</Text>
+            <Text textAlign="center">Play</Text>
+            <Text textAlign="center">Liquidity</Text>
           </Grid>
           {displayList.map((item, index) => (
             <ListItem key={index} item={item} />

@@ -16,20 +16,11 @@ export const DEFAULT_TOKEN = {
   decimals: 6
 };
 
-export const networkNames = {
-  1: 'ETH Mainnet',
-  42: 'Kovan Testnet',
-  56: 'Binance Smart Chain',
-  77: 'Sokol Testnet',
-  100: 'xDai Chain',
-};
-
 export const chainUrls = {
   1: {
     rpc: "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd",// mainnet
     explorer: 'https://blockscout.com/eth/mainnet',
     chainId: 1,
-    name: networkNames[1],
   },
 };
 

@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { WalletIcon } from 'icons/WalletIcon';
-import { getAccountString, getNetworkLabel, getNetworkName } from 'lib/helpers';
+import { getAccountString, getNetworkLabel } from 'lib/helpers';
 import React from 'react';
 
 export const WalletSelector = ({ close }) => {
@@ -55,7 +55,7 @@ export const WalletSelector = ({ close }) => {
               fontWeight="bold"
             >
               <Text mb={{ base: 4, md: undefined }}>
-                Connected to {getNetworkName(providerChainId)}
+                Connected to {getNetworkLabel(providerChainId)}
               </Text>
               <Button
                 colorScheme="blue"
