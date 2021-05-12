@@ -8,8 +8,8 @@ import {
 import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
-//tokenDecimals, tokenSymbol, formula
-export const ListItem = ({ play, item, accountString, item: { liquidity, formula, maxBetPercent, member, duration } }) => {
+
+export const ListItem = ({ play, item, accountString, item: { liquidity, formula, maxBetPercent, member, duration, tokenName, tokenSymbol, tokenDecimals } }) => {
 
   const activeUntilString = duration === "0" ? 'Infinite' : new Date(
     parseInt(duration, 10) * 1000,
@@ -55,19 +55,19 @@ export const ListItem = ({ play, item, accountString, item: { liquidity, formula
           base: '1fr 1fr 1fr 1fr 1fr 1fr',
         }}
         w="100%"
+        alignItems="center"
       >
         <Flex justify="center">
-          {/* <Text my="auto">{utils.formatUnits(BigNumber.from(liquidity), BigNumber.from(tokenDecimals))} {tokenSymbol}</Text> */}
-          <Text my="auto">{liquidity}</Text>
+          <Text my="auto" align="center">{utils.formatUnits(BigNumber.from(liquidity), BigNumber.from(tokenDecimals))} {tokenSymbol} ({tokenName})</Text>
         </Flex>
         <Flex justify="center">
-          <Text my="auto">{FORMULA[formula]}</Text>
+          <Text my="auto" align="center">{FORMULA[formula]}</Text>
         </Flex>
         <Flex justify="center">
-          <Text my="auto">{maxBetPercent}%</Text>
+          <Text my="auto" align="center">{maxBetPercent}%</Text>
         </Flex>
         <Flex justify="center">
-          <Text my="auto">{activeUntilString}</Text>
+          <Text my="auto" align="center">{activeUntilString}</Text>
         </Flex>
         <Flex justify="center">
           <Button w="80%" size="sm" colorScheme="blue" onClick={() => play(item)}>Play</Button>
