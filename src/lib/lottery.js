@@ -22,3 +22,12 @@ export const playLottery = async (
   const tokenContract = new Contract(LOTTERY_CONTRACT_ADDRESS, abi, ethersProvider.getSigner());
   return tokenContract.play(lotteryID, amount);
 };
+
+export const redeemLottery = async (
+  ethersProvider,
+  lotteryID
+) => {
+  const abi = ['function redeem(uint)'];
+  const tokenContract = new Contract(LOTTERY_CONTRACT_ADDRESS, abi, ethersProvider.getSigner());
+  return tokenContract.redeem(lotteryID);
+};

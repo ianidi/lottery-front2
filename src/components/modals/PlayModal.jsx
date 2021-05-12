@@ -49,7 +49,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
 
   const maxBetAmount = BigNumber.from(liquidity).div(BigNumber.from("100")).mul(BigNumber.from(maxBetPercent));
 
-  const { playTxHash, playLoading, play } = usePlay(selectedLottery.lotteryID, amount, maxBetPercent, 0);
+  const { playTxHash, playLoading, play } = usePlay(lotteryID, amount, maxBetPercent, 0);
 
   const showError = msg => {
     if (msg) {

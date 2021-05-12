@@ -4,6 +4,7 @@ import { ListPagination } from 'components/list/ListPagination';
 import { NoList } from 'components/list/NoList';
 import { useLotteryList } from 'hooks/useLotteryList';
 import { PlayModal } from 'components/modals/PlayModal';
+import { LiquidityModal } from 'components/modals/LiquidityModal';
 import { useWeb3Context } from 'contexts/Web3Context';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -15,7 +16,8 @@ const TOTAL_PER_PAGE = 20;
 export const LotteryList = ({ page }) => {
   const { account } = useWeb3Context();
   const dispatch = useDispatch();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen: isPlayOpen, onOpen: onPlayOpen, onClose: onPlayClose } = useDisclosure();
+  const { isOpen: isLiquidityOpen, onOpen: onLiquidityOpen, onClose: onLiquidityClose } = useDisclosure();
 
   const { transfers, loading } = useLotteryList();
 
@@ -34,7 +36,12 @@ export const LotteryList = ({ page }) => {
 
   const play = (lottery) => {
     dispatch(setSelectedLottery(lottery));
-    onOpen();
+    onPlayOpen();
+  };
+
+  const manageLiquidity = (lottery) => {
+    dispatch(setSelectedLottery(lottery));
+    onLiquidityOpen();
   };
 
   if (numPages > 1 && page > numPages) {
@@ -49,7 +56,8 @@ export const LotteryList = ({ page }) => {
       px={{ base: 4, sm: 8 }}
       w="100%"
     >
-      {typeof selectedLottery === "object" && <PlayModal isOpen={isOpen} onClose={onClose} />}
+      {typeof selectedLottery === "object" && <PlayModal isOpen={isPlayOpen} onClose={onPlayClose} />}
+      {typeof selectedLottery === "object" && <LiquidityModal isOpen={isLiquidityOpen} onClose={onLiquidityClose} />}
       <Flex justify="space-between" align="center" mb={4}>
         <Text fontSize="xl" fontWeight="bold">
           Lottery list
@@ -87,7 +95,7 @@ export const LotteryList = ({ page }) => {
             <Text textAlign="center">Liquidity</Text>
           </Grid>
           {displayList.map((item, index) => (
-            <ListItem key={index} item={item} accountString={accountString} play={play} />
+            <ListItem key={index} item={item} accountString={accountString} play={play} manageLiquidity={manageLiquidity} />
           ))}
           {numPages > 1 && (
             <ListPagination numPages={numPages} currentPage={page} />
