@@ -53,8 +53,8 @@ export const Token = () => {
   useEffect(() => {
     const subscription = defer(() => {
       let number = amountInput;
-      if (amountInput === "") { number = 0; }
-      const amount = parseValue(Number(number), token.decimals);
+      if (amountInput === "") { number = "0"; }
+      const amount = parseValue(number, token.decimals);
       dispatch(setAmount(amount));
     }).subscribe();
     return () => {

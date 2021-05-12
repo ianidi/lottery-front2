@@ -23,23 +23,21 @@ import { formatValue, logError, parseValue, truncateText } from 'lib/helpers';
 import { useCreate } from 'hooks/useCreate';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-import { selectToken, selectSelectedLottery } from "store/appSlice";
+import { useSelector } from "react-redux";
+import { selectSelectedLottery } from "store/appSlice";
 import { BigNumber } from '@ethersproject/bignumber';
 import NumberFormat from 'react-number-format';
 import { defer } from 'rxjs';
 
 export const PlayModal = ({ isOpen, onClose }) => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const toast = useToast();
   const { account, providerChainId } = useWeb3Context();
 
   const selectedLottery = useSelector(selectSelectedLottery);
 
-  const token = useSelector(selectToken);
-  const maxBetPercent = 20;
-  const formula = 1;
+  const { tokenSymbol, tokenName, tokenDecimals, formula, liquidity, collateral, lotteryID, maxBetPercent } = selectedLottery;
+
   const balanceIsZero = false;
   const amountIsZero = false;
   const transferAllowed = false;
@@ -80,6 +78,11 @@ export const PlayModal = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
+    const token = {
+      chainId: providerChainId,
+      address: collateral,
+    };
+
     let subscription;
     if (token && account) {
       setBalanceLoading(true);
@@ -101,13 +104,13 @@ export const PlayModal = ({ isOpen, onClose }) => {
         subscription.unsubscribe();
       }
     };
-  }, [token, account, setBalanceLoading]);
+  }, [account, setBalanceLoading, lotteryID]);
 
   useEffect(() => {
     const subscription = defer(() => {
       let number = amountInput;
-      if (amountInput === "") { number = 0; }
-      const amount_ = parseValue(Number(number), token.decimals);
+      if (amountInput === "") { number = "0"; }
+      const amount_ = parseValue(number, tokenDecimals);
       setAmount(amount_);
     }).subscribe();
     return () => {
@@ -137,7 +140,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
           <ModalBody px={6} py={0}>
             <Flex width="100%">
               <Text fontWeight="bold" fontSize="md">
-                Enter bet amount ({truncateText(token.name, 24)})
+                Enter bet amount ({tokenSymbol} - {truncateText(tokenName, 24)})
               </Text>
             </Flex>
             <Flex
@@ -164,14 +167,14 @@ export const PlayModal = ({ isOpen, onClose }) => {
                       textAlign="right"
                       style={{ position: 'absolute', bottom: '4px', right: 0 }}
                     >
-                      {`Balance: ${formatValue(balance, token.decimals)}`}
+                      {`Balance: ${formatValue(balance, tokenDecimals)}`}
                     </Text>
                   )}
                 </Flex>
               </Flex>
               <Flex mt={2}>
-                <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => setAmountInput(values.value)} />
-                <Button
+                <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} placeholder="0" decimalScale={tokenDecimals} onValueChange={(values) => setAmountInput(values.value)} />
+                {/* <Button
                   ml={2}
                   color="blue.500"
                   bg="blue.50"
@@ -184,11 +187,14 @@ export const PlayModal = ({ isOpen, onClose }) => {
                   }}
                 >
                   Max
-                  </Button>
+                  </Button> */}
               </Flex>
             </Flex>
             <Flex justify="center">
-              <UnlockButton token={token} amount={amount} balanceIsZero={balanceIsZero} amountIsZero={amountIsZero} transferAllowed={transferAllowed} />
+              <UnlockButton token={{
+                chainId: providerChainId,
+                address: collateral,
+              }} amount={amount} balanceIsZero={balanceIsZero} amountIsZero={amountIsZero} transferAllowed={transferAllowed} />
             </Flex>
 
             <Divider color="#DAE3F0" my={4} />

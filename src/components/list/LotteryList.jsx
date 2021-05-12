@@ -7,8 +7,8 @@ import { PlayModal } from 'components/modals/PlayModal';
 import { useWeb3Context } from 'contexts/Web3Context';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { setSelectedLottery } from 'store/appSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSelectedLottery, setSelectedLottery } from 'store/appSlice';
 
 const TOTAL_PER_PAGE = 20;
 
@@ -18,6 +18,8 @@ export const LotteryList = ({ page }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { transfers, loading } = useLotteryList();
+
+  const selectedLottery = useSelector(selectSelectedLottery);
 
   const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
   const accountString = account.toLowerCase();
@@ -47,7 +49,7 @@ export const LotteryList = ({ page }) => {
       px={{ base: 4, sm: 8 }}
       w="100%"
     >
-      <PlayModal isOpen={isOpen} onClose={onClose} />
+      {typeof selectedLottery === "object" && <PlayModal isOpen={isOpen} onClose={onClose} />}
       <Flex justify="space-between" align="center" mb={4}>
         <Text fontSize="xl" fontWeight="bold">
           Lottery list

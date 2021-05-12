@@ -12,7 +12,7 @@ export const appSlice = createSlice({
     maxBetPercent: 10,
     formula: null,
     duration: "0",
-    selectedLottery: {}
+    selectedLottery: false
   },
   reducers: {
     setToken: (state, action) => {

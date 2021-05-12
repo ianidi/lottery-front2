@@ -49,14 +49,21 @@ export const formatValue = (num, dec) => {
     });
     return `${first} x 10^${split[1]}`;
   }
+  // return str;
   return Number(str).toLocaleString('en', { maximumFractionDigits: 4 });
 };
 
 export const parseValue = (num, dec) => {
-  if (!num || isNaN(Number(num))) {
-    return BigNumber.from(0);
+  // if (!num || isNaN(Number(num))) {
+  //   return BigNumber.from(0);
+  // }
+  let result;
+  try {
+    result = utils.parseUnits(num, dec);
+  } catch (err) {
+    result = BigNumber.from(0);
   }
-  return utils.parseUnits(num.toString(), dec);
+  return result;
 };
 
 export const fetchQueryParams = search => {
