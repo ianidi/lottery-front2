@@ -2,7 +2,7 @@ import { Flex, Grid, Text } from '@chakra-ui/react';
 import { HistoryItem } from 'components/history/HistoryItem';
 import { HistoryPagination } from 'components/history/HistoryPagination';
 import { NoHistory } from 'components/history/NoHistory';
-import { useUserHistory } from 'hooks/useUserHistory';
+import { useMemberHistory } from 'hooks/useMemberHistory';
 import { useWeb3Context } from 'contexts/Web3Context';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
@@ -12,7 +12,7 @@ const TOTAL_PER_PAGE = 20;
 export const History = ({ page }) => {
   const { account } = useWeb3Context();
 
-  const { transfers, loading } = useUserHistory({ member: account.toLowerCase() });
+  const { transfers, loading } = useMemberHistory({ member: account.toLowerCase() });
 
   const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
   const displayHistory = transfers.slice(
@@ -42,7 +42,7 @@ export const History = ({ page }) => {
         <>
           <Grid
             templateColumns={{
-              base: '1fr 1fr 1fr 1fr 1fr',
+              base: '1fr 1fr 1fr 1fr 1fr 1fr',
             }}
             color="grey"
             fontSize="sm"
@@ -53,6 +53,7 @@ export const History = ({ page }) => {
             <Text textAlign="center">Lottery ID</Text>
             <Text textAlign="center">Date</Text>
             <Text textAlign="center">Amount</Text>
+            <Text textAlign="center">Formula</Text>
             <Text textAlign="center">Result</Text>
             <Text textAlign="center">Tx</Text>
           </Grid>

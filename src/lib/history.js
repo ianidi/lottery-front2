@@ -19,6 +19,7 @@ const requestsUserQuery = gql`
       timestamp
       result
       collateral
+      formula
       tokenName
       tokenSymbol
       tokenDecimals

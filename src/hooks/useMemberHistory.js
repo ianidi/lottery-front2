@@ -4,7 +4,7 @@ import { getRequests } from 'lib/history';
 import { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 
-export const useUserHistory = ({ member }) => {
+export const useMemberHistory = ({ member }) => {
   const { providerChainId } = useWeb3Context();
   const [transfers, setTransfers] = useState([]);
   const [loading, setLoading] = useState(true);

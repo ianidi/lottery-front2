@@ -18,7 +18,7 @@ export const usePlay = (lotteryID, amount) => {
     } catch (usePlayError) {
       logError({
         usePlayError,
-        token,
+        lotteryID,
         amount: amount.toString(),
         account,
       });

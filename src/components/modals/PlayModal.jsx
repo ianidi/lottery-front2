@@ -14,13 +14,13 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { UnlockButton } from 'components/create/UnlockButton';
+import { UnlockButton } from 'components/common/UnlockButton';
 import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { FORMULA } from 'lib/constants';
 import { fetchTokenBalance } from 'lib/token';
 import { formatValue, logError, parseValue, truncateText } from 'lib/helpers';
-import { useCreate } from 'hooks/useCreate';
+import { usePlay } from 'hooks/usePlay';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
@@ -47,7 +47,9 @@ export const PlayModal = ({ isOpen, onClose }) => {
   const [amountIsZero, setAmountIsZero] = useState(false);
   const [transferAllowed, setTransferAllowed] = useState(false);
 
-  const { createTxHash, createLoading, create } = useCreate(selectedLottery.lotteryID, amount, maxBetPercent, 0);
+  const maxBetAmount = BigNumber.from(liquidity).div(BigNumber.from("100")).mul(BigNumber.from(maxBetPercent));
+
+  const { playTxHash, playLoading, play } = usePlay(selectedLottery.lotteryID, amount, maxBetPercent, 0);
 
   const showError = msg => {
     if (msg) {
@@ -61,10 +63,10 @@ export const PlayModal = ({ isOpen, onClose }) => {
   };
 
   const onClick = () => {
-    if (createLoading || !transferAllowed) {
+    if (playLoading || !transferAllowed) {
       return;
     }
-    create().then(() => {
+    play().then(() => {
       history.push('/history');
     }).catch(error => {
       if (error && error.message) {
@@ -192,29 +194,35 @@ export const PlayModal = ({ isOpen, onClose }) => {
                   fontWeight="normal"
                   _hover={{ bg: 'blue.100' }}
                   onClick={() => {
-                    setAmountInput(formatValue(balance, tokenDecimals));
+                    if (maxBetAmount.gt(balance)) {
+                      setAmountInput(formatValue(balance, tokenDecimals));
+                    } else {
+                      setAmountInput(formatValue(maxBetAmount, tokenDecimals));
+                    }
                   }}
                 >
                   Max
                   </Button>
               </Flex>
             </Flex>
+            <Box w="100%" fontSize="sm" color={'black'} mt={2}>
+              <Text as="span">Maximum bet percent from total liquidity is </Text>
+              <Text as="b">{maxBetPercent}%</Text>
+              <Text as="span">. </Text>
+              <Text as="span">Maximum bet amount is </Text>
+              <Text as="b">{formatValue(maxBetAmount, tokenDecimals)}</Text>
+              <Text as="span">.</Text>
+            </Box>
             <Flex justify="center">
               <UnlockButton token={{
                 chainId: providerChainId,
                 address: collateral,
               }} amount={amount} balanceIsZero={balanceIsZero} amountIsZero={amountIsZero} transferAllowed={transferAllowed} />
             </Flex>
-
             <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
               <Text as="span">Keep in mind that you can both win or lose this amount. Lottery formula is </Text>
               <Text as="b">{FORMULA[formula]}.</Text>
-            </Box>
-            <Box w="100%" fontSize="sm" color={'black'}>
-              <Text as="span">Maximum bet percent from total liquidity is </Text>
-              <Text as="b">{maxBetPercent}%</Text>
-              <Text as="span">.</Text>
             </Box>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">
@@ -240,8 +248,8 @@ export const PlayModal = ({ isOpen, onClose }) => {
                 mt={{ base: 2, md: 0 }}
                 cursor={transferAllowed ? 'pointer' : 'not-allowed'} opacity={transferAllowed ? 1 : 0.4}
               >
-                {createLoading ? (
-                  <TxLink chainId={providerChainId} hash={createTxHash}>
+                {playLoading ? (
+                  <TxLink chainId={providerChainId} hash={playTxHash}>
                     <Spinner color="white" size="sm" />
                   </TxLink>
                 ) : (

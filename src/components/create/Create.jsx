@@ -1,5 +1,5 @@
 import { Slider, SliderTrack, Box, Select, SliderFilledTrack, SliderThumb, VStack, Flex, Text } from '@chakra-ui/react';
-import { UnlockButton } from 'components/create/UnlockButton';
+import { UnlockButton } from 'components/common/UnlockButton';
 import { CreateButton } from 'components/create/CreateButton';
 import { Token } from 'components/create/Token';
 import { FORMULA } from 'lib/constants';

@@ -10,10 +10,10 @@ import {
 import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { BigNumber, utils } from 'ethers';
-import { POLLING_INTERVAL } from 'lib/constants';
+import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
-export const HistoryItem = ({ item: { amount, result, collateral, lotteryID, txHash, timestamp } }) => {
+export const HistoryItem = ({ item: { amount, result, collateral, tokenDecimals, tokenSymbol, tokenName, formula, lotteryID, txHash, timestamp } }) => {
   const { providerChainId, ethersProvider } = useWeb3Context();
 
   const timestampString = new Date(
@@ -57,7 +57,7 @@ export const HistoryItem = ({ item: { amount, result, collateral, lotteryID, txH
     >
       <Grid
         templateColumns={{
-          base: '1fr 1fr 1fr 1fr 1fr',
+          base: '1fr 1fr 1fr 1fr 1fr 1fr',
         }}
         w="100%"
       >
@@ -68,8 +68,10 @@ export const HistoryItem = ({ item: { amount, result, collateral, lotteryID, txH
           <Text my="auto">{timestampString}</Text>
         </Flex>
         <Flex justify="center">
-          {/* <Text my="auto">{utils.formatUnits(BigNumber.from(amount), BigNumber.from(decimals))} {tokenSymbol}</Text> */}
-          <Text my="auto">{amount}</Text>
+          <Text my="auto" align="center">{utils.formatUnits(BigNumber.from(amount), BigNumber.from(tokenDecimals))} {tokenSymbol} ({tokenName})</Text>
+        </Flex>
+        <Flex justify="center">
+          <Text my="auto" align="center">{FORMULA[formula]}</Text>
         </Flex>
         <Flex justify="center">
           <Text my="auto">{result ? 'Win' : 'Lose'}</Text>
