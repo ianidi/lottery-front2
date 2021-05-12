@@ -9,7 +9,7 @@ import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 //tokenDecimals, tokenSymbol, formula
-export const ListItem = ({ play, item, accountString, item: { liquidity, maxBetPercent, member, duration } }) => {
+export const ListItem = ({ play, item, accountString, item: { liquidity, formula, maxBetPercent, member, duration } }) => {
 
   const activeUntilString = duration === "0" ? 'Infinite' : new Date(
     parseInt(duration, 10) * 1000,
@@ -61,10 +61,10 @@ export const ListItem = ({ play, item, accountString, item: { liquidity, maxBetP
           <Text my="auto">{liquidity}</Text>
         </Flex>
         <Flex justify="center">
-          {/* <Text my="auto">{FORMULA[formula]}</Text> */}
+          <Text my="auto">{FORMULA[formula]}</Text>
         </Flex>
         <Flex justify="center">
-          <Text my="auto">{maxBetPercent}</Text>
+          <Text my="auto">{maxBetPercent}%</Text>
         </Flex>
         <Flex justify="center">
           <Text my="auto">{activeUntilString}</Text>

@@ -18,9 +18,13 @@ const requestsUserQuery = gql`
       timestamp
       # status
       liquidity
+      formula
       maxBetPercent
       duration
       collateral
+      tokenName
+      tokenSymbol
+      tokenDecimals
     }
   }
 `;

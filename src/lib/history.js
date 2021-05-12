@@ -19,6 +19,9 @@ const requestsUserQuery = gql`
       timestamp
       result
       collateral
+      tokenName
+      tokenSymbol
+      tokenDecimals
     }
   }
 `;

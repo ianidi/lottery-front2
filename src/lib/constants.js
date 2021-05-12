@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 
-export const LOTTERY_CONTRACT_ADDRESS = '0xe3eD91Da3daAb35FD95ec192b14D19B73D84d6bf';
+export const LOTTERY_CONTRACT_ADDRESS = '0x16BD600a888b53D8808C0C7d84A1B7ca9FAe475D';
 
 export const GRAPH_ENDPOINT = "https://api.thegraph.com/subgraphs/name/ianidi/lottery-ropsten";
 
