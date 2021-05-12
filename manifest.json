@@ -1,0 +1,9 @@
+{
+  "short_name": "Lottery",
+  "name": "Lottery",
+  "description": "Lottery.",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#EEF4FD",
+  "background_color": "#EEF4FD"
+}
