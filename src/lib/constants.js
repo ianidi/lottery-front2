@@ -12,19 +12,24 @@ export const FORMULA = {
 
 export const DEFAULT_TOKEN = {
   chainId: 1,
-  address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+  address: '0xA99C91A4A603D3F51774ecf3C95cb4A1e93D7A52',
   mode: 'NATIVE',
   logoURI: 'https://etherscan.io/token/images/tether_32.png',
-  symbol: 'USDT',
-  name: 'Tether USD',
-  decimals: 6
+  symbol: 'TEST',
+  name: 'Test token',
+  decimals: 18
 };
 
 export const chainUrls = {
   1: {
     rpc: "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd",// mainnet
-    explorer: 'https://blockscout.com/eth/mainnet',
+    explorer: 'https://ropsten.etherscan.io/tx/',
     chainId: 1,
+  },
+  3: {
+    rpc: "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd",
+    explorer: 'https://ropsten.etherscan.io/tx/',
+    chainId: 3,
   },
 };
 

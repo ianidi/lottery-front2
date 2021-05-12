@@ -3,7 +3,7 @@ import { getExplorerUrl } from 'lib/helpers';
 import React from 'react';
 
 export const TxLink = ({ chainId, hash, children }) => {
-  const link = `${getExplorerUrl(chainId)}/tx/${hash}`;
+  const link = `${getExplorerUrl(chainId)}${hash}`;
   if (hash)
     return (
       <Link
