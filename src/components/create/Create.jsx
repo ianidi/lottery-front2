@@ -5,13 +5,19 @@ import { Token } from 'components/create/Token';
 import { FORMULA } from 'lib/constants';
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { selectMaxBetPercent, setMaxBetPercent, selectFormula, setFormula } from "store/appSlice";
+import { selectMaxBetPercent, setMaxBetPercent, selectFormula, setFormula, selectToken, selectAmount, selectBalanceIsZero, selectAmountIsZero, selectTransferAllowed } from "store/appSlice";
 
 export const Create = () => {
   const dispatch = useDispatch();
 
   const maxBetPercent = useSelector(selectMaxBetPercent);
   const formula = useSelector(selectFormula);
+
+  const token = useSelector(selectToken);
+  const amount = useSelector(selectAmount);
+  const balanceIsZero = useSelector(selectBalanceIsZero);
+  const amountIsZero = useSelector(selectAmountIsZero);
+  const transferAllowed = useSelector(selectTransferAllowed);
 
   return (
     <Flex
@@ -48,7 +54,7 @@ export const Create = () => {
             </Text>
           </Flex>
           <Token />
-          <UnlockButton />
+          <UnlockButton token={token} amount={amount} balanceIsZero={balanceIsZero} amountIsZero={amountIsZero} transferAllowed={transferAllowed} />
           <Flex width="100%">
             <Text fontWeight="bold" fontSize="md">
               Max bet percent ({maxBetPercent}%)

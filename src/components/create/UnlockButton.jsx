@@ -5,18 +5,10 @@ import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { LOTTERY_CONTRACT_ADDRESS } from 'lib/constants';
 import { useApproval } from 'hooks/useApproval';
-import { useSelector } from "react-redux";
-import { selectToken, selectAmount, selectBalanceIsZero, selectAmountIsZero, selectTransferAllowed } from "store/appSlice";
 
-export const UnlockButton = () => {
+export const UnlockButton = ({ token, amount, balanceIsZero, amountIsZero, transferAllowed }) => {
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
-
-  const token = useSelector(selectToken);
-  const amount = useSelector(selectAmount);
-  const balanceIsZero = useSelector(selectBalanceIsZero);
-  const amountIsZero = useSelector(selectAmountIsZero);
-  const transferAllowed = useSelector(selectTransferAllowed);
 
   const { approvalTxHash, approvalLoading, approve } = useApproval(token, LOTTERY_CONTRACT_ADDRESS, amount);
 
