@@ -5,14 +5,13 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useWeb3Context } from 'contexts/Web3Context';
 import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
 export const ListItem = ({ item: { poolAmount, maxBetPercent, formula, decimals, tokenSymbol, liquidityProvider, timestamp } }) => {
 
-  const timestampString = new Date(
+  const timestampString = timestamp === 0 ? 'Infinite' : new Date(
     parseInt(timestamp, 10) * 1000,
   ).toLocaleTimeString([], {
     month: 'short',

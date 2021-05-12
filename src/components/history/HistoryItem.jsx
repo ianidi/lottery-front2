@@ -13,7 +13,7 @@ import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
-export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, txHash, timestamp } }) => {
+export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, lotteryID, txHash, timestamp } }) => {
   const { providerChainId, ethersProvider } = useWeb3Context();
 
   const timestampString = new Date(
@@ -62,6 +62,9 @@ export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, txH
         w="100%"
       >
         <Flex justify="center">
+          <Text my="auto">{lotteryID}</Text>
+        </Flex>
+        <Flex justify="center">
           <Text my="auto">{timestampString}</Text>
         </Flex>
         <Flex justify="center">
@@ -69,9 +72,6 @@ export const HistoryItem = ({ item: { amount, result, decimals, tokenSymbol, txH
         </Flex>
         <Flex justify="center">
           <Text my="auto">{result ? 'Win' : 'Lose'}</Text>
-        </Flex>
-        <Flex justify="center">
-          <Button w="80%" size="sm" colorScheme="blue">View game</Button>
         </Flex>
         <Flex justify="center">
           <TxLink chainId={providerChainId} hash={txHash}>

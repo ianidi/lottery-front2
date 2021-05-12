@@ -16,7 +16,7 @@ export const History = ({ page }) => {
   //   (page - 1) * TOTAL_PER_PAGE,
   //   Math.min(page * TOTAL_PER_PAGE, transfers.length),
   // );
-  const displayHistory = [{ amount: "5", result: false, decimals: "8", tokenSymbol: "USDT", txHash: "a", timestamp: 1620758121 }];
+  const displayHistory = [{ lotteryID: 1, amount: "5", result: false, decimals: "8", tokenSymbol: "USDT", txHash: "a", timestamp: 1620758121 }];
 
   if (numPages > 1 && page > numPages) {
     return <Redirect to="/history" />;
@@ -48,10 +48,10 @@ export const History = ({ page }) => {
             mb={4}
             display={{ base: 'none', md: 'grid' }}
           >
+            <Text textAlign="center">Lottery ID</Text>
             <Text textAlign="center">Date</Text>
             <Text textAlign="center">Amount</Text>
             <Text textAlign="center">Result</Text>
-            <Text textAlign="center">Game</Text>
             <Text textAlign="center">Tx</Text>
           </Grid>
           {displayHistory.map((item, index) => (
