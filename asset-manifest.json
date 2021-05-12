@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.js": "/lottery/static/js/main.6a8afa26.chunk.js",
-    "runtime-main.js": "/lottery/static/js/runtime-main.9948f010.js",
-    "static/js/2.d12bf582.chunk.js": "/lottery/static/js/2.d12bf582.chunk.js",
-    "index.html": "/lottery/index.html",
-    "precache-manifest.9e09f74ae89f40469b972ae5537ff8ca.js": "/lottery/precache-manifest.9e09f74ae89f40469b972ae5537ff8ca.js",
-    "service-worker.js": "/lottery/service-worker.js",
-    "static/js/2.d12bf582.chunk.js.LICENSE.txt": "/lottery/static/js/2.d12bf582.chunk.js.LICENSE.txt",
-    "static/media/custom-token.svg": "/lottery/static/media/custom-token.cad03824.svg",
-    "static/media/down-triangle.svg": "/lottery/static/media/down-triangle.807bb502.svg",
-    "static/media/drop-down.svg": "/lottery/static/media/drop-down.d806ed30.svg",
-    "static/media/search.svg": "/lottery/static/media/search.deb1b290.svg",
-    "static/media/transfer.svg": "/lottery/static/media/transfer.b8118c61.svg",
-    "static/media/unlock.svg": "/lottery/static/media/unlock.b638e27f.svg",
-    "static/media/up-triangle.svg": "/lottery/static/media/up-triangle.ffb399c8.svg"
+    "main.js": "/lottery-front2/static/js/main.10de6170.chunk.js",
+    "runtime-main.js": "/lottery-front2/static/js/runtime-main.2d1b4b2e.js",
+    "static/js/2.0eacf575.chunk.js": "/lottery-front2/static/js/2.0eacf575.chunk.js",
+    "index.html": "/lottery-front2/index.html",
+    "precache-manifest.9485f795d993b83039e170ebf578c92b.js": "/lottery-front2/precache-manifest.9485f795d993b83039e170ebf578c92b.js",
+    "service-worker.js": "/lottery-front2/service-worker.js",
+    "static/js/2.0eacf575.chunk.js.LICENSE.txt": "/lottery-front2/static/js/2.0eacf575.chunk.js.LICENSE.txt",
+    "static/media/custom-token.svg": "/lottery-front2/static/media/custom-token.cad03824.svg",
+    "static/media/down-triangle.svg": "/lottery-front2/static/media/down-triangle.807bb502.svg",
+    "static/media/drop-down.svg": "/lottery-front2/static/media/drop-down.d806ed30.svg",
+    "static/media/search.svg": "/lottery-front2/static/media/search.deb1b290.svg",
+    "static/media/transfer.svg": "/lottery-front2/static/media/transfer.b8118c61.svg",
+    "static/media/unlock.svg": "/lottery-front2/static/media/unlock.b638e27f.svg",
+    "static/media/up-triangle.svg": "/lottery-front2/static/media/up-triangle.ffb399c8.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.9948f010.js",
-    "static/js/2.d12bf582.chunk.js",
-    "static/js/main.6a8afa26.chunk.js"
+    "static/js/runtime-main.2d1b4b2e.js",
+    "static/js/2.0eacf575.chunk.js",
+    "static/js/main.10de6170.chunk.js"
   ]
 }
