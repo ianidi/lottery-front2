@@ -13,14 +13,17 @@ export const LotteryList = ({ page }) => {
 
   const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
 
-  // const filteredTransfers = onlyLiquidityProvided ? transfers.filter(i => i.receivingTx === null) : transfers;
+  const transfersTEMP = [{ poolAmount: "5", formula: 1, maxBetPercent: "10", decimals: "8", tokenSymbol: "USDT", liquidityProvider: false, timestamp: 1620758121 }];
+
+  const filteredTransfers = onlyLiquidityProvided ? transfersTEMP.filter(i => i.liquidityProvider === true) : transfersTEMP;
 
   const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
   // const displayList = transfers.slice(
   //   (page - 1) * TOTAL_PER_PAGE,
   //   Math.min(page * TOTAL_PER_PAGE, transfers.length),
   // );
-  const displayList = [{ amount: "5", result: false, decimals: "8", tokenSymbol: "USDT", txHash: "a", timestamp: 1620758121 }];
+  const displayList = filteredTransfers;
+
 
   if (numPages > 1 && page > numPages) {
     return <Redirect to="/list" />;
@@ -63,8 +66,8 @@ export const LotteryList = ({ page }) => {
             display={{ base: 'none', md: 'grid' }}
           >
             <Text textAlign="center">Liquidity pool</Text>
-            <Text textAlign="center">Max bet percent</Text>
             <Text textAlign="center">Formula</Text>
+            <Text textAlign="center">Max bet percent</Text>
             <Text textAlign="center">Active until</Text>
             <Text textAlign="center">Play</Text>
             <Text textAlign="center">Liquidity</Text>
