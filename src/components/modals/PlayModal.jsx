@@ -14,6 +14,7 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
+import { UnlockButton } from 'components/create/UnlockButton';
 import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { FORMULA } from 'lib/constants';
@@ -39,6 +40,9 @@ export const PlayModal = ({ isOpen, onClose }) => {
   const token = useSelector(selectToken);
   const maxBetPercent = 20;
   const formula = 1;
+  const balanceIsZero = false;
+  const amountIsZero = false;
+  const transferAllowed = false;
 
   const [balance, setBalance] = useState(BigNumber.from("0"));
   const [balanceLoading, setBalanceLoading] = useState(false);
@@ -59,7 +63,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
   };
 
   const onClick = () => {
-    if (createLoading) {
+    if (createLoading || !transferAllowed) {
       return;
     }
     create().then(() => {
@@ -136,56 +140,56 @@ export const PlayModal = ({ isOpen, onClose }) => {
                 Enter bet amount ({truncateText(token.name, 24)})
               </Text>
             </Flex>
-
-            {token && (
+            <Flex
+              w="100%"
+              direction="column"
+            >
               <Flex
-                w="100%"
-                direction="column"
+                justify="space-between"
+                direction={{ base: 'column', sm: 'row' }}
               >
                 <Flex
-                  justify="space-between"
-                  direction={{ base: 'column', sm: 'row' }}
+                  flex={1}
+                  justify="flex-end"
+                  align="center"
+                  h="100%"
+                  position="relative"
+                  ml={{ base: undefined, sm: 2, md: undefined }}
                 >
-                  <Flex
-                    flex={1}
-                    justify="flex-end"
-                    align="center"
-                    h="100%"
-                    position="relative"
-                    ml={{ base: undefined, sm: 2, md: undefined }}
-                  >
-                    {balanceLoading ? (
-                      <Spinner size="sm" color="grey" />
-                    ) : (
-                      <Text
-                        color="grey"
-                        textAlign="right"
-                        style={{ position: 'absolute', bottom: '4px', right: 0 }}
-                      >
-                        {`Balance: ${formatValue(balance, token.decimals)}`}
-                      </Text>
-                    )}
-                  </Flex>
-                </Flex>
-                <Flex mt={2}>
-                  <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => setAmountInput(values.value)} />
-                  <Button
-                    ml={2}
-                    color="blue.500"
-                    bg="blue.50"
-                    size="sm"
-                    fontSize="sm"
-                    fontWeight="normal"
-                    _hover={{ bg: 'blue.100' }}
-                    onClick={() => {
-                      setAmountInput(balance.toString());
-                    }}
-                  >
-                    Max
-            </Button>
+                  {balanceLoading ? (
+                    <Spinner size="sm" color="grey" />
+                  ) : (
+                    <Text
+                      color="grey"
+                      textAlign="right"
+                      style={{ position: 'absolute', bottom: '4px', right: 0 }}
+                    >
+                      {`Balance: ${formatValue(balance, token.decimals)}`}
+                    </Text>
+                  )}
                 </Flex>
               </Flex>
-            )}
+              <Flex mt={2}>
+                <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => setAmountInput(values.value)} />
+                <Button
+                  ml={2}
+                  color="blue.500"
+                  bg="blue.50"
+                  size="sm"
+                  fontSize="sm"
+                  fontWeight="normal"
+                  _hover={{ bg: 'blue.100' }}
+                  onClick={() => {
+                    setAmountInput(balance.toString());
+                  }}
+                >
+                  Max
+                  </Button>
+              </Flex>
+            </Flex>
+            <Flex justify="center">
+              <UnlockButton token={token} amount={amount} balanceIsZero={balanceIsZero} amountIsZero={amountIsZero} transferAllowed={transferAllowed} />
+            </Flex>
 
             <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
@@ -219,6 +223,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
                 onClick={onClick}
                 colorScheme="blue"
                 mt={{ base: 2, md: 0 }}
+                cursor={transferAllowed ? 'pointer' : 'not-allowed'} opacity={transferAllowed ? 1 : 0.4}
               >
                 {createLoading ? (
                   <TxLink chainId={providerChainId} hash={createTxHash}>
@@ -234,6 +239,6 @@ export const PlayModal = ({ isOpen, onClose }) => {
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
-    </Modal>
+    </Modal >
   );
 };
