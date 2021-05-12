@@ -3,7 +3,7 @@ import { useWeb3Context } from 'contexts/Web3Context';
 import { logError } from 'lib/helpers';
 import { createLottery } from 'lib/lottery';
 
-export const useCreate = (token, amount, maxBetPercent, duration, onClose) => {
+export const useCreate = (token, amount, maxBetPercent, duration) => {
   const { account, ethersProvider } = useWeb3Context();
 
   const [createLoading, setCreateLoading] = useState(false);
@@ -15,7 +15,6 @@ export const useCreate = (token, amount, maxBetPercent, duration, onClose) => {
       const tx = await createLottery(ethersProvider, token, amount, maxBetPercent, duration);
       setCreateTxHash(tx.hash);
       await tx.wait();
-      onClose();
     } catch (approveError) {
       logError({
         approveError,

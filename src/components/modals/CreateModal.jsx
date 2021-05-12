@@ -19,10 +19,12 @@ import { useWeb3Context } from 'contexts/Web3Context';
 import { formatValue } from 'lib/helpers';
 import { useCreate } from 'hooks/useCreate';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { selectToken, selectAmount, selectMaxBetPercent, selectDuration } from "store/appSlice";
 
 export const CreateModal = ({ isOpen, onClose }) => {
+  const history = useHistory();
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
 
@@ -31,7 +33,7 @@ export const CreateModal = ({ isOpen, onClose }) => {
   const maxBetPercent = useSelector(selectMaxBetPercent);
   const duration = useSelector(selectDuration);
 
-  const { createTxHash, createLoading, create } = useCreate(token, amount, maxBetPercent, duration, onClose);
+  const { createTxHash, createLoading, create } = useCreate(token, amount, maxBetPercent, duration);
 
   const formattedAmount = formatValue(amount, token.decimals);
 
@@ -50,7 +52,9 @@ export const CreateModal = ({ isOpen, onClose }) => {
     if (createLoading) {
       return;
     }
-    create().catch(error => {
+    create().then(() => {
+      history.push('/list');
+    }).catch(error => {
       if (error && error.message) {
         showError(error.message);
       } else {
