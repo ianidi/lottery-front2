@@ -3,20 +3,23 @@ import { HistoryItem } from 'components/history/HistoryItem';
 import { HistoryPagination } from 'components/history/HistoryPagination';
 import { NoHistory } from 'components/history/NoHistory';
 import { useUserHistory } from 'hooks/useUserHistory';
+import { useWeb3Context } from 'contexts/Web3Context';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 const TOTAL_PER_PAGE = 20;
 
 export const History = ({ page }) => {
-  const { transfers, loading } = useUserHistory();
+  const { account } = useWeb3Context();
+
+  const { transfers, loading } = useUserHistory({ member: account.toLowerCase() });
 
   const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
-  // const displayHistory = transfers.slice(
-  //   (page - 1) * TOTAL_PER_PAGE,
-  //   Math.min(page * TOTAL_PER_PAGE, transfers.length),
-  // );
-  const displayHistory = [{ lotteryID: 1, amount: "5", result: false, decimals: "8", tokenSymbol: "USDT", txHash: "a", timestamp: 1620758121 }];
+  const displayHistory = transfers.slice(
+    (page - 1) * TOTAL_PER_PAGE,
+    Math.min(page * TOTAL_PER_PAGE, transfers.length),
+  );
+  // const displayHistory = [{ lotteryID: 1, amount: "5", result: false, decimals: "8", tokenSymbol: "USDT", txHash: "a", timestamp: 1620758121 }];
 
   if (numPages > 1 && page > numPages) {
     return <Redirect to="/history" />;

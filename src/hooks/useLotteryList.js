@@ -1,6 +1,6 @@
 import { useWeb3Context } from 'contexts/Web3Context';
 import { GRAPH_ENDPOINT } from 'lib/constants';
-import { getRequests } from 'lib/history';
+import { getRequests } from 'lib/list';
 import { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 

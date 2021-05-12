@@ -3,9 +3,8 @@ import { gql, request } from 'graphql-request';
 const pageSize = 1000;
 
 const requestsUserQuery = gql`
-  query getRequests($member: String!, $first: Int!, $skip: Int!) {
-    playLotteries(
-      where: { member: $member }
+  query getRequests($first: Int!, $skip: Int!) {
+    createLotteries(
       orderBy: txHash
       orderDirection: desc
       first: $first
@@ -17,18 +16,21 @@ const requestsUserQuery = gql`
       lotteryID
       amount
       timestamp
-      result
+      # status
+      liquidity
+      maxBetPercent
+      duration
       collateral
     }
   }
 `;
 
-export const getRequests = async (member, graphEndpoint) => {
-  const userRequests = await getRequestsWithQuery(member, graphEndpoint, requestsUserQuery);
+export const getRequests = async (graphEndpoint) => {
+  const userRequests = await getRequestsWithQuery(graphEndpoint, requestsUserQuery);
   return userRequests;
 };
 
-export const getRequestsWithQuery = async (member, graphEndpoint, query) => {
+export const getRequestsWithQuery = async (graphEndpoint, query) => {
   let requests = [];
   let page = 0;
   const first = pageSize;
@@ -37,14 +39,13 @@ export const getRequestsWithQuery = async (member, graphEndpoint, query) => {
   while (true) {
     // eslint-disable-next-line no-await-in-loop
     const data = await request(graphEndpoint, query, {
-      member,
       first,
       skip: page * pageSize,
     });
     if (data) {
-      requests = data.playLotteries;
+      requests = data.createLotteries;
     }
-    if (!data || data.playLotteries.length < pageSize) break;
+    if (!data || data.createLotteries.length < pageSize) break;
     page += 1;
   }
 
