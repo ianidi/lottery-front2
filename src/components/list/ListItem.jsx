@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { BigNumber, utils } from 'ethers';
-import { POLLING_INTERVAL } from 'lib/constants';
+import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
 export const ListItem = ({ item: { poolAmount, maxBetPercent, formula, decimals, tokenSymbol, liquidityProvider, timestamp } }) => {
@@ -61,7 +61,7 @@ export const ListItem = ({ item: { poolAmount, maxBetPercent, formula, decimals,
           <Text my="auto">{utils.formatUnits(BigNumber.from(poolAmount), BigNumber.from(decimals))} {tokenSymbol}</Text>
         </Flex>
         <Flex justify="center">
-          <Text my="auto">{formula}</Text>
+          <Text my="auto">{FORMULA[formula]}</Text>
         </Flex>
         <Flex justify="center">
           <Text my="auto">{maxBetPercent}</Text>

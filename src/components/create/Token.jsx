@@ -125,7 +125,7 @@ export const Token = () => {
               type="number"
               value={amountInput}
               maxLength={18}
-              placeholder="0.0"
+              placeholder="0"
               textAlign="left"
               fontWeight="bold"
               onChange={e => {

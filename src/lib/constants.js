@@ -6,6 +6,10 @@ export const GRAPH_ENDPOINT = "https://api.thegraph.com/subgraphs/name/ianidi/lo
 
 export const RPC_URL = "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd";
 
+export const FORMULA = {
+  1: '50/50'
+};
+
 export const DEFAULT_TOKEN = {
   chainId: 1,
   address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
