@@ -10,6 +10,7 @@ import { defer } from 'rxjs';
 import { useDispatch, useSelector } from "react-redux";
 import { selectToken, selectBalance, setAmount, setBalance } from "store/appSlice";
 import { BigNumber } from '@ethersproject/bignumber';
+import NumberFormat from 'react-number-format';
 
 export const Token = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export const Token = () => {
   const smallScreen = useBreakpointValue({ base: true, lg: false });
 
   const [balanceLoading, setBalanceLoading] = useState(false);
-  const [amountInput, setAmountInput] = useState('0');
+  const [amountInput, setAmountInput] = useState(0);
 
   useEffect(() => {
     let subscription;
@@ -51,7 +52,9 @@ export const Token = () => {
 
   useEffect(() => {
     const subscription = defer(() => {
-      const amount = parseValue(amountInput, token.decimals);
+      let number = amountInput;
+      if (amountInput === "") { number = 0; }
+      const amount = parseValue(Number(number), token.decimals);
       dispatch(setAmount(amount));
     }).subscribe();
     return () => {
@@ -119,20 +122,10 @@ export const Token = () => {
             </Flex>
           </Flex>
           <Flex>
-            <Input
-              flex={1}
-              variant="unstyled"
-              type="number"
-              value={amountInput}
-              maxLength={18}
-              placeholder="0"
-              textAlign="left"
-              fontWeight="bold"
-              onChange={e => {
-                setAmountInput(e.target.value);
-              }}
-              fontSize="2xl"
-            />
+            <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => {
+              const { formattedValue, value } = values;
+              setAmountInput(value)
+            }} />
             <Button
               ml={2}
               color="blue.500"

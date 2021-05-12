@@ -19,7 +19,7 @@ export const appSlice = createSlice({
       state.token = action.payload;
     },
     setAmount: (state, action) => {
-      state.amount = BigNumber.from(action.payload).toString();
+      state.amount = action.payload.toString();
     },
     setBalance: (state, action) => {
       state.balance = action.payload.toString();

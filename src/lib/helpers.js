@@ -56,7 +56,7 @@ export const parseValue = (num, dec) => {
   if (!num || isNaN(Number(num))) {
     return BigNumber.from(0);
   }
-  return utils.parseUnits(num, dec);
+  return utils.parseUnits(num.toString(), dec);
 };
 
 export const fetchQueryParams = search => {

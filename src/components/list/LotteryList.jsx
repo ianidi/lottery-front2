@@ -7,7 +7,7 @@ import { PlayModal } from 'components/modals/PlayModal';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setPlayLotteryID } from 'store/appSlice';
+import { setSelectedLotteryID } from 'store/appSlice';
 
 const TOTAL_PER_PAGE = 20;
 
@@ -31,7 +31,7 @@ export const LotteryList = ({ page }) => {
   const displayList = filteredTransfers;
 
   const play = (lotteryID) => {
-    dispatch(setPlayLotteryID(lotteryID));
+    dispatch(setSelectedLotteryID(lotteryID));
     onOpen();
   };
 

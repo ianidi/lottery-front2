@@ -81,7 +81,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
           mx={{ base: 12, lg: 0 }}
         >
           <ModalHeader p={6}>
-            <Text>Confirm Transfer</Text>
+            <Text>Play lottery</Text>
           </ModalHeader>
           <ModalCloseButton
             size="lg"
@@ -91,40 +91,15 @@ export const PlayModal = ({ isOpen, onClose }) => {
             p={2}
           />
           <ModalBody px={6} py={0}>
-            <Flex align="center" justify="center" width="100%">
-              <Flex
-                justify="center"
-                align="center"
-                direction="column"
-                border="1px solid #DAE3F0"
-                borderRadius="0.25rem"
-                w="10rem"
-                h="4rem"
-                px={4}
-              >
-                <Text textAlign="center" fontWeight="bold">
-                  {formattedAmount}
-                </Text>
-                <Text textAlign="center" fontSize="sm">
-                  {token.symbol}
-                </Text>
-              </Flex>
-            </Flex>
-            {selectedLotteryID}
-            <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
-              <Text as="span">Please confirm that you would like to create a new lottery and send </Text>
+              <Text as="span">You're sending </Text>
               <Text as="b">{`${formattedAmount} ${token.symbol}`}</Text>
-              <Text as="span"> to lottery liquidity fund.</Text>
+              <Text as="span"> to lottery contract in order to play a game. Keep in mind that you can both win or lose this amount. Lottery formula is </Text>
+              <Text as="b">{`${FORMULA[formula]}`}.</Text>
             </Box>
             <Box w="100%" fontSize="sm" color={'black'}>
-              <Text as="span">Maximum bet percent is set to </Text>
-              <Text as="b">{`${maxBetPercent}`}</Text>
-              <Text as="span">.</Text>
-            </Box>
-            <Box w="100%" fontSize="sm" color={'black'}>
-              <Text as="span">Formula is set to </Text>
-              <Text as="b">{`${FORMULA[formula]}`}</Text>
+              <Text as="span">Maximum bet percent from total liquidity is </Text>
+              <Text as="b">{`${maxBetPercent}`}%</Text>
               <Text as="span">.</Text>
             </Box>
           </ModalBody>
@@ -156,7 +131,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
                   </TxLink>
                 ) : (
                   <>
-                    <Text color="white" fontWeight="bold">Continue</Text>
+                    <Text color="white" fontWeight="bold">Confirm</Text>
                   </>
                 )}
               </Button>
