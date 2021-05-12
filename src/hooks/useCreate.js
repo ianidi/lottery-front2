@@ -15,14 +15,14 @@ export const useCreate = (token, amount, maxBetPercent, duration) => {
       const tx = await createLottery(ethersProvider, token, amount, maxBetPercent, duration);
       setCreateTxHash(tx.hash);
       await tx.wait();
-    } catch (approveError) {
+    } catch (useCreateError) {
       logError({
-        approveError,
+        useCreateError,
         token,
         amount: amount.toString(),
         account,
       });
-      throw approveError;
+      throw useCreateError;
     } finally {
       setCreateTxHash();
       setCreateLoading(false);

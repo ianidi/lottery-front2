@@ -49,7 +49,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
   const [amountInput, setAmountInput] = useState(0);
   const [amount, setAmount] = useState(0);
 
-  const { createTxHash, createLoading, create } = useCreate(token, amount, maxBetPercent, 0);
+  const { createTxHash, createLoading, create } = useCreate(selectedLottery.lotteryID, amount, maxBetPercent, 0);
 
   const showError = msg => {
     if (msg) {

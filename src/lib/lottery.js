@@ -12,3 +12,13 @@ export const createLottery = async (
   const tokenContract = new Contract(LOTTERY_CONTRACT_ADDRESS, abi, ethersProvider.getSigner());
   return tokenContract.create(token.address, amount, BigNumber.from(maxBetPercent), duration);
 };
+
+export const playLottery = async (
+  ethersProvider,
+  lotteryID,
+  amount
+) => {
+  const abi = ['function play(uint, uint)'];
+  const tokenContract = new Contract(LOTTERY_CONTRACT_ADDRESS, abi, ethersProvider.getSigner());
+  return tokenContract.play(lotteryID, amount);
+};
