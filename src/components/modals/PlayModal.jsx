@@ -24,7 +24,7 @@ import { useCreate } from 'hooks/useCreate';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { selectSelectedLottery } from "store/appSlice";
+import { selectSelectedLottery, selectAllowance } from "store/appSlice";
 import { BigNumber } from '@ethersproject/bignumber';
 import NumberFormat from 'react-number-format';
 import { defer } from 'rxjs';
@@ -35,17 +35,17 @@ export const PlayModal = ({ isOpen, onClose }) => {
   const { account, providerChainId } = useWeb3Context();
 
   const selectedLottery = useSelector(selectSelectedLottery);
+  const allowance = useSelector(selectAllowance);
 
   const { tokenSymbol, tokenName, tokenDecimals, formula, liquidity, collateral, lotteryID, maxBetPercent } = selectedLottery;
 
-  const balanceIsZero = false;
-  const amountIsZero = false;
-  const transferAllowed = false;
-
   const [balance, setBalance] = useState(BigNumber.from("0"));
   const [balanceLoading, setBalanceLoading] = useState(false);
-  const [amountInput, setAmountInput] = useState(0);
+  const [balanceIsZero, setBalanceIsZero] = useState(false);
+  const [amountInput, setAmountInput] = useState();
   const [amount, setAmount] = useState(0);
+  const [amountIsZero, setAmountIsZero] = useState(false);
+  const [transferAllowed, setTransferAllowed] = useState(false);
 
   const { createTxHash, createLoading, create } = useCreate(selectedLottery.lotteryID, amount, maxBetPercent, 0);
 
@@ -90,14 +90,17 @@ export const PlayModal = ({ isOpen, onClose }) => {
         fetchTokenBalance(token, account).catch(balanceError => {
           logError({ balanceError });
           setBalance(BigNumber.from(0));
+          setBalanceIsZero(true);
           setBalanceLoading(false);
         }),
       ).subscribe(b => {
         setBalance(b);
+        setBalanceIsZero(b.eq(BigNumber.from(0)))
         setBalanceLoading(false);
       });
     } else {
       setBalance(BigNumber.from(0));
+      setBalanceIsZero(true);
     }
     return () => {
       if (subscription) {
@@ -112,10 +115,16 @@ export const PlayModal = ({ isOpen, onClose }) => {
       if (amountInput === "") { number = "0"; }
       const amount_ = parseValue(number, tokenDecimals);
       setAmount(amount_);
+      setAmountIsZero(amount_.eq(BigNumber.from(0)));
     }).subscribe();
     return () => {
       subscription.unsubscribe();
     };
+  }, [amountInput]);
+
+
+  useEffect(() => {
+    setTransferAllowed(BigNumber.from(balance).gt(BigNumber.from(0)) && BigNumber.from(amount).gt(BigNumber.from(0)) && (BigNumber.from(amount).lte(BigNumber.from(allowance))));
   }, [amountInput]);
 
   return (
@@ -200,11 +209,11 @@ export const PlayModal = ({ isOpen, onClose }) => {
             <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
               <Text as="span">Keep in mind that you can both win or lose this amount. Lottery formula is </Text>
-              <Text as="b">{`${FORMULA[formula]}`}.</Text>
+              <Text as="b">{FORMULA[formula]}.</Text>
             </Box>
             <Box w="100%" fontSize="sm" color={'black'}>
               <Text as="span">Maximum bet percent from total liquidity is </Text>
-              <Text as="b">{`${maxBetPercent}`}%</Text>
+              <Text as="b">{maxBetPercent}%</Text>
               <Text as="span">.</Text>
             </Box>
           </ModalBody>
