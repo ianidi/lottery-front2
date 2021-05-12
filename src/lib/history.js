@@ -4,21 +4,23 @@ const pageSize = 1000;
 
 const requestsUserQuery = gql`
   query getRequests($first: Int!, $skip: Int!) {
-    lotteries(
+    createLotteries(
       orderBy: txHash
       orderDirection: desc
       first: $first
       skip: $skip
     ) {
       id
+      txHash
       member
       lotteryID
       amount
-      executor
-      messageId
-      status
       timestamp
-      txHash
+      # status
+      liquidity
+      maxBetPercent
+      duration
+      collateral
     }
   }
 `;
@@ -41,9 +43,9 @@ export const getRequestsWithQuery = async (graphEndpoint, query) => {
       skip: page * pageSize,
     });
     if (data) {
-      requests = data.lotteries;
+      requests = data.createLotteries;
     }
-    if (!data || data.lotteries.length < pageSize) break;
+    if (!data || data.createLotteries.length < pageSize) break;
     page += 1;
   }
 

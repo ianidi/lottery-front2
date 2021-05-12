@@ -4,6 +4,7 @@ import { ListPagination } from 'components/list/ListPagination';
 import { NoList } from 'components/list/NoList';
 import { useLotteryList } from 'hooks/useLotteryList';
 import { PlayModal } from 'components/modals/PlayModal';
+import { useWeb3Context } from 'contexts/Web3Context';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -12,23 +13,22 @@ import { setSelectedLottery } from 'store/appSlice';
 const TOTAL_PER_PAGE = 20;
 
 export const LotteryList = ({ page }) => {
+  const { account } = useWeb3Context();
   const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { transfers, loading } = useLotteryList();
 
   const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
+  const accountString = account.toLowerCase();
 
-  const transfersTEMP = [{ lotteryID: "1", poolAmount: "5", formula: 1, maxBetPercent: "10", tokenAddress: "", tokenDecimals: "8", tokenSymbol: "USDT", liquidityProvider: false, timestamp: 1620758121 }];
+  const filteredTransfers = onlyLiquidityProvided ? transfers.filter(i => i.member.toLowerCase() === accountString) : transfers;
 
-  const filteredTransfers = onlyLiquidityProvided ? transfersTEMP.filter(i => i.liquidityProvider === true) : transfersTEMP;
-
-  const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
-  // const displayList = transfers.slice(
-  //   (page - 1) * TOTAL_PER_PAGE,
-  //   Math.min(page * TOTAL_PER_PAGE, transfers.length),
-  // );
-  const displayList = filteredTransfers;
+  const numPages = Math.ceil(filteredTransfers.length / TOTAL_PER_PAGE);
+  const displayList = filteredTransfers.slice(
+    (page - 1) * TOTAL_PER_PAGE,
+    Math.min(page * TOTAL_PER_PAGE, filteredTransfers.length),
+  );
 
   const play = (lottery) => {
     dispatch(setSelectedLottery(lottery));
@@ -84,7 +84,7 @@ export const LotteryList = ({ page }) => {
             <Text textAlign="center">Liquidity</Text>
           </Grid>
           {displayList.map((item, index) => (
-            <ListItem key={index} item={item} play={play} />
+            <ListItem key={index} item={item} accountString={accountString} play={play} />
           ))}
           {numPages > 1 && (
             <ListPagination numPages={numPages} currentPage={page} />
