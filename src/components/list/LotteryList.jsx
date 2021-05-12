@@ -70,7 +70,7 @@ export const LotteryList = ({ page }) => {
         <>
           <Grid
             templateColumns={{
-              base: '1fr 1fr 1fr 1fr 1fr 1fr',
+              base: '1fr 1fr 1fr 1fr 1fr 1fr 1fr',
             }}
             color="grey"
             fontSize="sm"
@@ -78,6 +78,7 @@ export const LotteryList = ({ page }) => {
             mb={4}
             display={{ base: 'none', md: 'grid' }}
           >
+            <Text textAlign="center">Lottery ID</Text>
             <Text textAlign="center">Liquidity pool</Text>
             <Text textAlign="center">Formula</Text>
             <Text textAlign="center">Max bet percent</Text>

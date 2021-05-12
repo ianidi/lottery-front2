@@ -49,8 +49,8 @@ export const formatValue = (num, dec) => {
     });
     return `${first} x 10^${split[1]}`;
   }
-  // return str;
-  return Number(str).toLocaleString('en', { maximumFractionDigits: 4 });
+  return str;
+  // return Number(str).toLocaleString('en', { maximumFractionDigits: 4 });
 };
 
 export const parseValue = (num, dec) => {

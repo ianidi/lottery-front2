@@ -174,7 +174,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
               </Flex>
               <Flex mt={2}>
                 <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} placeholder="0" decimalScale={tokenDecimals} onValueChange={(values) => setAmountInput(values.value)} />
-                {/* <Button
+                <Button
                   ml={2}
                   color="blue.500"
                   bg="blue.50"
@@ -183,11 +183,11 @@ export const PlayModal = ({ isOpen, onClose }) => {
                   fontWeight="normal"
                   _hover={{ bg: 'blue.100' }}
                   onClick={() => {
-                    setAmountInput(balance.toString());
+                    setAmountInput(formatValue(balance, tokenDecimals));
                   }}
                 >
                   Max
-                  </Button> */}
+                  </Button>
               </Flex>
             </Flex>
             <Flex justify="center">
