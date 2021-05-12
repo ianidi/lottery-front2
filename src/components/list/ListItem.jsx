@@ -9,7 +9,7 @@ import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
-export const ListItem = ({ play, item: { lotteryID, poolAmount, maxBetPercent, formula, decimals, tokenSymbol, liquidityProvider, timestamp } }) => {
+export const ListItem = ({ play, item, item: { poolAmount, maxBetPercent, formula, tokenDecimals, tokenSymbol, liquidityProvider, timestamp } }) => {
 
   const timestampString = timestamp === 0 ? 'Infinite' : new Date(
     parseInt(timestamp, 10) * 1000,
@@ -57,7 +57,7 @@ export const ListItem = ({ play, item: { lotteryID, poolAmount, maxBetPercent, f
         w="100%"
       >
         <Flex justify="center">
-          <Text my="auto">{utils.formatUnits(BigNumber.from(poolAmount), BigNumber.from(decimals))} {tokenSymbol}</Text>
+          <Text my="auto">{utils.formatUnits(BigNumber.from(poolAmount), BigNumber.from(tokenDecimals))} {tokenSymbol}</Text>
         </Flex>
         <Flex justify="center">
           <Text my="auto">{FORMULA[formula]}</Text>
@@ -69,7 +69,7 @@ export const ListItem = ({ play, item: { lotteryID, poolAmount, maxBetPercent, f
           <Text my="auto">{timestampString}</Text>
         </Flex>
         <Flex justify="center">
-          <Button w="80%" size="sm" colorScheme="blue" onClick={() => play(lotteryID)}>Play</Button>
+          <Button w="80%" size="sm" colorScheme="blue" onClick={() => play(item)}>Play</Button>
         </Flex>
         <Flex justify="center">
           <Button w="80%" size="sm" colorScheme="blue">{liquidityProvider ? 'Manage liquidity' : 'Add liquidity'}</Button>

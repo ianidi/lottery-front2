@@ -7,7 +7,7 @@ import { PlayModal } from 'components/modals/PlayModal';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setSelectedLotteryID } from 'store/appSlice';
+import { setSelectedLottery } from 'store/appSlice';
 
 const TOTAL_PER_PAGE = 20;
 
@@ -19,7 +19,7 @@ export const LotteryList = ({ page }) => {
 
   const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
 
-  const transfersTEMP = [{ lotteryID: "1", poolAmount: "5", formula: 1, maxBetPercent: "10", decimals: "8", tokenSymbol: "USDT", liquidityProvider: false, timestamp: 1620758121 }];
+  const transfersTEMP = [{ lotteryID: "1", poolAmount: "5", formula: 1, maxBetPercent: "10", tokenAddress: "", tokenDecimals: "8", tokenSymbol: "USDT", liquidityProvider: false, timestamp: 1620758121 }];
 
   const filteredTransfers = onlyLiquidityProvided ? transfersTEMP.filter(i => i.liquidityProvider === true) : transfersTEMP;
 
@@ -30,8 +30,8 @@ export const LotteryList = ({ page }) => {
   // );
   const displayList = filteredTransfers;
 
-  const play = (lotteryID) => {
-    dispatch(setSelectedLotteryID(lotteryID));
+  const play = (lottery) => {
+    dispatch(setSelectedLottery(lottery));
     onOpen();
   };
 

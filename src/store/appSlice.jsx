@@ -12,7 +12,7 @@ export const appSlice = createSlice({
     maxBetPercent: 10,
     formula: null,
     duration: "0",
-    selectedLotteryID: null
+    selectedLottery: {}
   },
   reducers: {
     setToken: (state, action) => {
@@ -36,13 +36,13 @@ export const appSlice = createSlice({
     setDuration: (state, action) => {
       state.duration = action.payload;
     },
-    setSelectedLotteryID: (state, action) => {
-      state.selectedLotteryID = action.payload;
+    setSelectedLottery: (state, action) => {
+      state.selectedLottery = action.payload;
     },
   },
 });
 
-export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent, setFormula, setDuration, setSelectedLotteryID } = appSlice.actions;
+export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent, setFormula, setDuration, setSelectedLottery } = appSlice.actions;
 
 export const selectToken = (state) => state.app.token;
 export const selectAmount = (state) => BigNumber.from(state.app.amount);
@@ -54,6 +54,6 @@ export const selectTransferAllowed = (state) => BigNumber.from(state.app.balance
 export const selectMaxBetPercent = (state) => state.app.maxBetPercent;
 export const selectFormula = (state) => state.app.formula;
 export const selectDuration = (state) => BigNumber.from(state.app.duration);
-export const selectSelectedLotteryID = (state) => state.app.selectedLotteryID;
+export const selectSelectedLottery = (state) => state.app.selectedLottery;
 
 export default appSlice.reducer;
