@@ -22,7 +22,7 @@ import React from 'react';
 import { useSelector } from "react-redux";
 import { selectToken, selectAmount, selectMaxBetPercent, selectDuration } from "store/appSlice";
 
-export const ConfirmTransferModal = ({ isOpen, onClose }) => {
+export const CreateModal = ({ isOpen, onClose }) => {
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
 

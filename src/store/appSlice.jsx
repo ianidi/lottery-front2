@@ -10,6 +10,7 @@ export const appSlice = createSlice({
     balance: "0",
     allowance: "0",
     maxBetPercent: 10,
+    formula: null,
     duration: "0",
   },
   reducers: {
@@ -28,13 +29,16 @@ export const appSlice = createSlice({
     setMaxBetPercent: (state, action) => {
       state.maxBetPercent = action.payload;
     },
+    setFormula: (state, action) => {
+      state.formula = action.payload;
+    },
     setDuration: (state, action) => {
       state.duration = action.payload;
     },
   },
 });
 
-export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent, setDuration } = appSlice.actions;
+export const { setToken, setAmount, setBalance, setAllowance, setMaxBetPercent, setFormula, setDuration } = appSlice.actions;
 
 export const selectToken = (state) => state.app.token;
 export const selectAmount = (state) => BigNumber.from(state.app.amount);
@@ -42,8 +46,9 @@ export const selectAmountIsZero = (state) => BigNumber.from(state.app.amount).eq
 export const selectBalance = (state) => BigNumber.from(state.app.balance);
 export const selectBalanceIsZero = (state) => BigNumber.from(state.app.balance).eq(BigNumber.from(0));
 export const selectAllowance = (state) => BigNumber.from(state.app.allowance);
-export const selectTransferAllowed = (state) => BigNumber.from(state.app.balance).gt(BigNumber.from(0)) && BigNumber.from(state.app.amount).gt(BigNumber.from(0)) && (BigNumber.from(state.app.amount).eq(BigNumber.from(state.app.allowance))); // balance > 0 && amount == allowance;
+export const selectTransferAllowed = (state) => BigNumber.from(state.app.balance).gt(BigNumber.from(0)) && BigNumber.from(state.app.amount).gt(BigNumber.from(0)) && (BigNumber.from(state.app.amount).lte(BigNumber.from(state.app.allowance))); // balance > 0 && amount <= allowance;
 export const selectMaxBetPercent = (state) => state.app.maxBetPercent;
+export const selectFormula = (state) => state.app.formula;
 export const selectDuration = (state) => BigNumber.from(state.app.duration);
 
 export default appSlice.reducer;

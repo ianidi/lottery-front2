@@ -1,15 +1,17 @@
 import { Slider, SliderTrack, Box, Select, SliderFilledTrack, SliderThumb, VStack, Flex, Text } from '@chakra-ui/react';
 import { UnlockButton } from 'components/create/UnlockButton';
-import { TransferButton } from 'components/create/TransferButton';
+import { CreateButton } from 'components/create/CreateButton';
 import { Token } from 'components/create/Token';
 import { FORMULA } from 'lib/constants';
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { selectMaxBetPercent, setMaxBetPercent } from "store/appSlice";
+import { selectMaxBetPercent, setMaxBetPercent, selectFormula, setFormula } from "store/appSlice";
 
 export const Create = () => {
   const dispatch = useDispatch();
+
   const maxBetPercent = useSelector(selectMaxBetPercent);
+  const formula = useSelector(selectFormula);
 
   return (
     <Flex
@@ -64,11 +66,11 @@ export const Create = () => {
               Lottery math formula
             </Text>
           </Flex>
-          <Select placeholder="Select formula">
-            {Object.entries(FORMULA).map(([key, value, index]) => <option key={index} value={key}>{value}</option>)}
+          <Select placeholder="Select formula" value={formula} onChange={(e) => dispatch(setFormula(e.target.value))}>
+            {Object.entries(FORMULA).map(([key, value]) => <option key={key} value={key}>{value}</option>)}
           </Select>
         </VStack>
-        <TransferButton />
+        <CreateButton />
       </Flex>
     </Flex >
   );
