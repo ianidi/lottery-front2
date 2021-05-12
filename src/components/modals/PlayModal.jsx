@@ -18,13 +18,14 @@ import { TxLink } from 'components/common/TxLink';
 import { useWeb3Context } from 'contexts/Web3Context';
 import { FORMULA } from 'lib/constants';
 import { fetchTokenBalance } from 'lib/token';
-import { formatValue, logError, parseValue } from 'lib/helpers';
+import { formatValue, logError, parseValue, truncateText } from 'lib/helpers';
 import { useCreate } from 'hooks/useCreate';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import { selectToken, selectAmount, selectMaxBetPercent, selectFormula, selectDuration, selectSelectedLottery } from "store/appSlice";
+import { selectToken, selectSelectedLottery } from "store/appSlice";
 import { BigNumber } from '@ethersproject/bignumber';
+import NumberFormat from 'react-number-format';
 import { defer } from 'rxjs';
 
 export const PlayModal = ({ isOpen, onClose }) => {
@@ -132,9 +133,60 @@ export const PlayModal = ({ isOpen, onClose }) => {
           <ModalBody px={6} py={0}>
             <Flex width="100%">
               <Text fontWeight="bold" fontSize="md">
-                Enter bet amount
-            </Text>
+                Enter bet amount ({truncateText(token.name, 24)})
+              </Text>
             </Flex>
+
+            {token && (
+              <Flex
+                w="100%"
+                direction="column"
+              >
+                <Flex
+                  justify="space-between"
+                  direction={{ base: 'column', sm: 'row' }}
+                >
+                  <Flex
+                    flex={1}
+                    justify="flex-end"
+                    align="center"
+                    h="100%"
+                    position="relative"
+                    ml={{ base: undefined, sm: 2, md: undefined }}
+                  >
+                    {balanceLoading ? (
+                      <Spinner size="sm" color="grey" />
+                    ) : (
+                      <Text
+                        color="grey"
+                        textAlign="right"
+                        style={{ position: 'absolute', bottom: '4px', right: 0 }}
+                      >
+                        {`Balance: ${formatValue(balance, token.decimals)}`}
+                      </Text>
+                    )}
+                  </Flex>
+                </Flex>
+                <Flex mt={2}>
+                  <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} maxLength={18} placeholder="0" decimalScale={token.decimals} onValueChange={(values) => setAmountInput(values.value)} />
+                  <Button
+                    ml={2}
+                    color="blue.500"
+                    bg="blue.50"
+                    size="sm"
+                    fontSize="sm"
+                    fontWeight="normal"
+                    _hover={{ bg: 'blue.100' }}
+                    onClick={() => {
+                      setAmountInput(balance.toString());
+                    }}
+                  >
+                    Max
+            </Button>
+                </Flex>
+              </Flex>
+            )}
+
             <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
               <Text as="span">Keep in mind that you can both win or lose this amount. Lottery formula is </Text>
