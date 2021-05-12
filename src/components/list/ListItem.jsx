@@ -9,7 +9,7 @@ import { BigNumber, utils } from 'ethers';
 import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
-export const ListItem = ({ item: { poolAmount, maxBetPercent, formula, decimals, tokenSymbol, liquidityProvider, timestamp } }) => {
+export const ListItem = ({ play, item: { lotteryID, poolAmount, maxBetPercent, formula, decimals, tokenSymbol, liquidityProvider, timestamp } }) => {
 
   const timestampString = timestamp === 0 ? 'Infinite' : new Date(
     parseInt(timestamp, 10) * 1000,
@@ -69,7 +69,7 @@ export const ListItem = ({ item: { poolAmount, maxBetPercent, formula, decimals,
           <Text my="auto">{timestampString}</Text>
         </Flex>
         <Flex justify="center">
-          <Button w="80%" size="sm" colorScheme="blue">Play</Button>
+          <Button w="80%" size="sm" colorScheme="blue" onClick={() => play(lotteryID)}>Play</Button>
         </Flex>
         <Flex justify="center">
           <Button w="80%" size="sm" colorScheme="blue">{liquidityProvider ? 'Manage liquidity' : 'Add liquidity'}</Button>

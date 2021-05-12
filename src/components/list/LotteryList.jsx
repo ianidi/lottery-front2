@@ -1,19 +1,25 @@
-import { Flex, Grid, Text, Checkbox } from '@chakra-ui/react';
+import { Flex, Grid, Text, Checkbox, useDisclosure } from '@chakra-ui/react';
 import { ListItem } from 'components/list/ListItem';
 import { ListPagination } from 'components/list/ListPagination';
 import { NoList } from 'components/list/NoList';
 import { useLotteryList } from 'hooks/useLotteryList';
+import { PlayModal } from 'components/modals/PlayModal';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setPlayLotteryID } from 'store/appSlice';
 
 const TOTAL_PER_PAGE = 20;
 
 export const LotteryList = ({ page }) => {
+  const dispatch = useDispatch();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { transfers, loading } = useLotteryList();
 
   const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
 
-  const transfersTEMP = [{ poolAmount: "5", formula: 1, maxBetPercent: "10", decimals: "8", tokenSymbol: "USDT", liquidityProvider: false, timestamp: 1620758121 }];
+  const transfersTEMP = [{ lotteryID: "1", poolAmount: "5", formula: 1, maxBetPercent: "10", decimals: "8", tokenSymbol: "USDT", liquidityProvider: false, timestamp: 1620758121 }];
 
   const filteredTransfers = onlyLiquidityProvided ? transfersTEMP.filter(i => i.liquidityProvider === true) : transfersTEMP;
 
@@ -24,6 +30,10 @@ export const LotteryList = ({ page }) => {
   // );
   const displayList = filteredTransfers;
 
+  const play = (lotteryID) => {
+    dispatch(setPlayLotteryID(lotteryID));
+    onOpen();
+  };
 
   if (numPages > 1 && page > numPages) {
     return <Redirect to="/list" />;
@@ -37,6 +47,7 @@ export const LotteryList = ({ page }) => {
       px={{ base: 4, sm: 8 }}
       w="100%"
     >
+      <PlayModal isOpen={isOpen} onClose={onClose} />
       <Flex justify="space-between" align="center" mb={4}>
         <Text fontSize="xl" fontWeight="bold">
           Lottery list
@@ -73,7 +84,7 @@ export const LotteryList = ({ page }) => {
             <Text textAlign="center">Liquidity</Text>
           </Grid>
           {displayList.map((item, index) => (
-            <ListItem key={index} item={item} />
+            <ListItem key={index} item={item} play={play} />
           ))}
           {numPages > 1 && (
             <ListPagination numPages={numPages} currentPage={page} />

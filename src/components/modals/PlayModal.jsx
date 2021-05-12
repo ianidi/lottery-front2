@@ -22,9 +22,9 @@ import { useCreate } from 'hooks/useCreate';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { selectToken, selectAmount, selectMaxBetPercent, selectFormula, selectDuration } from "store/appSlice";
+import { selectToken, selectAmount, selectMaxBetPercent, selectFormula, selectDuration, selectSelectedLotteryID } from "store/appSlice";
 
-export const CreateModal = ({ isOpen, onClose }) => {
+export const PlayModal = ({ isOpen, onClose }) => {
   const history = useHistory();
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
@@ -34,6 +34,8 @@ export const CreateModal = ({ isOpen, onClose }) => {
   const maxBetPercent = useSelector(selectMaxBetPercent);
   const formula = useSelector(selectFormula);
   const duration = useSelector(selectDuration);
+
+  const selectedLotteryID = useSelector(selectSelectedLotteryID);
 
   const { createTxHash, createLoading, create } = useCreate(token, amount, maxBetPercent, duration);
 
@@ -67,7 +69,7 @@ export const CreateModal = ({ isOpen, onClose }) => {
     });
   };
 
-  if (!token) return null;
+  // if (!token) return null;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>
@@ -108,6 +110,7 @@ export const CreateModal = ({ isOpen, onClose }) => {
                 </Text>
               </Flex>
             </Flex>
+            {selectedLotteryID}
             <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
               <Text as="span">Please confirm that you would like to create a new lottery and send </Text>
