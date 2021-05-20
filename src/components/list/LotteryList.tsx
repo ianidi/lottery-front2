@@ -6,13 +6,13 @@ import { useLotteryList } from "../../hooks/useLotteryList";
 import { PlayModal } from "../../components/modals/PlayModal";
 import { LiquidityModal } from "../../components/modals/LiquidityModal";
 import { useWeb3Context } from "../../contexts/Web3Context";
+import { createLotteries } from "../../lib/list";
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectSelectedLottery,
-  setSelectedLottery,
-  Lottery
+  setSelectedLottery
 } from "../../store/appSlice";
 
 interface Props {
@@ -52,12 +52,12 @@ export const LotteryList: React.FC<Props> = ({ page }) => {
     Math.min(page * TOTAL_PER_PAGE, filteredTransfers.length)
   );
 
-  const play = (lottery: Lottery) => {
+  const play = (lottery: createLotteries) => {
     dispatch(setSelectedLottery(lottery));
     onPlayOpen();
   };
 
-  const manageLiquidity = (lottery: Lottery) => {
+  const manageLiquidity = (lottery: createLotteries) => {
     dispatch(setSelectedLottery(lottery));
     onLiquidityOpen();
   };

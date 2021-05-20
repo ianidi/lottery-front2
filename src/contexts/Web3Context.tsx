@@ -11,7 +11,7 @@ interface Web3Provider {
 }
 
 interface Web3State {
-  providerChainId?: number
+  providerChainId: number
   ethersProvider?: ethers.providers.Web3Provider
   account: string
 }
@@ -21,11 +21,11 @@ interface useWeb3Context {
   connectWeb3?: () => Promise<void>
   loading?: boolean
   disconnect?: () => Promise<void>
-  providerChainId?: number
+  providerChainId: number
   account: string
 }
 
-export const Web3Context = React.createContext<useWeb3Context>({ account: "" });
+export const Web3Context = React.createContext<useWeb3Context>({ account: "", providerChainId: 1 });
 export const useWeb3Context = () => useContext(Web3Context);
 
 const providerOptions = {
@@ -47,7 +47,7 @@ const web3Modal = new Web3Modal({
 
 export const Web3Provider = ({ children }: Web3Provider) => {
   const [{ providerChainId, ethersProvider, account }, setWeb3State] = useState<Web3State>(
-    { account: "" },
+    { account: "", providerChainId: 1 },
   );
   const [loading, setLoading] = useState(true);
 
@@ -110,7 +110,7 @@ export const Web3Provider = ({ children }: Web3Provider) => {
 
   const disconnect = useCallback(async () => {
     web3Modal.clearCachedProvider();
-    setWeb3State({ account: "" });
+    setWeb3State({ account: "", providerChainId: 1 });
   }, []);
 
   useEffect(() => {

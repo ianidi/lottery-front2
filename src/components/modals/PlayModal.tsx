@@ -219,6 +219,7 @@ export const PlayModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <Text as="span">.</Text>
             </Box>
             <Flex justify="center">
+              {/* @ts-ignore */}
               <UnlockButton token={{
                 chainId: providerChainId,
                 address: collateral,

@@ -10,7 +10,7 @@ export interface createLotteries {
   liquidity: number
   formula: number
   maxBetPercent: number
-  duration: number
+  duration: string
   collateral: string
   tokenName: string
   tokenSymbol: string

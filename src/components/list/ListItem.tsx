@@ -1,9 +1,17 @@
 import { Button, Flex, Grid, Text } from "@chakra-ui/react";
 import { BigNumber, utils } from "ethers";
 import { FORMULA } from "../../lib/constants";
+import { createLotteries } from "../../lib/list";
 import React from "react";
 
-export const ListItem = ({
+interface Props {
+  play: (arg0: createLotteries) => void
+  manageLiquidity: (arg0: createLotteries) => void
+  item: createLotteries
+  accountString: string
+}
+
+export const ListItem: React.FC<Props> = ({
   play,
   manageLiquidity,
   item,
@@ -24,12 +32,12 @@ export const ListItem = ({
     duration === "0"
       ? "Infinite"
       : new Date(parseInt(duration, 10) * 1000).toLocaleTimeString([], {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit"
-        });
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
 
   return (
     <Flex
