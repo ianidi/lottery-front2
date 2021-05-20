@@ -16,7 +16,7 @@ interface Return {
 export const useMemberHistory = ({ member }: Props): Return => {
   const { providerChainId } = useWeb3Context();
   const [transfers, setTransfers] = useState<Array<playLotteries>>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function update() {

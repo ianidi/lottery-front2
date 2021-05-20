@@ -6,7 +6,11 @@ import { Header } from '../../components/common/Header';
 import { useWeb3Context } from '../../contexts/Web3Context';
 import React, { useMemo } from 'react';
 
-export const Layout = ({ children }) => {
+interface Props {
+  children: JSX.Element
+}
+
+export const Layout: React.FC<Props> = ({ children }) => {
   const { account } = useWeb3Context();
 
   const valid = useMemo(() => !!account, [account]);

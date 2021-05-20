@@ -3,12 +3,13 @@ import { Button, Image, Link, Spinner, Text, useToast } from '@chakra-ui/react';
 import UnlockIcon from '../../assets/unlock.svg';
 import { TxLink } from '../../components/common/TxLink';
 import { useWeb3Context } from '../../contexts/Web3Context';
-import { LOTTERY_CONTRACT_ADDRESS } from '../../lib/constants';
+import { LOTTERY_CONTRACT_ADDRESS, DEFAULT_TOKEN } from '../../lib/constants';
 import { useApproval } from '../../hooks/useApproval';
+import { BigNumber } from '@ethersproject/bignumber';
 
 interface Props {
-  token: string
-  amount: string
+  token: typeof DEFAULT_TOKEN
+  amount: BigNumber
   balanceIsZero: boolean
   amountIsZero: boolean
   transferAllowed: boolean

@@ -2,7 +2,7 @@ import { Button, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const NoList = () => {
+export const NoList: React.FC = () => {
   return (
     <Flex
       w="100%"

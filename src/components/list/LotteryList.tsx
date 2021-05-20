@@ -11,12 +11,17 @@ import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectSelectedLottery,
-  setSelectedLottery
+  setSelectedLottery,
+  Lottery
 } from "../../store/appSlice";
+
+interface Props {
+  page: number
+}
 
 const TOTAL_PER_PAGE = 20;
 
-export const LotteryList = ({ page }) => {
+export const LotteryList: React.FC<Props> = ({ page }) => {
   const { account } = useWeb3Context();
   const dispatch = useDispatch();
   const {
@@ -47,12 +52,12 @@ export const LotteryList = ({ page }) => {
     Math.min(page * TOTAL_PER_PAGE, filteredTransfers.length)
   );
 
-  const play = lottery => {
+  const play = (lottery: Lottery) => {
     dispatch(setSelectedLottery(lottery));
     onPlayOpen();
   };
 
-  const manageLiquidity = lottery => {
+  const manageLiquidity = (lottery: Lottery) => {
     dispatch(setSelectedLottery(lottery));
     onLiquidityOpen();
   };

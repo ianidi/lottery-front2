@@ -1,6 +1,13 @@
 import React from 'react';
 
-export const ProgressRing = ({ radius, stroke, progress, totalProgress }) => {
+interface Props {
+  radius: number
+  stroke: number
+  progress: number
+  totalProgress: number
+}
+
+export const ProgressRingr: React.FC<Props> = ({ radius, stroke, progress, totalProgress }) => {
   const normalizedRadius = radius - stroke * 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset =

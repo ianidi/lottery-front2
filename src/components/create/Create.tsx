@@ -7,7 +7,7 @@ import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { selectMaxBetPercent, setMaxBetPercent, selectFormula, setFormula, selectToken, selectAmount, selectBalanceIsZero, selectAmountIsZero, selectTransferAllowed } from "../../store/appSlice";
 
-export const Create = () => {
+export const Create: React.FC = () => {
   const dispatch = useDispatch();
 
   const maxBetPercent = useSelector(selectMaxBetPercent);

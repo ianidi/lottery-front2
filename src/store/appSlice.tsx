@@ -14,7 +14,7 @@ interface initialState {
   selectedLottery: Lottery
 }
 
-interface Lottery {
+export interface Lottery {
   tokenSymbol: string
   tokenName: string
   tokenDecimals: number

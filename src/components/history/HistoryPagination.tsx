@@ -4,13 +4,18 @@ import { RightIcon } from '../../icons/RightIcon';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
-const getDisplayPages = (total, current) => {
+interface Props {
+  numPages: number
+  currentPage: number
+}
+
+const getDisplayPages = (total: number, current: number) => {
   if (total === current) return [current - 2, current - 1, current];
   if (current === 1) return [current, current + 1, current + 2];
   return [current - 1, current, current + 1];
 };
 
-export const HistoryPagination = ({ numPages, currentPage }) => {
+export const HistoryPagination: React.FC<Props> = ({ numPages, currentPage }) => {
   const history = useHistory();
 
   useEffect(() => {
@@ -22,7 +27,7 @@ export const HistoryPagination = ({ numPages, currentPage }) => {
     };
   }, [history]);
 
-  const onClick = page => {
+  const onClick = (page: number) => {
     history.push(`/history?page=${page}`);
   };
 

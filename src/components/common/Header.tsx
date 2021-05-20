@@ -13,7 +13,11 @@ import { HistoryIcon } from '../../icons/HistoryIcon';
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-const CreateLink = ({ close }) => {
+interface Props {
+  close: () => void
+}
+
+const CreateLink: React.FC<Props> = ({ close }) => {
   const history = useHistory();
   return (
     <Button
@@ -31,7 +35,7 @@ const CreateLink = ({ close }) => {
   );
 };
 
-const LotteryLink = ({ close }) => {
+const LotteryLink: React.FC<Props> = ({ close }) => {
   const history = useHistory();
   return (
     <Button
@@ -49,7 +53,7 @@ const LotteryLink = ({ close }) => {
   );
 };
 
-const HistoryLink = ({ close }) => {
+const HistoryLink: React.FC<Props> = ({ close }) => {
   const history = useHistory();
   return (
     <Button
@@ -67,7 +71,7 @@ const HistoryLink = ({ close }) => {
   );
 };
 
-export const Header = () => {
+export const Header: React.FC = () => {
   const { account } = useWeb3Context();
   const [isOpen, setOpen] = useState(false);
   const valid = !!account;

@@ -6,7 +6,7 @@ import { useWeb3Context } from '../../contexts/Web3Context';
 import { useSelector } from "react-redux";
 import { selectTransferAllowed, selectFormula } from "../../store/appSlice";
 
-export const CreateButton = () => {
+export const CreateButton: React.FC = () => {
   const { ethersProvider } = useWeb3Context();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
@@ -14,13 +14,13 @@ export const CreateButton = () => {
   const transferAllowed = useSelector(selectTransferAllowed);
   const formula = useSelector(selectFormula);
 
-  const showError = msg => {
+  const showError = (msg: string | JSX.Element) => {
     if (msg) {
       toast({
         title: 'Error',
         description: msg,
         status: 'error',
-        isClosable: 'true',
+        isClosable: true,
       });
     }
   };

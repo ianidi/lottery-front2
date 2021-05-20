@@ -30,7 +30,7 @@ import {
 import { BigNumber } from "@ethersproject/bignumber";
 import NumberFormat from "react-number-format";
 
-export const Token = () => {
+export const Token: React.FC = () => {
   const dispatch = useDispatch();
 
   const { account } = useWeb3Context();
@@ -42,11 +42,11 @@ export const Token = () => {
   const smallScreen = useBreakpointValue({ base: true, lg: false });
 
   const [balanceLoading, setBalanceLoading] = useState(false);
-  const [amountInput, setAmountInput] = useState(0);
+  const [amountInput, setAmountInput] = useState("0");
 
   useEffect(
     () => {
-      let subscription;
+      let subscription: any;
       if (token && account) {
         setBalanceLoading(true);
         subscription = defer(() =>

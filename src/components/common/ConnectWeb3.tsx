@@ -3,7 +3,7 @@ import { useWeb3Context } from '../../contexts/Web3Context';
 import { WalletFilledIcon } from '../../icons/WalletFilledIcon';
 import React from 'react';
 
-export const ConnectWeb3 = () => {
+export const ConnectWeb3: React.FC = () => {
   const {
     connectWeb3,
     loading,

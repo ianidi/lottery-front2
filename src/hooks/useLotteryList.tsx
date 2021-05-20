@@ -1,12 +1,17 @@
 import { useWeb3Context } from '../contexts/Web3Context';
 import { GRAPH_ENDPOINT } from '../lib/constants';
-import { getRequests } from '../lib/list';
+import { getRequests, createLotteries } from '../lib/list';
 import { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 
-export const useLotteryList = () => {
+interface Return {
+  transfers: Array<createLotteries>
+  loading: boolean
+}
+
+export const useLotteryList = (): Return => {
   const { providerChainId } = useWeb3Context();
-  const [transfers, setTransfers] = useState([]);
+  const [transfers, setTransfers] = useState<Array<createLotteries>>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

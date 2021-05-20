@@ -13,13 +13,18 @@ import { WalletIcon } from '../../icons/WalletIcon';
 import { getAccountString, getNetworkLabel } from '../../lib/helpers';
 import React from 'react';
 
-export const WalletSelector = ({ close }) => {
+interface Props {
+  close: () => void
+}
+
+export const WalletSelector: React.FC<Props> = ({ close }) => {
   const { disconnect, account, providerChainId } = useWeb3Context();
 
   const placement = useBreakpointValue({ base: 'bottom', md: 'bottom-end' });
   if (!account || !providerChainId) return null;
   return (
     <Flex>
+      {/* @ts-ignore */}
       <Popover placement={placement}>
         <PopoverTrigger>
           <Button colorScheme="blue">
@@ -60,6 +65,7 @@ export const WalletSelector = ({ close }) => {
               <Button
                 colorScheme="blue"
                 onClick={() => {
+                  {/* @ts-ignore */ }
                   disconnect();
                   close();
                 }}
