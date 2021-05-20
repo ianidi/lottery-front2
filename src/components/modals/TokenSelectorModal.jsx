@@ -14,25 +14,15 @@ import {
   ModalOverlay,
   Spinner,
   Text,
-  useBreakpointValue,
-} from '@chakra-ui/react';
-import SearchIcon from '../../assets/search.svg';
-import { useWeb3Context } from '../../contexts/Web3Context';
-import { PlusIcon } from '../../icons/PlusIcon';
-import { ADDRESS_ZERO, LOCAL_STORAGE_KEYS } from '../../lib/constants';
-import {
-  logError,
-  removeElement,
-  uniqueTokens,
-} from '../../lib/helpers';
-import { fetchTokenBalanceWithProvider } from '../../lib/token';
-import { fetchTokenList } from '../../lib/tokenList';
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+  useBreakpointValue
+} from "@chakra-ui/react";
+import SearchIcon from "../../assets/search.svg";
+import { useWeb3Context } from "../../contexts/Web3Context";
+import { PlusIcon } from "../../icons/PlusIcon";
+import { LOCAL_STORAGE_KEYS } from "../../lib/constants";
+import { logError, uniqueTokens } from "../../lib/helpers";
+import { fetchTokenList } from "../../lib/tokenList";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/appSlice";
 
@@ -44,7 +34,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
   // Ref
   const initialRef = useRef();
   // Contexts
-  const { account, ethersProvider, providerChainId } = useWeb3Context();
+  const { providerChainId } = useWeb3Context();
   // const { disableBalanceFetchToken } = useSettings();
   // State
   const [loading, setLoading] = useState(true);
@@ -52,82 +42,46 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
   const [filteredTokenList, setFilteredTokenList] = useState([]);
   const smallScreen = useBreakpointValue({ sm: false, base: true });
 
-  // Callbacks
-  const fetchTokenListWithBalance = useCallback(
-    async tList => {
-      const tokenValueSortFn = ({ balance: balanceA }, { balance: balanceB }) =>
-        balanceB.sub(balanceA).gt(0) ? 1 : -1;
+  const setDefaultTokenList = useCallback(async (chainId, customTokens) => {
+    setLoading(true);
+    try {
+      const baseTokenList = await fetchTokenList(chainId);
 
-      const tokenListWithBalance = await Promise.all(
-        tList.map(async token => ({
-          ...token,
-          balance: await fetchTokenBalanceWithProvider(
-            ethersProvider,
-            token,
-            account,
-          ),
-        })),
-      );
+      const customTokenList = [
+        ...uniqueTokens(
+          baseTokenList.concat(
+            customTokens.filter(token => token.chainId === chainId)
+          )
+        )
+      ];
 
-      const natCurIndex = tokenListWithBalance.findIndex(
-        ({ address, mode }) => address === ADDRESS_ZERO && mode === 'NATIVE',
-      );
-
-      if (natCurIndex !== -1) {
-        return [
-          tokenListWithBalance[natCurIndex],
-          ...removeElement(tokenListWithBalance, natCurIndex).sort(
-            tokenValueSortFn,
-          ),
-        ];
-      }
-
-      return tokenListWithBalance.sort(tokenValueSortFn);
-    },
-    [account, ethersProvider],
-  );
-
-  const setDefaultTokenList = useCallback(
-    async (chainId, customTokens) => {
-      setLoading(true);
-      try {
-        const baseTokenList = await fetchTokenList(chainId);
-
-        const customTokenList = [
-          ...uniqueTokens(
-            baseTokenList.concat(
-              customTokens.filter(token => token.chainId === chainId),
-            ),
-          ),
-        ];
-
-        setTokenList(
-          customTokenList,
-        );
-      } catch (fetchTokensError) {
-        logError({ fetchTokensError });
-      }
-      setLoading(false);
-    },
-    [
-      fetchTokenListWithBalance,
-    ],
-  );
+      setTokenList(customTokenList);
+    } catch (fetchTokensError) {
+      logError({ fetchTokensError });
+    }
+    setLoading(false);
+  }, []);
 
   // Effects
-  useEffect(() => {
-    tokenList.length && setFilteredTokenList(tokenList);
-  }, [tokenList, setFilteredTokenList]);
+  useEffect(
+    () => {
+      tokenList.length && setFilteredTokenList(tokenList);
+    },
+    [tokenList, setFilteredTokenList]
+  );
 
-  useEffect(() => {
-    if (!isOpen) return;
-    let localTokenList = window.localStorage.getItem(CUSTOM_TOKENS);
-    localTokenList =
-      !localTokenList || !localTokenList.length
-        ? []
-        : JSON.parse(localTokenList);
-    providerChainId && setDefaultTokenList(providerChainId, localTokenList);
-  }, [isOpen, providerChainId, setDefaultTokenList]);
+  useEffect(
+    () => {
+      if (!isOpen) return;
+      let localTokenList = window.localStorage.getItem(CUSTOM_TOKENS);
+      localTokenList =
+        !localTokenList || !localTokenList.length
+          ? []
+          : JSON.parse(localTokenList);
+      providerChainId && setDefaultTokenList(providerChainId, localTokenList);
+    },
+    [isOpen, providerChainId, setDefaultTokenList]
+  );
 
   // Handlers
   const onClick = token => {
@@ -176,7 +130,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
               >
                 <Flex align="center">
                   <PlusIcon mr={2} />
-                  <Text>{smallScreen ? 'Custom' : 'Add Custom Token'}</Text>
+                  <Text>{smallScreen ? "Custom" : "Add Custom Token"}</Text>
                 </Flex>
               </Link>
             </Flex>
@@ -187,7 +141,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
               <Input
                 placeholder="Search ..."
                 onChange={onChange}
-                _placeholder={{ color: 'grey' }}
+                _placeholder={{ color: "grey" }}
                 ref={initialRef}
               />
               <InputRightElement px={0}>
@@ -216,12 +170,10 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
             {!loading &&
               filteredTokenList.map(token => {
                 const {
-                  decimals,
-                  balance,
                   name,
                   address,
                   // logoURI,
-                  symbol,
+                  symbol
                 } = token;
                 return (
                   <Button

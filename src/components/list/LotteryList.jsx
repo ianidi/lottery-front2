@@ -1,45 +1,58 @@
-import { Flex, Grid, Text, Checkbox, useDisclosure } from '@chakra-ui/react';
-import { ListItem } from '../../components/list/ListItem';
-import { ListPagination } from '../../components/list/ListPagination';
-import { NoList } from '../../components/list/NoList';
-import { useLotteryList } from '../../hooks/useLotteryList';
-import { PlayModal } from '../../components/modals/PlayModal';
-import { LiquidityModal } from '../../components/modals/LiquidityModal';
-import { useWeb3Context } from '../../contexts/Web3Context';
-import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectSelectedLottery, setSelectedLottery } from '../../store/appSlice';
+import { Flex, Grid, Text, Checkbox, useDisclosure } from "@chakra-ui/react";
+import { ListItem } from "../../components/list/ListItem";
+import { ListPagination } from "../../components/list/ListPagination";
+import { NoList } from "../../components/list/NoList";
+import { useLotteryList } from "../../hooks/useLotteryList";
+import { PlayModal } from "../../components/modals/PlayModal";
+import { LiquidityModal } from "../../components/modals/LiquidityModal";
+import { useWeb3Context } from "../../contexts/Web3Context";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectSelectedLottery,
+  setSelectedLottery
+} from "../../store/appSlice";
 
 const TOTAL_PER_PAGE = 20;
 
 export const LotteryList = ({ page }) => {
   const { account } = useWeb3Context();
   const dispatch = useDispatch();
-  const { isOpen: isPlayOpen, onOpen: onPlayOpen, onClose: onPlayClose } = useDisclosure();
-  const { isOpen: isLiquidityOpen, onOpen: onLiquidityOpen, onClose: onLiquidityClose } = useDisclosure();
+  const {
+    isOpen: isPlayOpen,
+    onOpen: onPlayOpen,
+    onClose: onPlayClose
+  } = useDisclosure();
+  const {
+    isOpen: isLiquidityOpen,
+    onOpen: onLiquidityOpen,
+    onClose: onLiquidityClose
+  } = useDisclosure();
 
-  const { transfers, loading } = useLotteryList();
+  const { transfers } = useLotteryList();
 
   const selectedLottery = useSelector(selectSelectedLottery);
 
   const [onlyLiquidityProvided, setOnlyLiquidityProvided] = useState(false);
   const accountString = account.toLowerCase();
 
-  const filteredTransfers = onlyLiquidityProvided ? transfers.filter(i => i.member.toLowerCase() === accountString) : transfers;
+  const filteredTransfers = onlyLiquidityProvided
+    ? transfers.filter(i => i.member.toLowerCase() === accountString)
+    : transfers;
 
   const numPages = Math.ceil(filteredTransfers.length / TOTAL_PER_PAGE);
   const displayList = filteredTransfers.slice(
     (page - 1) * TOTAL_PER_PAGE,
-    Math.min(page * TOTAL_PER_PAGE, filteredTransfers.length),
+    Math.min(page * TOTAL_PER_PAGE, filteredTransfers.length)
   );
 
-  const play = (lottery) => {
+  const play = lottery => {
     dispatch(setSelectedLottery(lottery));
     onPlayOpen();
   };
 
-  const manageLiquidity = (lottery) => {
+  const manageLiquidity = lottery => {
     dispatch(setSelectedLottery(lottery));
     onLiquidityOpen();
   };
@@ -56,8 +69,12 @@ export const LotteryList = ({ page }) => {
       px={{ base: 4, sm: 8 }}
       w="100%"
     >
-      {typeof selectedLottery === "object" && <PlayModal isOpen={isPlayOpen} onClose={onPlayClose} />}
-      {typeof selectedLottery === "object" && <LiquidityModal isOpen={isLiquidityOpen} onClose={onLiquidityClose} />}
+      {typeof selectedLottery === "object" && (
+        <PlayModal isOpen={isPlayOpen} onClose={onPlayClose} />
+      )}
+      {typeof selectedLottery === "object" && (
+        <LiquidityModal isOpen={isLiquidityOpen} onClose={onLiquidityClose} />
+      )}
       <Flex justify="space-between" align="center" mb={4}>
         <Text fontSize="xl" fontWeight="bold">
           Lottery list
@@ -78,13 +95,13 @@ export const LotteryList = ({ page }) => {
         <>
           <Grid
             templateColumns={{
-              base: '1fr 1fr 1fr 1fr 1fr 1fr 1fr',
+              base: "1fr 1fr 1fr 1fr 1fr 1fr 1fr"
             }}
             color="grey"
             fontSize="sm"
             px={4}
             mb={4}
-            display={{ base: 'none', md: 'grid' }}
+            display={{ base: "none", md: "grid" }}
           >
             <Text textAlign="center">Lottery ID</Text>
             <Text textAlign="center">Liquidity pool</Text>
@@ -95,7 +112,13 @@ export const LotteryList = ({ page }) => {
             <Text textAlign="center">Liquidity</Text>
           </Grid>
           {displayList.map((item, index) => (
-            <ListItem key={index} item={item} accountString={accountString} play={play} manageLiquidity={manageLiquidity} />
+            <ListItem
+              key={index}
+              item={item}
+              accountString={accountString}
+              play={play}
+              manageLiquidity={manageLiquidity}
+            />
           ))}
           {numPages > 1 && (
             <ListPagination numPages={numPages} currentPage={page} />

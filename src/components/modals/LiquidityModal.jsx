@@ -12,15 +12,15 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  useToast,
-} from '@chakra-ui/react';
-import { TxLink } from '../../components/common/TxLink';
-import { useWeb3Context } from '../../contexts/Web3Context';
+  useToast
+} from "@chakra-ui/react";
+import { TxLink } from "../../components/common/TxLink";
+import { useWeb3Context } from "../../contexts/Web3Context";
 // import { FORMULA } from '../../lib/constants';
 // import { fetchLiquidityBalance } from '../../lib/token';
 // import { formatValue, logError, parseValue, truncateText } from '../../lib/helpers';
-import { useRedeem } from '../../hooks/useRedeem';
-import React from 'react';
+import { useRedeem } from "../../hooks/useRedeem";
+import React from "react";
 import { useSelector } from "react-redux";
 import { selectSelectedLottery } from "../../store/appSlice";
 
@@ -30,17 +30,17 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
 
   const selectedLottery = useSelector(selectSelectedLottery);
 
-  const { tokenSymbol, tokenName, tokenDecimals, formula, liquidity, collateral, lotteryID, maxBetPercent } = selectedLottery;
+  const { lotteryID } = selectedLottery;
 
-  const { redeemTxHash, redeemLoading, redeem } = useRedeem({lotteryID});
+  const { redeemTxHash, redeemLoading, redeem } = useRedeem({ lotteryID });
 
   const showError = msg => {
     if (msg) {
       toast({
-        title: 'Error',
+        title: "Error",
         description: msg,
-        status: 'error',
-        isClosable: 'true',
+        status: "error",
+        isClosable: "true"
       });
     }
   };
@@ -49,17 +49,19 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
     if (redeemLoading) {
       return;
     }
-    redeem().then(() => {
-      onClose();
-    }).catch(error => {
-      if (error && error.message) {
-        showError(error.message);
-      } else {
-        showError(
-          'Impossible to perform the operation. Reload the application and try again.',
-        );
-      }
-    });
+    redeem()
+      .then(() => {
+        onClose();
+      })
+      .catch(error => {
+        if (error && error.message) {
+          showError(error.message);
+        } else {
+          showError(
+            "Impossible to perform the operation. Reload the application and try again."
+          );
+        }
+      });
   };
 
   // useEffect(() => {
@@ -114,13 +116,13 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
             p={2}
           />
           <ModalBody px={6} py={0}>
-            <Box w="100%" fontSize="sm" color={'black'} mt={2}>
+            <Box w="100%" fontSize="sm" color={"black"} mt={2}>
               <Text as="span">You have </Text>
               <Text as="b">xxx</Text>
               <Text as="span"> liquidity.</Text>
             </Box>
             <Divider color="#DAE3F0" my={4} />
-            <Box w="100%" fontSize="sm" color={'black'} mb={2}>
+            <Box w="100%" fontSize="sm" color={"black"} mb={2}>
               <Text as="span">You can withdraw your liquidity.</Text>
             </Box>
           </ModalBody>
@@ -128,14 +130,14 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
             <Flex
               w="100%"
               justify="space-between"
-              align={{ base: 'stretch', md: 'center' }}
-              direction={{ base: 'column', md: 'row' }}
+              align={{ base: "stretch", md: "center" }}
+              direction={{ base: "column", md: "row" }}
             >
               <Button
                 px={12}
                 onClick={onClose}
                 background="background"
-                _hover={{ background: '#bfd3f2' }}
+                _hover={{ background: "#bfd3f2" }}
                 color="#687D9D"
               >
                 Cancel
@@ -145,7 +147,8 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
                 onClick={onClick}
                 colorScheme="blue"
                 mt={{ base: 2, md: 0 }}
-                cursor={true ? 'pointer' : 'not-allowed'} opacity={true ? 1 : 0.4}
+                cursor={true ? "pointer" : "not-allowed"}
+                opacity={true ? 1 : 0.4}
               >
                 {redeemLoading ? (
                   <TxLink chainId={providerChainId} hash={redeemTxHash}>
@@ -153,7 +156,9 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
                   </TxLink>
                 ) : (
                   <>
-                    <Text color="white" fontWeight="bold">Withdraw</Text>
+                    <Text color="white" fontWeight="bold">
+                      Withdraw
+                    </Text>
                   </>
                 )}
               </Button>
@@ -161,6 +166,6 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
           </ModalFooter>
         </ModalContent>
       </ModalOverlay>
-    </Modal >
+    </Modal>
   );
 };

@@ -16,7 +16,7 @@ const TOTAL_PER_PAGE = 20;
 export const History: React.FC<Props> = ({ page }) => {
   const { account } = useWeb3Context();
 
-  const { transfers, loading } = useMemberHistory({ member: account.toLowerCase() });
+  const { transfers } = useMemberHistory({ member: account.toLowerCase() });
 
   const numPages = Math.ceil(transfers.length / TOTAL_PER_PAGE);
   const displayHistory = transfers.slice(

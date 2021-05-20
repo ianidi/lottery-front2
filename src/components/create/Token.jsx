@@ -68,7 +68,7 @@ export const Token = () => {
         }
       };
     },
-    [token, account, setBalanceLoading]
+    [token, dispatch, account, setBalanceLoading]
   );
 
   useEffect(
@@ -85,7 +85,7 @@ export const Token = () => {
         subscription.unsubscribe();
       };
     },
-    [amountInput]
+    [token, amountInput, dispatch]
   );
 
   return (
