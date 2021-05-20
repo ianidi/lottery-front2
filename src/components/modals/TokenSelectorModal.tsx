@@ -26,9 +26,16 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/appSlice";
 
+
+interface Props {
+  isOpen: boolean
+  onClose: () => void
+  onCustom: () => void
+}
+
 const { CUSTOM_TOKENS } = LOCAL_STORAGE_KEYS;
 
-export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
+export const TokenSelectorModal: React.FC<Props> = ({ isOpen, onClose, onCustom }) => {
   const dispatch = useDispatch();
 
   // Ref
@@ -38,7 +45,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
   // const { disableBalanceFetchToken } = useSettings();
   // State
   const [loading, setLoading] = useState(true);
-  const [tokenList, setTokenList] = useState([]);
+  const [tokenList, setTokenList] = useState<any>([]);
   const [filteredTokenList, setFilteredTokenList] = useState([]);
   const smallScreen = useBreakpointValue({ sm: false, base: true });
 
@@ -50,7 +57,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
       const customTokenList = [
         ...uniqueTokens(
           baseTokenList.concat(
-            customTokens.filter(token => token.chainId === chainId)
+            customTokens.filter((token: any) => token.chainId === chainId)
           )
         )
       ];
@@ -84,13 +91,13 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
   );
 
   // Handlers
-  const onClick = token => {
+  const onClick = (token: any) => {
     onClose();
     dispatch(setToken(token));
   };
 
-  const onChange = e => {
-    const newFilteredTokenList = tokenList.filter(token => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newFilteredTokenList = tokenList.filter((token: any) => {
       const lowercaseSearch = e.target.value.toLowerCase();
       const { name, symbol, address } = token;
       return (
@@ -108,6 +115,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
       onClose={onClose}
       scrollBehavior="inside"
       isCentered
+      //@ts-ignore
       initialFocusRef={initialRef}
     >
       <ModalOverlay background="modalBG">
@@ -142,6 +150,7 @@ export const TokenSelectorModal = ({ isOpen, onClose, onCustom }) => {
                 placeholder="Search ..."
                 onChange={onChange}
                 _placeholder={{ color: "grey" }}
+                //@ts-ignore
                 ref={initialRef}
               />
               <InputRightElement px={0}>

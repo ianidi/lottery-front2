@@ -23,9 +23,15 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/appSlice";
 
+interface Props {
+  isOpen: boolean
+  onClose: () => void
+  onBack: () => void
+}
+
 const { CUSTOM_TOKENS } = LOCAL_STORAGE_KEYS;
 
-export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
+export const CustomTokenModal: React.FC<Props> = ({ isOpen, onClose, onBack }) => {
   const dispatch = useDispatch();
 
   const toast = useToast();
@@ -59,7 +65,7 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
   };
 
   const addCustomToken = () => {
-    let localTokensList = window.localStorage.getItem(CUSTOM_TOKENS);
+    let localTokensList: any = window.localStorage.getItem(CUSTOM_TOKENS);
     let customTokensList = [];
 
     if (!localTokensList) {
@@ -79,7 +85,7 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
     dispatch(setToken(customToken));
   };
 
-  const handleChange = async e => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'address') {
       setAddressInput(e.target.value);
       if (utils.isAddress(e.target.value)) {
@@ -91,7 +97,9 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
     } else {
       if (e.target.id === 'decimals') {
         let value = e.target.value.replace(/\D/, '');
+        // @ts-ignore
         if (value < 0 || value > 18) { return }
+        // @ts-ignore
         setCustomToken({ ...customToken, [e.target.id]: value });
       } else {
         setCustomToken({ ...customToken, [e.target.id]: e.target.value });
@@ -107,6 +115,7 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
       onClose={onClose}
       scrollBehavior="inside"
       isCentered
+      // @ts-ignore
       initialFocusRef={initialRef}
     >
       <ModalOverlay background="modalBG">
@@ -138,6 +147,7 @@ export const CustomTokenModal = ({ isOpen, onClose, onBack }) => {
                   onChange={handleChange}
                   _placeholder={{ color: 'grey' }}
                   value={addressInput}
+                  // @ts-ignore
                   ref={initialRef}
                   isInvalid={addressInvalid}
                 />

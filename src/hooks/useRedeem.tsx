@@ -4,7 +4,7 @@ import { logError } from '../lib/helpers';
 import { redeemLottery } from '../lib/lottery';
 
 interface Props {
-  lotteryID: number
+  lotteryID: string
 }
 
 interface Return {

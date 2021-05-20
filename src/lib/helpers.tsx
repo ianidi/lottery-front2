@@ -7,26 +7,30 @@ import {
   networkLabels,
 } from './constants';
 
-export const getDefaultToken = chainId => defaultTokens[chainId] || defaultTokens[1];
+//@ts-ignore
+export const getDefaultToken = (chainId: any): any => defaultTokens[chainId] || defaultTokens[1];
 
-export const getNetworkLabel = chainId => networkLabels[chainId] || 'Unknown';
+//@ts-ignore
+export const getNetworkLabel = (chainId: any): any => networkLabels[chainId] || 'Unknown';
 
-export const getNetworkCurrency = chainId => networkCurrencies[chainId] || { name: 'Unknown', symbol: 'Unknown' };
+//@ts-ignore
+export const getNetworkCurrency = (chainId: any): any => networkCurrencies[chainId] || { name: 'Unknown', symbol: 'Unknown' };
 
-export const getExplorerUrl = chainId => (chainUrls[chainId] || chainUrls[1]).explorer;
+//@ts-ignore
+export const getExplorerUrl = (chainId: any): any => (chainUrls[chainId] || chainUrls[1]).explorer;
 
-export const getTokenListUrl = chainId =>
-  defaultTokensUrl[chainId] || defaultTokensUrl[1];
+//@ts-ignore
+export const getTokenListUrl = (chainId: any): any => defaultTokensUrl[chainId] || defaultTokensUrl[1];
 
-export const removeElement = (array, index) => {
+export const removeElement = (array: any, index: any) => {
   const cloneArr = [...array];
   cloneArr.splice(index, 1);
   return cloneArr;
 };
 
-export const uniqueTokens = list => {
+export const uniqueTokens = (list: any) => {
   const seen = {};
-  return list.filter(token => {
+  return list.filter((token: any) => {
     const { address } = token;
     const lowerCaseAddress = address.toLowerCase();
     const isDuplicate = Object.prototype.hasOwnProperty.call(
@@ -34,12 +38,13 @@ export const uniqueTokens = list => {
       lowerCaseAddress,
     )
       ? false
+      //@ts-ignore
       : (seen[lowerCaseAddress] = true);
     return isDuplicate;
   });
 };
 
-export const formatValue = (num, dec) => {
+export const formatValue = (num: any, dec: any) => {
   const str = utils.formatUnits(num, dec);
   if (str.length > 50) {
     const expStr = Number(str).toExponential().replace(/e\+?/, ' x 10^');
@@ -53,7 +58,7 @@ export const formatValue = (num, dec) => {
   // return Number(str).toLocaleString('en', { maximumFractionDigits: 4 });
 };
 
-export const parseValue = (num, dec) => {
+export const parseValue = (num: any, dec: any) => {
   let result;
   try {
     result = utils.parseUnits(num, dec);
@@ -63,19 +68,19 @@ export const parseValue = (num, dec) => {
   return result;
 };
 
-export const fetchQueryParams = search => {
+export const fetchQueryParams = (search: any) => {
   if (!search || !search.trim().length) return null;
   return search
     .replace('?', '')
     .split(/&/g)
-    .reduce((acc, keyValuePair) => {
+    .reduce((acc: any, keyValuePair: any) => {
       const [key, value] = keyValuePair.split('=');
       acc[key] = value;
       return acc;
     }, {});
 };
 
-export const getAccountString = account => {
+export const getAccountString = (account: any) => {
   const len = account.length;
   return `${account.substr(0, 6)}...${account.substr(
     len - 4,
@@ -83,19 +88,19 @@ export const getAccountString = account => {
   )}`.toUpperCase();
 };
 
-export const logError = error => {
+export const logError = (error: any) => {
   // eslint-disable-next-line no-console
   console.error(error);
 };
 
-export const logDebug = error => {
+export const logDebug = (error: any) => {
   if (process.env.REACT_APP_DEBUG_LOGS === 'true') {
     // eslint-disable-next-line no-console
     console.debug(error);
   }
 };
 
-export const truncateText = (text, maxLength) => {
+export const truncateText = (text: string, maxLength: number) => {
   let truncated = text;
 
   if (truncated.length > maxLength - 3) {

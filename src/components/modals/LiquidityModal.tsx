@@ -16,15 +16,17 @@ import {
 } from "@chakra-ui/react";
 import { TxLink } from "../../components/common/TxLink";
 import { useWeb3Context } from "../../contexts/Web3Context";
-// import { FORMULA } from '../../lib/constants';
-// import { fetchLiquidityBalance } from '../../lib/token';
-// import { formatValue, logError, parseValue, truncateText } from '../../lib/helpers';
 import { useRedeem } from "../../hooks/useRedeem";
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectSelectedLottery } from "../../store/appSlice";
 
-export const LiquidityModal = ({ isOpen, onClose }) => {
+interface Props {
+  isOpen: boolean
+  onClose: () => void
+}
+
+export const LiquidityModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
 
@@ -34,13 +36,13 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
 
   const { redeemTxHash, redeemLoading, redeem } = useRedeem({ lotteryID });
 
-  const showError = msg => {
+  const showError = (msg: string | JSX.Element) => {
     if (msg) {
       toast({
         title: "Error",
         description: msg,
         status: "error",
-        isClosable: "true"
+        isClosable: true
       });
     }
   };
@@ -63,38 +65,6 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
         }
       });
   };
-
-  // useEffect(() => {
-  //   const token = {
-  //     chainId: providerChainId,
-  //     address: collateral,
-  //   };
-
-  //   let subscription;
-  //   if (token && account) {
-  //     // setBalanceLoading(true);
-  //     subscription = defer(() =>
-  //       fetchLiquidityBalance(token, account).catch(balanceError => {
-  //         // logError({ balanceError });
-  //         // setBalance(BigNumber.from(0));
-  //         // setBalanceIsZero(true);
-  //         // setBalanceLoading(false);
-  //       }),
-  //     ).subscribe(b => {
-  //       // setBalance(b);
-  //       // setBalanceIsZero(b.eq(BigNumber.from(0)))
-  //       // setBalanceLoading(false);
-  //     });
-  //   } else {
-  //     // setBalance(BigNumber.from(0));
-  //     // setBalanceIsZero(true);
-  //   }
-  //   return () => {
-  //     if (subscription) {
-  //       subscription.unsubscribe();
-  //     }
-  //   };
-  // }, [account, lotteryID]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered>

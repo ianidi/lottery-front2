@@ -6,7 +6,7 @@ const memoized = memoize(
   url => new ethers.providers.StaticJsonRpcProvider(url),
 );
 
-export const getEthersProvider = async chainId => {
+export const getEthersProvider = async () => {
   const rpcURL = RPC_URL;
   const provider = memoized(rpcURL);
   return provider || null;

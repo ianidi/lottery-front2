@@ -4,10 +4,10 @@ import { logError } from './helpers';
 import { getEthersProvider } from './providers';
 
 export const fetchAllowance = async (
-  { address },
-  account,
-  delegate,
-  ethersProvider,
+  { address }: any,
+  account: any,
+  delegate: any,
+  ethersProvider: any,
 ) => {
   if (
     !account ||
@@ -30,15 +30,15 @@ export const fetchAllowance = async (
   return BigNumber.from(0);
 };
 
-export const fetchTokenName = async token => {
-  const ethersProvider = await getEthersProvider(token.chainId);
+export const fetchTokenName = async (token: any) => {
+  const ethersProvider = await getEthersProvider();
   const abi = ['function name() view returns (string)'];
   const tokenContract = new Contract(token.address, abi, ethersProvider);
   return tokenContract.name();
 };
 
-export const fetchTokenDetailsBytes32 = async token => {
-  const ethersProvider = await getEthersProvider(token.chainId);
+export const fetchTokenDetailsBytes32 = async (token: any) => {
+  const ethersProvider = await getEthersProvider();
   const abi = [
     'function decimals() view returns (uint8)',
     'function symbol() view returns (bytes32)',
@@ -57,8 +57,8 @@ export const fetchTokenDetailsBytes32 = async token => {
   };
 };
 
-export const fetchTokenDetailsString = async token => {
-  const ethersProvider = await getEthersProvider(token.chainId);
+export const fetchTokenDetailsString = async (token: any) => {
+  const ethersProvider = await getEthersProvider();
   const abi = [
     'function decimals() view returns (uint8)',
     'function symbol() view returns (string)',
@@ -75,7 +75,7 @@ export const fetchTokenDetailsString = async token => {
   return { name, symbol, decimals };
 };
 
-const fetchTokenDetailsFromContract = async token => {
+const fetchTokenDetailsFromContract = async (token: any) => {
   let details = {};
   try {
     details = await fetchTokenDetailsString(token);
@@ -85,8 +85,8 @@ const fetchTokenDetailsFromContract = async token => {
   return details;
 };
 
-export const fetchTokenDetails = async (token) => {
-  const [{ name, symbol, decimals }] = await Promise.all([
+export const fetchTokenDetails = async (token: any) => {
+  const [{ name, symbol, decimals }]: any = await Promise.all([
     fetchTokenDetailsFromContract(token),
   ]);
 
@@ -99,25 +99,25 @@ export const fetchTokenDetails = async (token) => {
 };
 
 export const approveToken = async (
-  ethersProvider,
-  { address },
-  recipient,
-  amount,
+  ethersProvider: any,
+  { address }: any,
+  recipient: any,
+  amount: any,
 ) => {
   const abi = ['function approve(address, uint256)'];
   const tokenContract = new Contract(address, abi, ethersProvider.getSigner());
   return tokenContract.approve(recipient, amount);
 };
 
-export const fetchTokenBalance = async (token, account) => {
-  const ethersProvider = await getEthersProvider(token.chainId);
+export const fetchTokenBalance = async (token: any, account: any) => {
+  const ethersProvider = await getEthersProvider();
   return fetchTokenBalanceWithProvider(ethersProvider, token, account);
 };
 
 export const fetchTokenBalanceWithProvider = async (
-  ethersProvider,
-  { address },
-  account,
+  ethersProvider: any,
+  { address }: any,
+  account: any,
 ) => {
   if (address === ADDRESS_ZERO) {
     return ethersProvider.getBalance(account);
