@@ -1,14 +1,14 @@
 import { Button, Flex, Image, Input, Spinner, Text, useBreakpointValue, useDisclosure } from '@chakra-ui/react';
-import DropDown from 'assets/drop-down.svg';
-// import { Logo } from 'components/common/Logo';
-import { SelectTokenModal } from 'components/modals/SelectTokenModal';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { formatValue, logError, truncateText, parseValue } from 'lib/helpers';
-import { fetchTokenBalance } from 'lib/token';
+import DropDown from '../../assets/drop-down.svg';
+// import { Logo } from '../../components/common/Logo';
+import { SelectTokenModal } from '../../components/modals/SelectTokenModal';
+import { useWeb3Context } from '../../contexts/Web3Context';
+import { formatValue, logError, truncateText, parseValue } from '../../lib/helpers';
+import { fetchTokenBalance } from '../../lib/token';
 import React, { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 import { useDispatch, useSelector } from "react-redux";
-import { selectToken, selectBalance, setAmount, setBalance } from "store/appSlice";
+import { selectToken, selectBalance, setAmount, setBalance } from "../../store/appSlice";
 import { BigNumber } from '@ethersproject/bignumber';
 import NumberFormat from 'react-number-format';
 

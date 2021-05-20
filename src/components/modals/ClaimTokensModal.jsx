@@ -13,7 +13,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import ClaimTokensImage from 'assets/multiple-claim.svg';
+import ClaimTokensImage from '../../assets/multiple-claim.svg';
 import React, { useState } from 'react';
 
 export const ClaimTokensModal = () => {

@@ -1,11 +1,11 @@
 import { Slider, SliderTrack, Box, Select, SliderFilledTrack, SliderThumb, VStack, Flex, Text } from '@chakra-ui/react';
-import { UnlockButton } from 'components/common/UnlockButton';
-import { CreateButton } from 'components/create/CreateButton';
-import { Token } from 'components/create/Token';
-import { FORMULA } from 'lib/constants';
+import { UnlockButton } from '../../components/common/UnlockButton';
+import { CreateButton } from '../../components/create/CreateButton';
+import { Token } from '../../components/create/Token';
+import { FORMULA } from '../../lib/constants';
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { selectMaxBetPercent, setMaxBetPercent, selectFormula, setFormula, selectToken, selectAmount, selectBalanceIsZero, selectAmountIsZero, selectTransferAllowed } from "store/appSlice";
+import { selectMaxBetPercent, setMaxBetPercent, selectFormula, setFormula, selectToken, selectAmount, selectBalanceIsZero, selectAmountIsZero, selectTransferAllowed } from "../../store/appSlice";
 
 export const Create = () => {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { Button, Flex, Text } from '@chakra-ui/react';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { WalletFilledIcon } from 'icons/WalletFilledIcon';
+import { useWeb3Context } from '../../contexts/Web3Context';
+import { WalletFilledIcon } from '../../icons/WalletFilledIcon';
 import React from 'react';
 
 export const ConnectWeb3 = () => {

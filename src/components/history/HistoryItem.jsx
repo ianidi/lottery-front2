@@ -7,10 +7,10 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { TxLink } from 'components/common/TxLink';
-import { useWeb3Context } from 'contexts/Web3Context';
+import { TxLink } from '../../components/common/TxLink';
+import { useWeb3Context } from '../../contexts/Web3Context';
 import { BigNumber, utils } from 'ethers';
-import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
+import { POLLING_INTERVAL, FORMULA } from '../../lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
 export const HistoryItem = ({ item: { amount, result, collateral, tokenDecimals, tokenSymbol, tokenName, formula, lotteryID, txHash, timestamp } }) => {

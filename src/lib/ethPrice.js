@@ -1,4 +1,4 @@
-import { logDebug, logError } from 'lib/helpers';
+import { logDebug, logError } from './helpers';
 
 const ethPriceFromApi = async fetchFn => {
   try {

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { logError } from 'lib/helpers';
-import { playLottery } from 'lib/lottery';
+import { useWeb3Context } from '../contexts/Web3Context';
+import { logError } from '../lib/helpers';
+import { playLottery } from '../lib/lottery';
 
 export const usePlay = (lotteryID, amount) => {
   const { account, ethersProvider } = useWeb3Context();

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { BigNumber } from 'ethers';
-import { DEFAULT_TOKEN } from 'lib/constants';
+import { DEFAULT_TOKEN } from '../lib/constants';
 
 export const appSlice = createSlice({
   name: "app",

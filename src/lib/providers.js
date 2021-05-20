@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import memoize from 'fast-memoize';
-import { RPC_URL } from 'lib/constants';
+import { RPC_URL } from './constants';
 
 const memoized = memoize(
   url => new ethers.providers.StaticJsonRpcProvider(url),

@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { LARGEST_UINT256, LOCAL_STORAGE_KEYS, LOTTERY_CONTRACT_ADDRESS } from 'lib/constants';
-import { logError } from 'lib/helpers';
-import { approveToken, fetchAllowance } from 'lib/token';
+import { useWeb3Context } from '../contexts/Web3Context';
+import { LARGEST_UINT256, LOCAL_STORAGE_KEYS, LOTTERY_CONTRACT_ADDRESS } from '../lib/constants';
+import { logError } from '../lib/helpers';
+import { approveToken, fetchAllowance } from '../lib/token';
 import { useDispatch } from "react-redux";
-import { setAllowance } from "store/appSlice";
+import { setAllowance } from "../store/appSlice";
 
 const { INFINITE_UNLOCK } = LOCAL_STORAGE_KEYS;
 

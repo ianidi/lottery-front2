@@ -14,15 +14,15 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { TxLink } from 'components/common/TxLink';
-import { useWeb3Context } from 'contexts/Web3Context';
-// import { FORMULA } from 'lib/constants';
-// import { fetchLiquidityBalance } from 'lib/token';
-// import { formatValue, logError, parseValue, truncateText } from 'lib/helpers';
-import { useRedeem } from 'hooks/useRedeem';
+import { TxLink } from '../../components/common/TxLink';
+import { useWeb3Context } from '../../contexts/Web3Context';
+// import { FORMULA } from '../../lib/constants';
+// import { fetchLiquidityBalance } from '../../lib/token';
+// import { formatValue, logError, parseValue, truncateText } from '../../lib/helpers';
+import { useRedeem } from '../../hooks/useRedeem';
 import React from 'react';
 import { useSelector } from "react-redux";
-import { selectSelectedLottery } from "store/appSlice";
+import { selectSelectedLottery } from "../../store/appSlice";
 
 export const LiquidityModal = ({ isOpen, onClose }) => {
   const toast = useToast();

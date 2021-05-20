@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BigNumber, utils } from 'ethers';
 import { GasPriceOracle } from 'gas-price-oracle';
-import { logError } from 'lib/helpers';
+import { logError } from './helpers';
 
 const lowest = arr => {
   return arr.reduce((low, item) => (low > item ? item : low), arr[0]);

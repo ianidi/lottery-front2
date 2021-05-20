@@ -5,11 +5,11 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { WalletSelector } from 'components/common/WalletSelector';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { CreateIcon } from 'icons/CreateIcon';
-import { LotteryIcon } from 'icons/LotteryIcon';
-import { HistoryIcon } from 'icons/HistoryIcon';
+import { WalletSelector } from '../../components/common/WalletSelector';
+import { useWeb3Context } from '../../contexts/Web3Context';
+import { CreateIcon } from '../../icons/CreateIcon';
+import { LotteryIcon } from '../../icons/LotteryIcon';
+import { HistoryIcon } from '../../icons/HistoryIcon';
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 

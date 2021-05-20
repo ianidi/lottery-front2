@@ -5,7 +5,7 @@ import {
   defaultTokensUrl,
   networkCurrencies,
   networkLabels,
-} from 'lib/constants';
+} from './constants';
 
 export const getDefaultToken = chainId => defaultTokens[chainId] || defaultTokens[1];
 

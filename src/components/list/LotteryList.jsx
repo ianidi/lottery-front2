@@ -1,15 +1,15 @@
 import { Flex, Grid, Text, Checkbox, useDisclosure } from '@chakra-ui/react';
-import { ListItem } from 'components/list/ListItem';
-import { ListPagination } from 'components/list/ListPagination';
-import { NoList } from 'components/list/NoList';
-import { useLotteryList } from 'hooks/useLotteryList';
-import { PlayModal } from 'components/modals/PlayModal';
-import { LiquidityModal } from 'components/modals/LiquidityModal';
-import { useWeb3Context } from 'contexts/Web3Context';
+import { ListItem } from '../../components/list/ListItem';
+import { ListPagination } from '../../components/list/ListPagination';
+import { NoList } from '../../components/list/NoList';
+import { useLotteryList } from '../../hooks/useLotteryList';
+import { PlayModal } from '../../components/modals/PlayModal';
+import { LiquidityModal } from '../../components/modals/LiquidityModal';
+import { useWeb3Context } from '../../contexts/Web3Context';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSelectedLottery, setSelectedLottery } from 'store/appSlice';
+import { selectSelectedLottery, setSelectedLottery } from '../../store/appSlice';
 
 const TOTAL_PER_PAGE = 20;
 

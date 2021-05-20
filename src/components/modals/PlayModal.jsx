@@ -14,17 +14,17 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { UnlockButton } from 'components/common/UnlockButton';
-import { TxLink } from 'components/common/TxLink';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { FORMULA } from 'lib/constants';
-import { fetchTokenBalance } from 'lib/token';
-import { formatValue, logError, parseValue, truncateText } from 'lib/helpers';
-import { usePlay } from 'hooks/usePlay';
+import { UnlockButton } from '../../components/common/UnlockButton';
+import { TxLink } from '../../components/common/TxLink';
+import { useWeb3Context } from '../../contexts/Web3Context';
+import { FORMULA } from '../../lib/constants';
+import { fetchTokenBalance } from '../../lib/token';
+import { formatValue, logError, parseValue, truncateText } from '../../lib/helpers';
+import { usePlay } from '../../hooks/usePlay';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from "react-redux";
-import { selectSelectedLottery, selectAllowance } from "store/appSlice";
+import { selectSelectedLottery, selectAllowance } from "../../store/appSlice";
 import { BigNumber } from '@ethersproject/bignumber';
 import NumberFormat from 'react-number-format';
 import { defer } from 'rxjs';

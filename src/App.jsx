@@ -2,14 +2,14 @@ import 'focus-visible/dist/focus-visible';
 
 import { ChakraProvider, CSSReset } from '@chakra-ui/react';
 import { css, Global } from '@emotion/react';
-import { ErrorBoundary } from 'components/common/ErrorBoundary';
-import { Layout } from 'components/common/Layout';
-import { Web3Provider } from 'contexts/Web3Context';
+import { ErrorBoundary } from './components/common/ErrorBoundary';
+import { Layout } from './components/common/Layout';
+import { Web3Provider } from './contexts/Web3Context';
 import React from 'react';
 import { HashRouter as Router } from 'react-router-dom';
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { store, persistor } from "store";
+import { store, persistor } from "./store";
 
 import { Routes } from './Routes';
 import { theme } from './theme';

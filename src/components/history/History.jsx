@@ -1,9 +1,9 @@
 import { Flex, Grid, Text } from '@chakra-ui/react';
-import { HistoryItem } from 'components/history/HistoryItem';
-import { HistoryPagination } from 'components/history/HistoryPagination';
-import { NoHistory } from 'components/history/NoHistory';
-import { useMemberHistory } from 'hooks/useMemberHistory';
-import { useWeb3Context } from 'contexts/Web3Context';
+import { HistoryItem } from '../../components/history/HistoryItem';
+import { HistoryPagination } from '../../components/history/HistoryPagination';
+import { NoHistory } from '../../components/history/NoHistory';
+import { useMemberHistory } from '../../hooks/useMemberHistory';
+import { useWeb3Context } from '../../contexts/Web3Context';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 

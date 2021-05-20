@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Image, Text, useDisclosure, useToast } from '@chakra-ui/react';
-import TransferIcon from 'assets/transfer.svg';
-import { CreateModal } from 'components/modals/CreateModal';
-import { useWeb3Context } from 'contexts/Web3Context';
+import TransferIcon from '../../assets/transfer.svg';
+import { CreateModal } from '../../components/modals/CreateModal';
+import { useWeb3Context } from '../../contexts/Web3Context';
 import { useSelector } from "react-redux";
-import { selectTransferAllowed, selectFormula } from "store/appSlice";
+import { selectTransferAllowed, selectFormula } from "../../store/appSlice";
 
 export const CreateButton = () => {
   const { ethersProvider } = useWeb3Context();

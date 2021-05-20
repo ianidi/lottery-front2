@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Image, Link, Spinner, Text, useToast } from '@chakra-ui/react';
-import UnlockIcon from 'assets/unlock.svg';
-import { TxLink } from 'components/common/TxLink';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { LOTTERY_CONTRACT_ADDRESS } from 'lib/constants';
-import { useApproval } from 'hooks/useApproval';
+import UnlockIcon from '../../assets/unlock.svg';
+import { TxLink } from '../../components/common/TxLink';
+import { useWeb3Context } from '../../contexts/Web3Context';
+import { LOTTERY_CONTRACT_ADDRESS } from '../../lib/constants';
+import { useApproval } from '../../hooks/useApproval';
 
 export const UnlockButton = ({ token, amount, balanceIsZero, amountIsZero, transferAllowed }) => {
   const toast = useToast();

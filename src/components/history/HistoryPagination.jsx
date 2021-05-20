@@ -1,6 +1,6 @@
 import { Button, Flex, HStack } from '@chakra-ui/react';
-import { LeftIcon } from 'icons/LeftIcon';
-import { RightIcon } from 'icons/RightIcon';
+import { LeftIcon } from '../../icons/LeftIcon';
+import { RightIcon } from '../../icons/RightIcon';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 

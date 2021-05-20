@@ -14,14 +14,14 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import CustomTokenImage from 'assets/custom-token.svg';
-import { useWeb3Context } from 'contexts/Web3Context';
+import CustomTokenImage from '../../assets/custom-token.svg';
+import { useWeb3Context } from '../../contexts/Web3Context';
 import { utils } from 'ethers';
-import { LOCAL_STORAGE_KEYS } from 'lib/constants';
-import { uniqueTokens } from 'lib/helpers';
+import { LOCAL_STORAGE_KEYS } from '../../lib/constants';
+import { uniqueTokens } from '../../lib/helpers';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from "react-redux";
-import { setToken } from "store/appSlice";
+import { setToken } from "../../store/appSlice";
 
 const { CUSTOM_TOKENS } = LOCAL_STORAGE_KEYS;
 

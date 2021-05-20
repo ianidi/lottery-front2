@@ -6,7 +6,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { BigNumber, utils } from 'ethers';
-import { POLLING_INTERVAL, FORMULA } from 'lib/constants';
+import { POLLING_INTERVAL, FORMULA } from '../../lib/constants';
 import React, { useCallback, useMemo } from 'react';
 
 export const ListItem = ({ play, manageLiquidity, item, accountString, item: { lotteryID, liquidity, formula, maxBetPercent, member, duration, tokenName, tokenSymbol, tokenDecimals } }) => {

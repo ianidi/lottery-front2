@@ -16,17 +16,17 @@ import {
   Text,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import SearchIcon from 'assets/search.svg';
-import { useWeb3Context } from 'contexts/Web3Context';
-import { PlusIcon } from 'icons/PlusIcon';
-import { ADDRESS_ZERO, LOCAL_STORAGE_KEYS } from 'lib/constants';
+import SearchIcon from '../../assets/search.svg';
+import { useWeb3Context } from '../../contexts/Web3Context';
+import { PlusIcon } from '../../icons/PlusIcon';
+import { ADDRESS_ZERO, LOCAL_STORAGE_KEYS } from '../../lib/constants';
 import {
   logError,
   removeElement,
   uniqueTokens,
-} from 'lib/helpers';
-import { fetchTokenBalanceWithProvider } from 'lib/token';
-import { fetchTokenList } from 'lib/tokenList';
+} from '../../lib/helpers';
+import { fetchTokenBalanceWithProvider } from '../../lib/token';
+import { fetchTokenList } from '../../lib/tokenList';
 import React, {
   useCallback,
   useEffect,
@@ -34,7 +34,7 @@ import React, {
   useState,
 } from 'react';
 import { useDispatch } from "react-redux";
-import { setToken } from "store/appSlice";
+import { setToken } from "../../store/appSlice";
 
 const { CUSTOM_TOKENS } = LOCAL_STORAGE_KEYS;
 

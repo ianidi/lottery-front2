@@ -1,7 +1,7 @@
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { ethers } from 'ethers';
-import { logError } from 'lib/helpers';
-import { RPC_URL } from 'lib/constants';
+import { logError } from '../lib/helpers';
+import { RPC_URL } from '../lib/constants';
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
