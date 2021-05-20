@@ -65,7 +65,7 @@ export const WalletSelector: React.FC<Props> = ({ close }) => {
               <Button
                 colorScheme="blue"
                 onClick={() => {
-                  {/* @ts-ignore */ }
+                  // @ts-ignore
                   disconnect();
                   close();
                 }}
