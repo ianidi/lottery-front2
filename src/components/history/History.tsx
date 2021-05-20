@@ -7,9 +7,13 @@ import { useWeb3Context } from '../../contexts/Web3Context';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+interface Props {
+  page: number
+}
+
 const TOTAL_PER_PAGE = 20;
 
-export const History = ({ page }) => {
+export const History: React.FC<Props> = ({ page }) => {
   const { account } = useWeb3Context();
 
   const { transfers, loading } = useMemberHistory({ member: account.toLowerCase() });

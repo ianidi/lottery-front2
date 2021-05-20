@@ -1,5 +1,20 @@
 import { gql, request } from 'graphql-request';
 
+export interface playLotteries {
+  id: string
+  txHash: string
+  member: string
+  lotteryID: string
+  amount: string
+  timestamp: number
+  result: string
+  collateral: string
+  formula: number
+  tokenName: string
+  tokenSymbol: string
+  tokenDecimals: string
+}
+
 const pageSize = 1000;
 
 const requestsUserQuery = gql`
@@ -27,12 +42,12 @@ const requestsUserQuery = gql`
   }
 `;
 
-export const getRequests = async (member, graphEndpoint) => {
+export const getRequests = async (member: string, graphEndpoint: string) => {
   const userRequests = await getRequestsWithQuery(member, graphEndpoint, requestsUserQuery);
   return userRequests;
 };
 
-export const getRequestsWithQuery = async (member, graphEndpoint, query) => {
+export const getRequestsWithQuery = async (member: string, graphEndpoint: string, query: string): Promise<Array<playLotteries>> => {
   let requests = [];
   let page = 0;
   const first = pageSize;

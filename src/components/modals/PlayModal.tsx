@@ -34,7 +34,7 @@ interface Props {
   onClose: () => void
 }
 
-export const PlayModal = ({ isOpen, onClose }: Props) => {
+export const PlayModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const history = useHistory();
   const toast = useToast();
   const { account, providerChainId } = useWeb3Context();

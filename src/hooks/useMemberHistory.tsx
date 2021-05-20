@@ -1,13 +1,22 @@
 import { useWeb3Context } from '../contexts/Web3Context';
 import { GRAPH_ENDPOINT } from '../lib/constants';
-import { getRequests } from '../lib/history';
+import { getRequests, playLotteries } from '../lib/history';
 import { useEffect, useState } from 'react';
 import { defer } from 'rxjs';
 
-export const useMemberHistory = ({ member }) => {
+interface Props {
+  member: string
+}
+
+interface Return {
+  transfers: Array<playLotteries>
+  loading: boolean
+}
+
+export const useMemberHistory = ({ member }: Props): Return => {
   const { providerChainId } = useWeb3Context();
-  const [transfers, setTransfers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [transfers, setTransfers] = useState<Array<playLotteries>>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function update() {
