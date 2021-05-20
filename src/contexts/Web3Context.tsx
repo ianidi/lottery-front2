@@ -6,17 +6,17 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
 
-interface IWeb3Provider {
+interface Web3Provider {
   children?: React.ReactNode
 }
 
-interface IWeb3State {
+interface Web3State {
   providerChainId?: number
   ethersProvider?: ethers.providers.Web3Provider
   account?: string
 }
 
-interface IUseWeb3Context {
+interface useWeb3Context {
   ethersProvider?: ethers.providers.Web3Provider | undefined
   connectWeb3?: () => Promise<void>
   loading?: boolean
@@ -25,7 +25,7 @@ interface IUseWeb3Context {
   account?: string | undefined
 }
 
-export const Web3Context = React.createContext<IUseWeb3Context>({});
+export const Web3Context = React.createContext<useWeb3Context>({});
 export const useWeb3Context = () => useContext(Web3Context);
 
 const providerOptions = {
@@ -45,8 +45,8 @@ const web3Modal = new Web3Modal({
   providerOptions,
 });
 
-export const Web3Provider = ({ children }: IWeb3Provider) => {
-  const [{ providerChainId, ethersProvider, account }, setWeb3State] = useState<IWeb3State>(
+export const Web3Provider = ({ children }: Web3Provider) => {
+  const [{ providerChainId, ethersProvider, account }, setWeb3State] = useState<Web3State>(
     {},
   );
   const [loading, setLoading] = useState(true);

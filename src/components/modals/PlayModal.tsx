@@ -14,8 +14,8 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { UnlockButton } from '../../components/common/UnlockButton';
-import { TxLink } from '../../components/common/TxLink';
+import { UnlockButton } from '../common/UnlockButton';
+import { TxLink } from '../common/TxLink';
 import { useWeb3Context } from '../../contexts/Web3Context';
 import { FORMULA } from '../../lib/constants';
 import { fetchTokenBalance } from '../../lib/token';
@@ -29,7 +29,12 @@ import { BigNumber } from '@ethersproject/bignumber';
 import NumberFormat from 'react-number-format';
 import { defer } from 'rxjs';
 
-export const PlayModal = ({ isOpen, onClose }) => {
+interface Props {
+  isOpen: boolean
+  onClose: () => void
+}
+
+export const PlayModal = ({ isOpen, onClose }: Props) => {
   const history = useHistory();
   const toast = useToast();
   const { account, providerChainId } = useWeb3Context();
@@ -37,27 +42,27 @@ export const PlayModal = ({ isOpen, onClose }) => {
   const selectedLottery = useSelector(selectSelectedLottery);
   const allowance = useSelector(selectAllowance);
 
-  const { tokenSymbol, tokenName, tokenDecimals, formula, liquidity, collateral, lotteryID, maxBetPercent } = selectedLottery;
+  const [balance, setBalance] = useState<BigNumber>(BigNumber.from("0"));
+  const [balanceLoading, setBalanceLoading] = useState<boolean>(false);
+  const [balanceIsZero, setBalanceIsZero] = useState<boolean>(false);
+  const [amountInput, setAmountInput] = useState<string>("");
+  const [amount, setAmount] = useState<BigNumber>(BigNumber.from("0"));
+  const [amountIsZero, setAmountIsZero] = useState<boolean>(false);
+  const [transferAllowed, setTransferAllowed] = useState<boolean>(false);
 
-  const [balance, setBalance] = useState(BigNumber.from("0"));
-  const [balanceLoading, setBalanceLoading] = useState(false);
-  const [balanceIsZero, setBalanceIsZero] = useState(false);
-  const [amountInput, setAmountInput] = useState();
-  const [amount, setAmount] = useState(0);
-  const [amountIsZero, setAmountIsZero] = useState(false);
-  const [transferAllowed, setTransferAllowed] = useState(false);
+  const { liquidity, lotteryID, maxBetPercent } = selectedLottery;
 
   const maxBetAmount = BigNumber.from(liquidity).div(BigNumber.from("100")).mul(BigNumber.from(maxBetPercent));
 
-  const { playTxHash, playLoading, play } = usePlay(lotteryID, amount, maxBetPercent, 0);
+  const { playTxHash, playLoading, play } = usePlay({ lotteryID, amount });
 
-  const showError = msg => {
+  const showError = (msg: string) => {
     if (msg) {
       toast({
         title: 'Error',
         description: msg,
         status: 'error',
-        isClosable: 'true',
+        isClosable: true,
       });
     }
   };
@@ -82,10 +87,10 @@ export const PlayModal = ({ isOpen, onClose }) => {
   useEffect(() => {
     const token = {
       chainId: providerChainId,
-      address: collateral,
+      address: selectedLottery.collateral,
     };
 
-    let subscription;
+    let subscription: any;
     if (token && account) {
       setBalanceLoading(true);
       subscription = defer(() =>
@@ -115,7 +120,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
     const subscription = defer(() => {
       let number = amountInput;
       if (amountInput === "") { number = "0"; }
-      const amount_ = parseValue(number, tokenDecimals);
+      const amount_ = parseValue(number, selectedLottery.tokenDecimals);
       setAmount(amount_);
       setAmountIsZero(amount_.eq(BigNumber.from(0)));
     }).subscribe();
@@ -151,7 +156,7 @@ export const PlayModal = ({ isOpen, onClose }) => {
           <ModalBody px={6} py={0}>
             <Flex width="100%">
               <Text fontWeight="bold" fontSize="md">
-                Enter bet amount ({tokenSymbol} - {truncateText(tokenName, 24)})
+                Enter bet amount ({selectedLottery.tokenSymbol} - {truncateText(selectedLottery.tokenName, 24)})
               </Text>
             </Flex>
             <Flex
@@ -178,13 +183,13 @@ export const PlayModal = ({ isOpen, onClose }) => {
                       textAlign="right"
                       style={{ position: 'absolute', bottom: '4px', right: 0 }}
                     >
-                      {`Balance: ${formatValue(balance, tokenDecimals)}`}
+                      {`Balance: ${formatValue(balance, selectedLottery.tokenDecimals)}`}
                     </Text>
                   )}
                 </Flex>
               </Flex>
               <Flex mt={2}>
-                <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} placeholder="0" decimalScale={tokenDecimals} onValueChange={(values) => setAmountInput(values.value)} />
+                <NumberFormat style={{ width: '100%', outline: 'none', fontWeight: 'bold', fontSize: '24px' }} value={amountInput} placeholder="0" decimalScale={selectedLottery.tokenDecimals} onValueChange={(values) => setAmountInput(values.value)} />
                 <Button
                   ml={2}
                   color="blue.500"
@@ -195,9 +200,9 @@ export const PlayModal = ({ isOpen, onClose }) => {
                   _hover={{ bg: 'blue.100' }}
                   onClick={() => {
                     if (maxBetAmount.gt(balance)) {
-                      setAmountInput(formatValue(balance, tokenDecimals));
+                      setAmountInput(formatValue(balance, selectedLottery.tokenDecimals));
                     } else {
-                      setAmountInput(formatValue(maxBetAmount, tokenDecimals));
+                      setAmountInput(formatValue(maxBetAmount, selectedLottery.tokenDecimals));
                     }
                   }}
                 >
@@ -210,19 +215,19 @@ export const PlayModal = ({ isOpen, onClose }) => {
               <Text as="b">{maxBetPercent}%</Text>
               <Text as="span">. </Text>
               <Text as="span">Maximum bet amount is </Text>
-              <Text as="b">{formatValue(maxBetAmount, tokenDecimals)}</Text>
+              <Text as="b">{formatValue(maxBetAmount, selectedLottery.tokenDecimals)}</Text>
               <Text as="span">.</Text>
             </Box>
             <Flex justify="center">
               <UnlockButton token={{
                 chainId: providerChainId,
-                address: collateral,
+                address: selectedLottery.collateral,
               }} amount={amount} balanceIsZero={balanceIsZero} amountIsZero={amountIsZero} transferAllowed={transferAllowed} />
             </Flex>
             <Divider color="#DAE3F0" my={4} />
             <Box w="100%" fontSize="sm" color={'black'} mb={2}>
               <Text as="span">Keep in mind that you can both win or lose this amount. Lottery formula is </Text>
-              <Text as="b">{FORMULA[formula]}.</Text>
+              <Text as="b">{FORMULA[selectedLottery.formula]}.</Text>
             </Box>
           </ModalBody>
           <ModalFooter p={6} flexDirection="column">

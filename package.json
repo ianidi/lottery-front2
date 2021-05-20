@@ -65,6 +65,7 @@
   },
   "main": "index.js",
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.7",
     "prettier": "1.9.1",
     "prettier-eslint": "10.1.0"
   }

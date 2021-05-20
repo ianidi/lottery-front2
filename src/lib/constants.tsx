@@ -6,7 +6,11 @@ export const GRAPH_ENDPOINT = "https://api.thegraph.com/subgraphs/name/ianidi/lo
 
 export const RPC_URL = "https://ropsten.infura.io/v3/c010ef4cc4754cfba5eba886a7508afd";
 
-export const FORMULA = {
+interface FORMULA {
+  [key: number]: string
+}
+
+export const FORMULA: FORMULA = {
   1: '50/50'
 };
 

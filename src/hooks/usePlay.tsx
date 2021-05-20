@@ -1,13 +1,25 @@
 import { useCallback, useState } from 'react';
+import { BigNumber } from '@ethersproject/bignumber';
 import { useWeb3Context } from '../contexts/Web3Context';
 import { logError } from '../lib/helpers';
 import { playLottery } from '../lib/lottery';
 
-export const usePlay = (lotteryID, amount) => {
+interface Props {
+  lotteryID?: string
+  amount: BigNumber
+}
+
+interface Return {
+  playLoading: boolean
+  playTxHash: string
+  play: () => Promise<void>
+}
+
+export const usePlay = ({ lotteryID, amount }: Props): Return => {
   const { account, ethersProvider } = useWeb3Context();
 
-  const [playLoading, setPlayLoading] = useState(false);
-  const [playTxHash, setPlayTxHash] = useState();
+  const [playLoading, setPlayLoading] = useState<boolean>(false);
+  const [playTxHash, setPlayTxHash] = useState<string>("");
 
   const play = useCallback(async () => {
     setPlayLoading(true);
@@ -24,7 +36,7 @@ export const usePlay = (lotteryID, amount) => {
       });
       throw usePlayError;
     } finally {
-      setPlayTxHash();
+      setPlayTxHash("");
       setPlayLoading(false);
     }
   }, [lotteryID, amount, ethersProvider, account]);
