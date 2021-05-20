@@ -19,7 +19,7 @@ export const UnlockButton = ({ token, amount, balanceIsZero, amountIsZero, trans
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
 
-  const { approvalTxHash, approvalLoading, approve } = useApproval(token, LOTTERY_CONTRACT_ADDRESS, amount);
+  const { approvalTxHash, approvalLoading, approve } = useApproval({ token, recipient: LOTTERY_CONTRACT_ADDRESS, amount });
 
   const showError = (msg: string | JSX.Element) => {
     if (msg) {

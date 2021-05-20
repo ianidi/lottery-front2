@@ -1,12 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
+import { BigNumber } from "ethers"
 import { useWeb3Context } from '../contexts/Web3Context';
-import { LOTTERY_CONTRACT_ADDRESS } from '../lib/constants';
+import { LOTTERY_CONTRACT_ADDRESS, DEFAULT_TOKEN } from '../lib/constants';
 import { logError } from '../lib/helpers';
 import { approveToken, fetchAllowance } from '../lib/token';
 import { useDispatch } from "react-redux";
 import { setAllowance } from "../store/appSlice";
 
-export const useApproval = (token, recipient, amount) => {
+interface Props {
+  token: typeof DEFAULT_TOKEN
+  recipient: string
+  amount: BigNumber
+}
+
+interface Return {
+  approvalLoading: boolean
+  approvalTxHash: string
+  updateAllowance: () => void
+  approve: () => Promise<void>
+}
+
+export const useApproval = ({ token, recipient, amount }: Props): Return => {
   const dispatch = useDispatch();
 
   const { account, ethersProvider, providerChainId } = useWeb3Context();
@@ -20,7 +34,7 @@ export const useApproval = (token, recipient, amount) => {
   }, [ethersProvider, account, token, providerChainId, trigger, dispatch]);
 
   const [approvalLoading, setApprovalLoading] = useState(false);
-  const [approvalTxHash, setApprovalTxHash] = useState();
+  const [approvalTxHash, setApprovalTxHash] = useState("");
 
   const approve = useCallback(async () => {
     setApprovalLoading(true);
@@ -39,7 +53,7 @@ export const useApproval = (token, recipient, amount) => {
       });
       throw approveError;
     } finally {
-      setApprovalTxHash();
+      setApprovalTxHash("");
       setApprovalLoading(false);
     }
   }, [amount, token, recipient, ethersProvider, account, dispatch]);
