@@ -32,7 +32,7 @@ export const LiquidityModal = ({ isOpen, onClose }) => {
 
   const { tokenSymbol, tokenName, tokenDecimals, formula, liquidity, collateral, lotteryID, maxBetPercent } = selectedLottery;
 
-  const { redeemTxHash, redeemLoading, redeem } = useRedeem(lotteryID);
+  const { redeemTxHash, redeemLoading, redeem } = useRedeem({lotteryID});
 
   const showError = msg => {
     if (msg) {

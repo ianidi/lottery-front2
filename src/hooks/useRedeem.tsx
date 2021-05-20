@@ -3,11 +3,21 @@ import { useWeb3Context } from '../contexts/Web3Context';
 import { logError } from '../lib/helpers';
 import { redeemLottery } from '../lib/lottery';
 
-export const useRedeem = (lotteryID) => {
+interface Props {
+  lotteryID: number
+}
+
+interface Return {
+  redeemLoading: boolean
+  redeemTxHash: string
+  redeem: () => Promise<void>
+}
+
+export const useRedeem = ({ lotteryID }: Props): Return => {
   const { account, ethersProvider } = useWeb3Context();
 
-  const [redeemLoading, setRedeemLoading] = useState(false);
-  const [redeemTxHash, setRedeemTxHash] = useState();
+  const [redeemLoading, setRedeemLoading] = useState<boolean>(false);
+  const [redeemTxHash, setRedeemTxHash] = useState<string>("");
 
   const redeem = useCallback(async () => {
     setRedeemLoading(true);
@@ -23,7 +33,7 @@ export const useRedeem = (lotteryID) => {
       });
       throw useRedeemError;
     } finally {
-      setRedeemTxHash();
+      setRedeemTxHash("");
       setRedeemLoading(false);
     }
   }, [lotteryID, ethersProvider, account]);

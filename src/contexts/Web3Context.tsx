@@ -6,7 +6,26 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import Web3 from 'web3';
 import { SafeAppWeb3Modal as Web3Modal } from '@gnosis.pm/safe-apps-web3modal';
 
-export const Web3Context = React.createContext({});
+interface IWeb3Provider {
+  children?: React.ReactNode
+}
+
+interface IWeb3State {
+  providerChainId?: number
+  ethersProvider?: ethers.providers.Web3Provider
+  account?: string
+}
+
+interface IUseWeb3Context {
+  ethersProvider?: ethers.providers.Web3Provider | undefined
+  connectWeb3?: () => Promise<void>
+  loading?: boolean
+  disconnect?: () => Promise<void>
+  providerChainId?: number | undefined
+  account?: string | undefined
+}
+
+export const Web3Context = React.createContext<IUseWeb3Context>({});
 export const useWeb3Context = () => useContext(Web3Context);
 
 const providerOptions = {
@@ -26,8 +45,8 @@ const web3Modal = new Web3Modal({
   providerOptions,
 });
 
-export const Web3Provider = ({ children }) => {
-  const [{ providerChainId, ethersProvider, account }, setWeb3State] = useState(
+export const Web3Provider = ({ children }: IWeb3Provider) => {
+  const [{ providerChainId, ethersProvider, account }, setWeb3State] = useState<IWeb3State>(
     {},
   );
   const [loading, setLoading] = useState(true);
@@ -37,6 +56,7 @@ export const Web3Provider = ({ children }) => {
       if (prov) {
         const web3Provider = new Web3(prov);
         const provider = new ethers.providers.Web3Provider(
+          // @ts-ignore
           web3Provider.currentProvider,
         );
         const chainId = Number(prov.chainId);
@@ -72,7 +92,7 @@ export const Web3Provider = ({ children }) => {
       const isGnosisSafe = !!modalProvider.safe;
 
       if (!isGnosisSafe) {
-        modalProvider.on('accountsChanged', accounts => {
+        modalProvider.on('accountsChanged', (accounts: Array<string>) => {
           setWeb3State(_provider => ({
             ..._provider,
             account: accounts[0],
