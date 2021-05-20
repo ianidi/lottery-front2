@@ -1,7 +1,11 @@
 import { Flex } from '@chakra-ui/react';
 import React from 'react';
 
-export const ErrorIcon = ({ size, ...props }) => {
+interface Props {
+  size: number
+}
+
+export const ErrorIcon = ({ size, ...props }: Props) => {
   const borderWidth = size * 0.25;
   return (
     <Flex

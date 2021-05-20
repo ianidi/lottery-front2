@@ -54,9 +54,6 @@ export const formatValue = (num, dec) => {
 };
 
 export const parseValue = (num, dec) => {
-  // if (!num || isNaN(Number(num))) {
-  //   return BigNumber.from(0);
-  // }
   let result;
   try {
     result = utils.parseUnits(num, dec);

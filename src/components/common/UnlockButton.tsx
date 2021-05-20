@@ -6,19 +6,27 @@ import { useWeb3Context } from '../../contexts/Web3Context';
 import { LOTTERY_CONTRACT_ADDRESS } from '../../lib/constants';
 import { useApproval } from '../../hooks/useApproval';
 
-export const UnlockButton = ({ token, amount, balanceIsZero, amountIsZero, transferAllowed }) => {
+interface Props {
+  token: string
+  amount: string
+  balanceIsZero: boolean
+  amountIsZero: boolean
+  transferAllowed: boolean
+}
+
+export const UnlockButton = ({ token, amount, balanceIsZero, amountIsZero, transferAllowed }: Props) => {
   const toast = useToast();
   const { providerChainId } = useWeb3Context();
 
   const { approvalTxHash, approvalLoading, approve } = useApproval(token, LOTTERY_CONTRACT_ADDRESS, amount);
 
-  const showError = msg => {
+  const showError = (msg: string | JSX.Element) => {
     if (msg) {
       toast({
         title: 'Error',
         description: msg,
         status: 'error',
-        isClosable: 'true',
+        isClosable: true,
       });
     }
   };
@@ -35,8 +43,7 @@ export const UnlockButton = ({ token, amount, balanceIsZero, amountIsZero, trans
         ) {
           showError(
             <Text>
-              There is problem with the token unlock. Try to revoke previous
-                approval if any on{' '}
+              There is problem with the token unlock. Try to revoke previous approval if any on{' '}
               <Link
                 href="https://revoke.cash"
                 textDecor="underline"

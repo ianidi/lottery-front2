@@ -25,7 +25,7 @@ const GlobalStyles = css`
   }
 `;
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
