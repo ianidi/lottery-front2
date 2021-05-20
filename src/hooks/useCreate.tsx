@@ -1,13 +1,28 @@
 import { useCallback, useState } from 'react';
+import { BigNumber } from "ethers"
 import { useWeb3Context } from '../contexts/Web3Context';
 import { logError } from '../lib/helpers';
 import { createLottery } from '../lib/lottery';
+import { DEFAULT_TOKEN } from "../lib/constants";
 
-export const useCreate = (token, amount, maxBetPercent, duration) => {
+interface Props {
+  token: typeof DEFAULT_TOKEN
+  amount: BigNumber
+  maxBetPercent: number
+  duration: BigNumber
+}
+
+interface Return {
+  createLoading: boolean
+  createTxHash: string
+  create: () => Promise<void>
+}
+
+export const useCreate = ({ token, amount, maxBetPercent, duration }: Props): Return => {
   const { account, ethersProvider } = useWeb3Context();
 
   const [createLoading, setCreateLoading] = useState(false);
-  const [createTxHash, setCreateTxHash] = useState();
+  const [createTxHash, setCreateTxHash] = useState("");
 
   const create = useCallback(async () => {
     setCreateLoading(true);
@@ -24,7 +39,7 @@ export const useCreate = (token, amount, maxBetPercent, duration) => {
       });
       throw useCreateError;
     } finally {
-      setCreateTxHash();
+      setCreateTxHash("");
       setCreateLoading(false);
     }
   }, [amount, token, maxBetPercent, duration, ethersProvider, account]);

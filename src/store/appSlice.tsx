@@ -9,7 +9,7 @@ interface initialState {
   balance: string
   allowance: string
   maxBetPercent: number
-  formula: number | undefined
+  formula: number
   duration: string
   selectedLottery: Lottery
 }
@@ -31,7 +31,7 @@ const initialState: initialState = {
   balance: "0",
   allowance: "0",
   maxBetPercent: 10,
-  formula: undefined,
+  formula: 1,
   duration: "0",
   selectedLottery: {
     tokenSymbol: "",
@@ -101,7 +101,7 @@ export const selectTransferAllowed = (state: RootState): boolean =>
   BigNumber.from(state.app.amount).gt(BigNumber.from(0)) &&
   BigNumber.from(state.app.amount).lte(BigNumber.from(state.app.allowance)); // balance > 0 && amount <= allowance;
 export const selectMaxBetPercent = (state: RootState): number => state.app.maxBetPercent;
-export const selectFormula = (state: RootState): number | undefined => state.app.formula;
+export const selectFormula = (state: RootState): number => state.app.formula;
 export const selectDuration = (state: RootState) => BigNumber.from(state.app.duration);
 export const selectSelectedLottery = (state: RootState): Lottery => state.app.selectedLottery;
 
